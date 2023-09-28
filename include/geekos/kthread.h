@@ -79,6 +79,8 @@ struct Kernel_Thread {
 
     char threadName[20];
 
+    bool sigFlags[6];
+    void *sigHandlers[6];
 };
 
 #ifdef GEEKOS

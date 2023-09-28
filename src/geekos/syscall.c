@@ -349,7 +349,11 @@ static int Sys_PS(struct Interrupt_State *state) {
  * Returns: 0 on success or error code (< 0) on error
  */
 static int Sys_Kill(struct Interrupt_State *state) {
-    TODO_P(PROJECT_SIGNALS, "Sys_Kill system call");
+    if (!IS_SIGNUM(state->ecx)){
+        return EINVALID;
+    }
+    struct Kernel_Thread *kthread = Lookup_Thread(state->ebx, 1);
+    (kthread->sigFlags)[state->ecx] = 1;
     return 0;
 }
 
@@ -364,8 +368,7 @@ static int Sys_Signal(struct Interrupt_State *state) {
     if (!IS_SIGNUM(state->ecx) || state->ecx == SIGKILL){
         return EINVALID;
     }
-    
-    TODO_P(PROJECT_SIGNALS, "Sys_Signal system call");
+    (CURRENT_THREAD->sigHandlers)[state->ecx] = (signal_handler)(state->ebx);
     return 0;
 }
 
