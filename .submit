@@ -1,0 +1,11 @@
+# Submit server .submit file for
+#  Course CMSC412
+#  Project Project 2: Signals
+
+courseName=CMSC412
+semester=202308
+projectNumber=Project 2
+courseKey=cf5d5d823f18e797
+authentication.type=cas
+baseURL=https://submit.cs.umd.edu:443/fall2023
+submitURL=https://submit.cs.umd.edu:443/fall2023/eclipse/SubmitProjectViaEclipse
