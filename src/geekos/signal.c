@@ -51,9 +51,19 @@ int Check_Pending_Signal(struct Kernel_Thread *kthread,
     KASSERT(kthread);
     KASSERT(state);
 
+    bool pending = 0;
+    int i;
+    for (i = 0; i<6; i++){
+        if ((kthread->sigFlags)[i]){
+            pending = 1;
+            break;
+        }
+
+    }
+    if (pending && state->cs != KERNEL_CS && !kthread->busy){
+        return 1;
+    }
     return 0;
-    TODO_P(PROJECT_SIGNALS,
-           "Check_Pending_Signal returns 1 if this thread has a pending signal");
 }
 
 #if 0
