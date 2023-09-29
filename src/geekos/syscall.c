@@ -349,11 +349,14 @@ static int Sys_PS(struct Interrupt_State *state) {
  * Returns: 0 on success or error code (< 0) on error
  */
 static int Sys_Kill(struct Interrupt_State *state) {
+    if (CURRENT_THREAD->userContext != 0){
+        return EACCESS;
+    }
     if (!IS_SIGNUM(state->ecx)){
         return EINVALID;
     }
     struct Kernel_Thread *kthread = Lookup_Thread(state->ebx, 1);
-    (kthread->sigFlags)[state->ecx] = 1;
+    (kthread->sigFlags)[(state->ecx)-1] = 1;
     return 0;
 }
 
@@ -368,7 +371,7 @@ static int Sys_Signal(struct Interrupt_State *state) {
     if (!IS_SIGNUM(state->ecx) || state->ecx == SIGKILL){
         return EINVALID;
     }
-    (CURRENT_THREAD->sigHandlers)[state->ecx] = (signal_handler)(state->ebx);
+    (CURRENT_THREAD->sigHandlers)[(state->ecx)-1] = (signal_handler)(state->ebx);
     return 0;
 }
 
@@ -955,6 +958,7 @@ static int Sys_Fork(struct Interrupt_State *state) {
     Attach_User_Context(childKT, childUC);
 
     memcpy(childKT->stackPage, CURRENT_THREAD->stackPage, PAGE_SIZE);
+    memcpy(childKT->sigHandlers, CURRENT_THREAD->sigHandlers, sizeof(CURRENT_THREAD->sigHandlers));
     childKT->esp = (ulong_t)(childKT->stackPage) + ((ulong_t)state - (ulong_t)(CURRENT_THREAD->stackPage));
     struct Interrupt_State* childIS = (struct Interrupt_State*)(childKT->esp);
     childIS->eax = 0;

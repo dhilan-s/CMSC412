@@ -159,6 +159,20 @@ struct Kernel_Thread *Create_Thread(int priority, bool detached) {
      */
     Init_Thread(kthread, stackPage, priority, detached);
 
+    (kthread->sigHandlers[0]) = SIG_DFL;
+    (kthread->sigHandlers[1]) = SIG_DFL;
+    (kthread->sigHandlers[2]) = SIG_DFL;
+    (kthread->sigHandlers[3]) = SIG_DFL;
+    (kthread->sigHandlers[4]) = SIG_DFL;
+    (kthread->sigHandlers[5]) = SIG_DFL;
+
+    (kthread->sigFlags[0]) = 0;
+    (kthread->sigFlags[1]) = 0;
+    (kthread->sigFlags[2]) = 0;
+    (kthread->sigFlags[3]) = 0;
+    (kthread->sigFlags[4]) = 0;
+    (kthread->sigFlags[5]) = 0;
+
     /* Add to the list of all threads in the system. */
     int iflag = Begin_Int_Atomic();
     Add_To_Back_Of_All_Thread_List(&s_allThreadList, kthread);
