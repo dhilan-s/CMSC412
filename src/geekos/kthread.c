@@ -743,6 +743,7 @@ void Exit(int exitCode) {
 
     bool iflag;
     struct Kernel_Thread *current = CURRENT_THREAD;
+    (current->sigFlags)[3] = 1;
 
     /* ns14 old form disabled interrupts entirely; now narrower int_atomic sections. */
     KASSERT0(Interrupts_Enabled(),

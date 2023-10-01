@@ -399,8 +399,13 @@ static int Sys_RegDeliver(struct Interrupt_State *state) {
  * Returns: not expected to "return"
  */
 static int Sys_ReturnSignal(struct Interrupt_State *state) {
-    TODO_P(PROJECT_SIGNALS, "Sys_ReturnSignal system call");
-    return EUNSUPPORTED;
+    int i;
+    for (i = 0; i < 6; i++){
+        if((CURRENT_THREAD->sigFlags)[i]){
+            ((signal_handler)((CURRENT_THREAD->sigHandlers)[i]))(i+1);
+        }
+    }
+    return state->eax;
 }
 
 /*
@@ -410,9 +415,26 @@ static int Sys_ReturnSignal(struct Interrupt_State *state) {
  * Returns: pid of reaped process on success, -1 on error.
  */
 static int Sys_WaitNoPID(struct Interrupt_State *state) {
-    /* not required for Spring 2017 */
-    TODO_P(PROJECT_SIGNALS, "Sys_WaitNoPID system call");
-    return EUNSUPPORTED;
+   struct Kernel_Thread *result = 0;
+   int exitCode = 0;
+   bool iflag = Begin_Int_Atomic();
+
+    Spin_Lock(&kthreadLock);
+    result = Get_Front_Of_All_Thread_List(&s_allThreadList);
+    Spin_Unlock(&kthreadLock);
+    while (result != 0) {
+        if(CURRENT_THREAD == result->owner && !(result->detached)){
+            Enable_Interrupts();
+            exitCode = Join(result);
+            Disable_Interrupts();
+        }
+        Spin_Lock(&kthreadLock);
+        result = Get_Next_In_All_Thread_List(result);
+        Spin_Unlock(&kthreadLock);
+    }
+
+    End_Int_Atomic(iflag);
+    return exitCode;
 }
 
 /*

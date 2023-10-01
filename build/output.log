@@ -1,7 +1,7 @@
-BSS = 43868
+BSS = 44988
 start kern info = 90000
 Creating kernel heap: start=102000, size=1048576
-527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+527352KB memory detected, 130400 pages in freelist, 1048576 bytes in kernel heap
 Initializing IDT...
 Init_SMP
 Initializing SMP...
@@ -10,7 +10,7 @@ found CPU#1 with APIC id #1
 found IO APIC ID=0 at fec00000
 /Init_SMP
 apic counted down to ffffffe6
-cpu freq = 4252800
+cpu freq = 1184666304
 Initializing timer...
 Initializing keyboard...
 Initializing DMA Controller...
@@ -25,7 +25,7 @@ Mounted /c filesystem!
 Never gonna give you up!
 Welcome to GeekOS!
 Spawning init process (/c/shell.exe)
-$ sigpipe
+$ igp   sig  pp o ipe
 Parent should handle sigpipe, child should terminate on sigpipe.
 original pid=9
 parent n=1, global=1, child_pid=10, my_pid=9

@@ -61,6 +61,7 @@ int Check_Pending_Signal(struct Kernel_Thread *kthread,
 
     }
     if (pending && state->cs != KERNEL_CS && !kthread->busy){
+        kthread->busy = 1;
         return 1;
     }
     return 0;
