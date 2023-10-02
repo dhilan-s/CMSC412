@@ -1,4 +1,4 @@
-BSS = 44bc8
+BSS = 44c28
 start kern info = 90000
 Creating kernel heap: start=102000, size=1048576
 527352KB memory detected, 130400 pages in freelist, 1048576 bytes in kernel heap
@@ -10,7 +10,7 @@ found CPU#1 with APIC id #1
 found IO APIC ID=0 at fec00000
 /Init_SMP
 apic counted down to ffffffe6
-cpu freq = 358187200
+cpu freq = 1184992704
 Initializing timer...
 Initializing keyboard...
 Initializing DMA Controller...
@@ -25,14 +25,13 @@ Mounted /c filesystem!
 Never gonna give you up!
 Welcome to GeekOS!
 Spawning init process (/c/shell.exe)
-$ sigpipe
+$ ssig   igpipe
 Parent should handle sigpipe, child should terminate on sigpipe.
 original pid=9
 parent n=1, global=1, child_pid=10, my_pid=9
 child n=1, global=1, child_pid=0, my_pid=10
-Good so far, child could write a lot.FAIL: Didn't sigpipe to kill the child.
-expected to reap child_pid 10, Wait returned 0
-Failed assertion: sigpiped: at ../src/user/sigpipe.c, line 95
+expected to reap child_pid 10, Wait returned 262
+GOOD: sigpiped the parent!
 $ exit
 DONE!
 Init process exited with code 0

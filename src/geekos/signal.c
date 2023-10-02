@@ -44,7 +44,7 @@ void Complete_Handler(struct Kernel_Thread *kthread,
     KASSERT(state);
     struct User_Interrupt_State *userState = (struct User_Interrupt_State *)(state);
     userState->espUser += sizeof(int); // remove signal number
-    memcpy(state, (void *)userState->espUser, sizeof(struct Interrupt_State)); //Restore interrupt_state on userstack to interrupt_state on current thread
+    Copy_From_User(state, userState->espUser, sizeof(struct Interrupt_State)); //Restore interrupt_state on userstack to interrupt_state on current thread
     userState->espUser += sizeof(struct Interrupt_State);
 }
 
@@ -112,6 +112,7 @@ void Setup_Frame(struct Kernel_Thread *kthread,
     for (i = 0; i < 6; i++){
         if((CURRENT_THREAD->sigFlags)[i]){
             if ((CURRENT_THREAD->sigHandlers)[i] == SIG_DFL){
+                Enable_Interrupts();
                 switch (i+1){
                     case 1:
                     Exit(257);
@@ -137,6 +138,7 @@ void Setup_Frame(struct Kernel_Thread *kthread,
                     Exit(262);
                     break;
                 }
+                Disable_Interrupts();
                 goto done;
             }
             if ((CURRENT_THREAD->sigHandlers)[i] == SIG_IGN){
@@ -147,13 +149,14 @@ void Setup_Frame(struct Kernel_Thread *kthread,
             
             
             userState->espUser -= sizeof(struct Interrupt_State);
-            memcpy((void *)(userState->espUser), state, sizeof(struct Interrupt_State));
+            Copy_To_User(userState->espUser, state, sizeof(struct Interrupt_State));
             
             userState->espUser -= sizeof(int);
-            *((ulong_t *) userState->espUser) = (i+1);
+            int sigNum = i+1;
+            Copy_To_User(userState->espUser, &sigNum, sizeof(int));
 
-            userState->espUser -= sizeof(void *);
-            memcpy((void *)userState->espUser, (CURRENT_THREAD->userContext)->trampoline, sizeof(void *));
+            userState->espUser -= sizeof(uint_t);
+            Copy_To_User(userState->espUser, &((CURRENT_THREAD->userContext)->trampoline), sizeof(uint_t));
 
             state->eip = (uint_t)(CURRENT_THREAD->sigHandlers)[i];
 

@@ -390,7 +390,7 @@ static int Sys_RegDeliver(struct Interrupt_State *state) {
     if (state->ebx == 0){
         return EINVALID;
     }
-    (CURRENT_THREAD->userContext)->trampoline = (void *)state->ebx;
+    (CURRENT_THREAD->userContext)->trampoline = state->ebx;
     return 0;
 }
 

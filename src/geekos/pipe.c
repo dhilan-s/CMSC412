@@ -77,6 +77,7 @@ int Pipe_Read(struct File *f, void *buf, ulong_t numBytes) {
 
 int Pipe_Write(struct File *f, void *buf, ulong_t numBytes) {
     if (!((struct Pipe*)(f->fsData))->readers){
+        (get_current_thread(1)->sigFlags)[5] = 1;
         return EPIPE;
     }
     if (((struct Pipe*)(f->fsData))->writepos + numBytes >= 32768){
@@ -86,7 +87,6 @@ int Pipe_Write(struct File *f, void *buf, ulong_t numBytes) {
     memcpy((((struct Pipe*)(f->fsData))->buffer) + ((struct Pipe*)(f->fsData))->writepos, buf, numBytes);
     ((struct Pipe*)(f->fsData))->writepos += numBytes;
 
-    (get_current_thread(1)->sigFlags)[5] = 1;
 
     return numBytes;
 }
