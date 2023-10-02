@@ -740,10 +740,11 @@ void Yield(void) {
  */
 void Exit(int exitCode) {
     extern int Munmap_Impl(uint_t addr);
-
     bool iflag;
     struct Kernel_Thread *current = CURRENT_THREAD;
-    (current->sigFlags)[3] = 1;
+    if(!current->waited){
+        (current->sigFlags)[3] = 1;
+    }
 
     /* ns14 old form disabled interrupts entirely; now narrower int_atomic sections. */
     KASSERT0(Interrupts_Enabled(),
@@ -818,6 +819,8 @@ int Join(struct Kernel_Thread *kthread) {
     /* It is only legal for the owner to join */
     KASSERT(kthread->owner == CURRENT_THREAD);
 
+    kthread->waited = 1;
+
     /* Wait for it to die */
     while (kthread->alive) {
         Wait(&kthread->joinQueue);
@@ -829,7 +832,6 @@ int Join(struct Kernel_Thread *kthread) {
     /* once joined we are effectively detached - prevents Exit from this thread trying to double detach */
     /* do this before detach since deatch can free the thread */
     kthread->detached = 1;
-
 
     Enable_Interrupts();
 

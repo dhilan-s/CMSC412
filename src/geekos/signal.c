@@ -115,14 +115,17 @@ void Setup_Frame(struct Kernel_Thread *kthread,
                 Enable_Interrupts();
                 switch (i+1){
                     case 1:
+                    Print("Terminated %d.\n",CURRENT_THREAD->pid);
                     Exit(257);
                     break;
 
                     case 2:
+                    Print("Terminated %d.\n",CURRENT_THREAD->pid);
                     Exit(258);
                     break;
 
                     case 3:
+                    Print("Terminated %d.\n",CURRENT_THREAD->pid);
                     Exit(259);
                     break;
 
@@ -131,10 +134,12 @@ void Setup_Frame(struct Kernel_Thread *kthread,
                     break;
 
                     case 5:
+                    Print("Terminated %d.\n",CURRENT_THREAD->pid);
                     Exit(261);
                     break;
 
                     case 6:
+                    Print("Terminated %d.\n",CURRENT_THREAD->pid);
                     Exit(262);
                     break;
                 }

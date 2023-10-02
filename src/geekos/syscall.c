@@ -415,7 +415,7 @@ static int Sys_ReturnSignal(struct Interrupt_State *state) {
 static int Sys_WaitNoPID(struct Interrupt_State *state) {
    struct Kernel_Thread *result = 0;
    int exitCode = 0;
-   bool noZombies = 0;
+   bool zombies = 0;
    bool iflag = Begin_Int_Atomic();
 
     Spin_Lock(&kthreadLock);
@@ -426,7 +426,7 @@ static int Sys_WaitNoPID(struct Interrupt_State *state) {
             Enable_Interrupts();
             exitCode = Join(result);
             Disable_Interrupts();
-            noZombies = 1;
+            zombies = 1;
         }
         Spin_Lock(&kthreadLock);
         result = Get_Next_In_All_Thread_List(result);
@@ -434,7 +434,7 @@ static int Sys_WaitNoPID(struct Interrupt_State *state) {
     }
 
     End_Int_Atomic(iflag);
-    if (noZombies){
+    if (!zombies){
         return ENOZOMBIES;
     }
     return exitCode;
@@ -984,6 +984,7 @@ static int Sys_Fork(struct Interrupt_State *state) {
 
     memcpy(childKT->stackPage, CURRENT_THREAD->stackPage, PAGE_SIZE);
     memcpy(childKT->sigHandlers, CURRENT_THREAD->sigHandlers, sizeof(CURRENT_THREAD->sigHandlers));
+    memcpy((void *)((childKT->userContext)->trampoline), (void *)((CURRENT_THREAD->userContext)->trampoline), sizeof(uint_t));
     childKT->esp = (ulong_t)(childKT->stackPage) + ((ulong_t)state - (ulong_t)(CURRENT_THREAD->stackPage));
     struct Interrupt_State* childIS = (struct Interrupt_State*)(childKT->esp);
     childIS->eax = 0;

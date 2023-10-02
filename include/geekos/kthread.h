@@ -82,6 +82,7 @@ struct Kernel_Thread {
     bool sigFlags[6];
     void *sigHandlers[6];
     bool busy;
+    bool waited;
 };
 
 #ifdef GEEKOS
