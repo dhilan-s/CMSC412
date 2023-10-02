@@ -387,8 +387,11 @@ static int Sys_Signal(struct Interrupt_State *state) {
  * Returns: 0 on success or error code (< 0) on error
  */
 static int Sys_RegDeliver(struct Interrupt_State *state) {
+    if (state->ebx == 0){
+        return EINVALID;
+    }
+    (CURRENT_THREAD->userContext)->trampoline = (void *)state->ebx;
     return 0;
-    TODO_P(PROJECT_SIGNALS, "Sys_RegDeliver system call");
 }
 
 /*
@@ -399,12 +402,7 @@ static int Sys_RegDeliver(struct Interrupt_State *state) {
  * Returns: not expected to "return"
  */
 static int Sys_ReturnSignal(struct Interrupt_State *state) {
-    int i;
-    for (i = 0; i < 6; i++){
-        if((CURRENT_THREAD->sigFlags)[i]){
-            ((signal_handler)((CURRENT_THREAD->sigHandlers)[i]))(i+1);
-        }
-    }
+    
     return state->eax;
 }
 
@@ -423,7 +421,7 @@ static int Sys_WaitNoPID(struct Interrupt_State *state) {
     result = Get_Front_Of_All_Thread_List(&s_allThreadList);
     Spin_Unlock(&kthreadLock);
     while (result != 0) {
-        if(CURRENT_THREAD == result->owner && !(result->detached)){
+        if(CURRENT_THREAD == result->owner && result->refCount == 1){
             Enable_Interrupts();
             exitCode = Join(result);
             Disable_Interrupts();

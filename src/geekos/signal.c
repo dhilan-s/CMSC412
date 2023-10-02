@@ -106,6 +106,53 @@ void Setup_Frame(struct Kernel_Thread *kthread,
                  struct Interrupt_State *state) {
     KASSERT(kthread);
     KASSERT(state);
+    int i;
+    for (i = 0; i < 6; i++){
+        if((CURRENT_THREAD->sigFlags)[i]){
+            if ((CURRENT_THREAD->sigHandlers)[i] == SIG_DFL){
+                switch (i+1){
+                    case 1:
+                    // KILL PROCESS
+                    break;
 
+                    case 2:
+                    // KILL PROCESS
+                    break;
+
+                    case 3:
+                    // KILL PROCESS
+                    break;
+
+                    case 4:
+                    // IGNORE
+                    break;
+
+                    case 5:
+                    // KILL PROCESS
+                    break;
+
+                    case 6:
+                    // KILL PROCESS
+                    break;
+                }
+                goto done;
+            }
+            if ((CURRENT_THREAD->sigHandlers)[i] == SIG_IGN){
+                goto done;
+            }
+            
+            struct User_Interrupt_State userState = (struct User_Interrupt_State)(*state);
+            
+            
+            &userState->espUser -= sizeof(struct Interrupt_State);
+            memcpy((void *)(&userState->espUser), state, sizeof(struct Interrupt_State));
+            
+            &userState->espUser -= sizeof(int);
+            *((ulong_t *) &userState->espUser) = (i+1);
+
+            done:
+            break;
+        }
+    }
     TODO_P(PROJECT_SIGNALS, "Setup_Frame");
 }

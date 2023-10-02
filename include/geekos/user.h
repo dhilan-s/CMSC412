@@ -104,7 +104,7 @@ struct User_Context {
     char name[MAX_PROC_NAME_SZB];
 
 
-
+    void *trampoline;
 
     mappedRegion_t *mappedRegions;
 };
