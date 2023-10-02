@@ -43,9 +43,13 @@ void Complete_Handler(struct Kernel_Thread *kthread,
     KASSERT(kthread);
     KASSERT(state);
     struct User_Interrupt_State *userState = (struct User_Interrupt_State *)(state);
+    int sigNum;
+    Copy_From_User(&sigNum, userState->espUser, sizeof(int));
     userState->espUser += sizeof(int); // remove signal number
     Copy_From_User(state, userState->espUser, sizeof(struct Interrupt_State)); //Restore interrupt_state on userstack to interrupt_state on current thread
     userState->espUser += sizeof(struct Interrupt_State);
+    CURRENT_THREAD->sigFlags[sigNum-1] = 0;
+    CURRENT_THREAD->busy = 0; 
 }
 
 int Check_Pending_Signal(struct Kernel_Thread *kthread,
