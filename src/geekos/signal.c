@@ -42,8 +42,10 @@ void Complete_Handler(struct Kernel_Thread *kthread,
                       struct Interrupt_State *state) {
     KASSERT(kthread);
     KASSERT(state);
-    TODO_P(PROJECT_SIGNALS,
-           "Complete_Handler cleans up after a signal handler");
+    struct User_Interrupt_State *userState = (struct User_Interrupt_State *)(state);
+    userState->espUser += sizeof(int); // remove signal number
+    memcpy(state, (void *)userState->espUser, sizeof(struct Interrupt_State)); //Restore interrupt_state on userstack to interrupt_state on current thread
+    userState->espUser += sizeof(struct Interrupt_State);
 }
 
 int Check_Pending_Signal(struct Kernel_Thread *kthread,
