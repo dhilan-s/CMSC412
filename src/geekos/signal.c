@@ -112,15 +112,15 @@ void Setup_Frame(struct Kernel_Thread *kthread,
             if ((CURRENT_THREAD->sigHandlers)[i] == SIG_DFL){
                 switch (i+1){
                     case 1:
-                    // KILL PROCESS
+                    Exit(257);
                     break;
 
                     case 2:
-                    // KILL PROCESS
+                    Exit(258);
                     break;
 
                     case 3:
-                    // KILL PROCESS
+                    Exit(259);
                     break;
 
                     case 4:
@@ -128,11 +128,11 @@ void Setup_Frame(struct Kernel_Thread *kthread,
                     break;
 
                     case 5:
-                    // KILL PROCESS
+                    Exit(261);
                     break;
 
                     case 6:
-                    // KILL PROCESS
+                    Exit(262);
                     break;
                 }
                 goto done;
@@ -141,18 +141,22 @@ void Setup_Frame(struct Kernel_Thread *kthread,
                 goto done;
             }
             
-            struct User_Interrupt_State userState = (struct User_Interrupt_State)(*state);
+            struct User_Interrupt_State *userState = (struct User_Interrupt_State *)(state);
             
             
-            &userState->espUser -= sizeof(struct Interrupt_State);
-            memcpy((void *)(&userState->espUser), state, sizeof(struct Interrupt_State));
+            userState->espUser -= sizeof(struct Interrupt_State);
+            memcpy((void *)(userState->espUser), state, sizeof(struct Interrupt_State));
             
-            &userState->espUser -= sizeof(int);
-            *((ulong_t *) &userState->espUser) = (i+1);
+            userState->espUser -= sizeof(int);
+            *((ulong_t *) userState->espUser) = (i+1);
+
+            userState->espUser -= sizeof(void *);
+            memcpy((void *)userState->espUser, (CURRENT_THREAD->userContext)->trampoline, sizeof(void *));
+
+            state->eip = (uint_t)(CURRENT_THREAD->sigHandlers)[i];
 
             done:
             break;
         }
     }
-    TODO_P(PROJECT_SIGNALS, "Setup_Frame");
 }

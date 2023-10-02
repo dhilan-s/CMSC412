@@ -402,7 +402,7 @@ static int Sys_RegDeliver(struct Interrupt_State *state) {
  * Returns: not expected to "return"
  */
 static int Sys_ReturnSignal(struct Interrupt_State *state) {
-    
+    Complete_Handler(CURRENT_THREAD, state);
     return state->eax;
 }
 
@@ -415,16 +415,18 @@ static int Sys_ReturnSignal(struct Interrupt_State *state) {
 static int Sys_WaitNoPID(struct Interrupt_State *state) {
    struct Kernel_Thread *result = 0;
    int exitCode = 0;
+   bool noZombies = 0;
    bool iflag = Begin_Int_Atomic();
 
     Spin_Lock(&kthreadLock);
     result = Get_Front_Of_All_Thread_List(&s_allThreadList);
     Spin_Unlock(&kthreadLock);
     while (result != 0) {
-        if(CURRENT_THREAD == result->owner && result->refCount == 1){
+        if(CURRENT_THREAD == result->owner && !(result->detached)){
             Enable_Interrupts();
             exitCode = Join(result);
             Disable_Interrupts();
+            noZombies = 1;
         }
         Spin_Lock(&kthreadLock);
         result = Get_Next_In_All_Thread_List(result);
@@ -432,6 +434,9 @@ static int Sys_WaitNoPID(struct Interrupt_State *state) {
     }
 
     End_Int_Atomic(iflag);
+    if (noZombies){
+        return ENOZOMBIES;
+    }
     return exitCode;
 }
 

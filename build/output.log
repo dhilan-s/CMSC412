@@ -1,4 +1,4 @@
-BSS = 449a8
+BSS = 44a88
 start kern info = 90000
 Creating kernel heap: start=102000, size=1048576
 527352KB memory detected, 130400 pages in freelist, 1048576 bytes in kernel heap
@@ -10,7 +10,7 @@ found CPU#1 with APIC id #1
 found IO APIC ID=0 at fec00000
 /Init_SMP
 apic counted down to ffffffe6
-cpu freq = -1701024896
+cpu freq = -1914351488
 Initializing timer...
 Initializing keyboard...
 Initializing DMA Controller...
