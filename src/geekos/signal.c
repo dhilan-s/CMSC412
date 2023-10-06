@@ -60,8 +60,9 @@ int Check_Pending_Signal(struct Kernel_Thread *kthread,
     bool pending = 0;
     int i;
     for (i = 0; i<6; i++){
-        if ((kthread->sigFlags)[i]){
+        if ((kthread->sigFlags)[i] && (kthread->handling!=i+1)){
             pending = 1;
+            kthread->handling = i+1;
             break;
         }
 
@@ -112,46 +113,19 @@ void Setup_Frame(struct Kernel_Thread *kthread,
                  struct Interrupt_State *state) {
     KASSERT(kthread);
     KASSERT(state);
-    int i;
-    for (i = 0; i < 6; i++){
+    int i = kthread->handling - 1;
         if((CURRENT_THREAD->sigFlags)[i]){
-            if ((CURRENT_THREAD->sigHandlers)[i] == SIG_DFL){
+            if ((CURRENT_THREAD->sigHandlers)[i] == SIG_DFL || (CURRENT_THREAD->sigHandlers)[i] == NULL){
                 Enable_Interrupts();
-                switch (i+1){
-                    case 1:
+                if (i != 3){
                     Print("Terminated %d.\n",CURRENT_THREAD->pid);
-                    Exit(257);
-                    break;
-
-                    case 2:
-                    Print("Terminated %d.\n",CURRENT_THREAD->pid);
-                    Exit(258);
-                    break;
-
-                    case 3:
-                    Print("Terminated %d.\n",CURRENT_THREAD->pid);
-                    Exit(259);
-                    break;
-
-                    case 4:
-                    // IGNORE
-                    break;
-
-                    case 5:
-                    Print("Terminated %d.\n",CURRENT_THREAD->pid);
-                    Exit(261);
-                    break;
-
-                    case 6:
-                    Print("Terminated %d.\n",CURRENT_THREAD->pid);
-                    Exit(262);
-                    break;
+                    Exit(i+257);
                 }
                 Disable_Interrupts();
-                goto done;
+                return;
             }
             if ((CURRENT_THREAD->sigHandlers)[i] == SIG_IGN){
-                goto done;
+                return;
             }
             
             struct User_Interrupt_State *userState = (struct User_Interrupt_State *)(state);
@@ -169,8 +143,5 @@ void Setup_Frame(struct Kernel_Thread *kthread,
 
             state->eip = (uint_t)(CURRENT_THREAD->sigHandlers)[i];
 
-            done:
-            break;
-        }
     }
 }

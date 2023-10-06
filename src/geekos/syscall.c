@@ -349,13 +349,13 @@ static int Sys_PS(struct Interrupt_State *state) {
  * Returns: 0 on success or error code (< 0) on error
  */
 static int Sys_Kill(struct Interrupt_State *state) {
-    if (CURRENT_THREAD->userContext != 0){
+    struct Kernel_Thread *kthread = Lookup_Thread(state->ebx, 1);
+    if (Lookup_Thread(state->ebx, 1)->userContext == 0){
         return EACCESS;
     }
     if (!IS_SIGNUM(state->ecx)){
         return EINVALID;
     }
-    struct Kernel_Thread *kthread = Lookup_Thread(state->ebx, 1);
     (kthread->sigFlags)[(state->ecx)-1] = 1;
     return 0;
 }
@@ -415,18 +415,18 @@ static int Sys_ReturnSignal(struct Interrupt_State *state) {
 static int Sys_WaitNoPID(struct Interrupt_State *state) {
    struct Kernel_Thread *result = 0;
    int exitCode = 0;
-   bool zombies = 0;
    bool iflag = Begin_Int_Atomic();
 
     Spin_Lock(&kthreadLock);
     result = Get_Front_Of_All_Thread_List(&s_allThreadList);
     Spin_Unlock(&kthreadLock);
     while (result != 0) {
-        if(CURRENT_THREAD == result->owner && !(result->detached)){
+        if(CURRENT_THREAD == result->owner && !(result->alive)){
             Enable_Interrupts();
             exitCode = Join(result);
             Disable_Interrupts();
-            zombies = 1;
+            state->ebx = exitCode;
+            return result->pid;
         }
         Spin_Lock(&kthreadLock);
         result = Get_Next_In_All_Thread_List(result);
@@ -434,10 +434,7 @@ static int Sys_WaitNoPID(struct Interrupt_State *state) {
     }
 
     End_Int_Atomic(iflag);
-    if (!zombies){
-        return ENOZOMBIES;
-    }
-    return exitCode;
+    return ENOZOMBIES;
 }
 
 /*
