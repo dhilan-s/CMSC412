@@ -48,8 +48,8 @@ void Complete_Handler(struct Kernel_Thread *kthread,
     userState->espUser += sizeof(int); // remove signal number
     Copy_From_User(state, userState->espUser, sizeof(struct Interrupt_State)); //Restore interrupt_state on userstack to interrupt_state on current thread
     userState->espUser += sizeof(struct Interrupt_State);
-    CURRENT_THREAD->sigFlags[sigNum-1] = 0;
-    CURRENT_THREAD->busy = 0; 
+    kthread->sigFlags[sigNum-1] = 0;
+    kthread->busy = 0; 
 }
 
 int Check_Pending_Signal(struct Kernel_Thread *kthread,
@@ -114,17 +114,17 @@ void Setup_Frame(struct Kernel_Thread *kthread,
     KASSERT(kthread);
     KASSERT(state);
     int i = kthread->handling - 1;
-        if((CURRENT_THREAD->sigFlags)[i]){
-            if ((CURRENT_THREAD->sigHandlers)[i] == SIG_DFL || (CURRENT_THREAD->sigHandlers)[i] == NULL){
+        if((kthread->sigFlags)[i]){
+            if ((kthread->sigHandlers)[i] == SIG_DFL || (kthread->sigHandlers)[i] == NULL){
                 Enable_Interrupts();
                 if (i != 3){
-                    Print("Terminated %d.\n",CURRENT_THREAD->pid);
+                    Print("Terminated %d.\n",kthread->pid);
                     Exit(i+257);
                 }
                 Disable_Interrupts();
                 return;
             }
-            if ((CURRENT_THREAD->sigHandlers)[i] == SIG_IGN){
+            if ((kthread->sigHandlers)[i] == SIG_IGN){
                 return;
             }
             
@@ -139,9 +139,9 @@ void Setup_Frame(struct Kernel_Thread *kthread,
             Copy_To_User(userState->espUser, &sigNum, sizeof(int));
 
             userState->espUser -= sizeof(uint_t);
-            Copy_To_User(userState->espUser, &((CURRENT_THREAD->userContext)->trampoline), sizeof(uint_t));
+            Copy_To_User(userState->espUser, &((kthread->userContext)->trampoline), sizeof(uint_t));
 
-            state->eip = (uint_t)(CURRENT_THREAD->sigHandlers)[i];
+            state->eip = (uint_t)(kthread->sigHandlers)[i];
 
     }
 }
