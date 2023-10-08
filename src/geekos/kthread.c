@@ -742,13 +742,18 @@ void Exit(int exitCode) {
     extern int Munmap_Impl(uint_t addr);
     bool iflag;
     struct Kernel_Thread *current = CURRENT_THREAD;
-    if(!current->waited){
-        (current->sigFlags)[3] = 1;
-    }
 
     /* ns14 old form disabled interrupts entirely; now narrower int_atomic sections. */
     KASSERT0(Interrupts_Enabled(),
              "believe exit should be called with interrupts enabled");
+
+        
+    /* Thread is dead */
+    current->exitCode = exitCode;
+    current->alive = false;
+    if(!current->waited){
+        ((current->owner)->sigFlags)[3] = 1;
+    }
 
     /* Deal with any children */
     struct Kernel_Thread *result = 0;
@@ -769,12 +774,6 @@ void Exit(int exitCode) {
     }
 
     End_Int_Atomic(iflag);
-    
-   
-    /* Thread is dead */
-    current->exitCode = exitCode;
-    current->alive = false;
-
 
 
     /* Remove timer references this thread has held */

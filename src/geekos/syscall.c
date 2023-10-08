@@ -353,7 +353,7 @@ static int Sys_Kill(struct Interrupt_State *state) {
     if (Lookup_Thread(state->ebx, 1)->userContext == 0){
         return EACCESS;
     }
-    if (!IS_SIGNUM(state->ecx)){
+    if (!IS_SIGNUM(state->ecx) || !Lookup_Thread(state->ebx, 1)){
         return EINVALID;
     }
     (kthread->sigFlags)[(state->ecx)-1] = 1;

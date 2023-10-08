@@ -81,8 +81,8 @@ struct Kernel_Thread {
 
     bool sigFlags[6];
     void *sigHandlers[6];
+    int sigNum;
     bool busy;
-    int handling;
     bool waited;
 };
 

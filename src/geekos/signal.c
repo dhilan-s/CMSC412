@@ -60,15 +60,16 @@ int Check_Pending_Signal(struct Kernel_Thread *kthread,
     bool pending = 0;
     int i;
     for (i = 0; i<6; i++){
-        if ((kthread->sigFlags)[i] && (kthread->handling!=i+1)){
+        if ((kthread->sigFlags)[i]){
             pending = 1;
-            kthread->handling = i+1;
             break;
         }
 
     }
     if (pending && state->cs != KERNEL_CS && !kthread->busy){
+        kthread->sigNum = i+1;
         kthread->busy = 1;
+        kthread->sigFlags[kthread->sigNum] = 0;
         return 1;
     }
     return 0;
@@ -113,35 +114,36 @@ void Setup_Frame(struct Kernel_Thread *kthread,
                  struct Interrupt_State *state) {
     KASSERT(kthread);
     KASSERT(state);
-    int i = kthread->handling - 1;
-        if((kthread->sigFlags)[i]){
-            if ((kthread->sigHandlers)[i] == SIG_DFL || (kthread->sigHandlers)[i] == NULL){
-                Enable_Interrupts();
-                if (i != 3){
-                    Print("Terminated %d.\n",kthread->pid);
-                    Exit(i+257);
-                }
-                Disable_Interrupts();
-                return;
+    int i = kthread->sigNum - 1;
+    //kthread->sigFlags[i] = 0;
+    if((kthread->sigFlags)[i]){
+        if ((kthread->sigHandlers)[i] == SIG_DFL || (kthread->sigHandlers)[i] == NULL){
+            Enable_Interrupts();
+            if (i != 3){
+                Print("Terminated %d.\n",kthread->pid);
+                Exit(i+257);
             }
-            if ((kthread->sigHandlers)[i] == SIG_IGN){
-                return;
-            }
+            Disable_Interrupts();
+            return;
+        }
+        if ((kthread->sigHandlers)[i] == SIG_IGN){
+            return;
+        }
             
-            struct User_Interrupt_State *userState = (struct User_Interrupt_State *)(state);
+        struct User_Interrupt_State *userState = (struct User_Interrupt_State *)(state);
             
             
-            userState->espUser -= sizeof(struct Interrupt_State);
-            Copy_To_User(userState->espUser, state, sizeof(struct Interrupt_State));
+        userState->espUser -= sizeof(struct Interrupt_State);
+        Copy_To_User(userState->espUser, state, sizeof(struct Interrupt_State));
             
-            userState->espUser -= sizeof(int);
-            int sigNum = i+1;
-            Copy_To_User(userState->espUser, &sigNum, sizeof(int));
+        userState->espUser -= sizeof(int);
+        int sigNum = i+1;
+        Copy_To_User(userState->espUser, &sigNum, sizeof(int));
 
-            userState->espUser -= sizeof(uint_t);
-            Copy_To_User(userState->espUser, &((kthread->userContext)->trampoline), sizeof(uint_t));
+        userState->espUser -= sizeof(uint_t);
+        Copy_To_User(userState->espUser, &((kthread->userContext)->trampoline), sizeof(uint_t));
 
-            state->eip = (uint_t)(kthread->sigHandlers)[i];
+        state->eip = (uint_t)(kthread->sigHandlers)[i];
 
     }
 }
