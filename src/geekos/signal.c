@@ -48,7 +48,7 @@ void Complete_Handler(struct Kernel_Thread *kthread,
     userState->espUser += sizeof(int); // remove signal number
     Copy_From_User(state, userState->espUser, sizeof(struct Interrupt_State)); //Restore interrupt_state on userstack to interrupt_state on current thread
     userState->espUser += sizeof(struct Interrupt_State);
-    kthread->sigFlags[sigNum-1] = 0;
+    //kthread->sigFlags[sigNum-1] = 0;
     kthread->busy = 0; 
 }
 
@@ -69,7 +69,7 @@ int Check_Pending_Signal(struct Kernel_Thread *kthread,
     if (pending && state->cs != KERNEL_CS && !kthread->busy){
         kthread->sigNum = i+1;
         kthread->busy = 1;
-        kthread->sigFlags[kthread->sigNum] = 0;
+        //kthread->sigFlags[(kthread->sigNum)-1] = 0;
         return 1;
     }
     return 0;
@@ -115,8 +115,7 @@ void Setup_Frame(struct Kernel_Thread *kthread,
     KASSERT(kthread);
     KASSERT(state);
     int i = kthread->sigNum - 1;
-    //kthread->sigFlags[i] = 0;
-    if((kthread->sigFlags)[i]){
+    kthread->sigFlags[i] = 0;
         if ((kthread->sigHandlers)[i] == SIG_DFL || (kthread->sigHandlers)[i] == NULL){
             Enable_Interrupts();
             if (i != 3){
@@ -128,22 +127,14 @@ void Setup_Frame(struct Kernel_Thread *kthread,
         }
         if ((kthread->sigHandlers)[i] == SIG_IGN){
             return;
-        }
-            
+        } 
         struct User_Interrupt_State *userState = (struct User_Interrupt_State *)(state);
-            
-            
         userState->espUser -= sizeof(struct Interrupt_State);
         Copy_To_User(userState->espUser, state, sizeof(struct Interrupt_State));
-            
         userState->espUser -= sizeof(int);
         int sigNum = i+1;
         Copy_To_User(userState->espUser, &sigNum, sizeof(int));
-
         userState->espUser -= sizeof(uint_t);
         Copy_To_User(userState->espUser, &((kthread->userContext)->trampoline), sizeof(uint_t));
-
         state->eip = (uint_t)(kthread->sigHandlers)[i];
-
-    }
 }
