@@ -21,6 +21,8 @@
 #include <geekos/string.h>
 #include <geekos/tss.h>
 #include <geekos/segment.h>
+#include <geekos/percpu.h>
+#include <geekos/defs.h>
 
 static __inline__ void Set_Size_And_Base_Pages(struct Segment_Descriptor
                                                *desc, ulong_t baseAddr,
@@ -125,4 +127,18 @@ void Init_LDT_Descriptor(struct Segment_Descriptor *desc,
     desc->dbBit = 0;
 }
 
-/* // TODO(PERCPU, "write a function based on Init_LDT_Descriptor that initializes an LDT on each per-cpu GDT") */
+/*
+ * Initialize a per-cpu segment descriptor.
+ */
+void Init_CPU_Segment_Descriptor(struct Segment_Descriptor *desc, int cpuid, int privilegeLevel) {
+    KASSERT(privilegeLevel >= 0 && privilegeLevel <= 3);
+
+    Set_Size_And_Base_Pages(desc, (ulong_t)&perCPUarr[cpuid], 1);  // change for percpu
+    desc->type = 0x02;          /* 0010b: data, expand-up, writable, !accessed */
+    desc->system = 1;
+    desc->dpl = privilegeLevel;
+    desc->present = 1;
+    desc->reserved = 0;
+    desc->dbBit = 1;            /* 32 bit operands */
+}
+
