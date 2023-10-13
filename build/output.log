@@ -1,4 +1,4 @@
-BSS = 44fe8
+BSS = 44f08
 start kern info = 90000
 Creating kernel heap: start=102000, size=1048576
 527352KB memory detected, 130400 pages in freelist, 1048576 bytes in kernel heap
@@ -10,6 +10,6 @@ found CPU#1 with APIC id #1
 found IO APIC ID=0 at fec00000
 /Init_SMP
 apic counted down to ffffffe6
-cpu freq = 626544640
-InitiaFailed assertion in Make_Runnable: kthread->inThread_Queue == NULL at ../src/geekos/sched.c, line 47, RA=109a9, thread=0x00000000
+cpu freq = 1677737024
+Initializing timFailed assertion in Make_Runnable: kthread->inThread_Queue == NULL at ../src/geekos/sched.c, line 47, RA=109a9, thread=0x00000000
 Note: attempting to make runnable a thread that is in another list.

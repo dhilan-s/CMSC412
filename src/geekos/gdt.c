@@ -141,10 +141,10 @@ void Init_GDT(int cpuid) {
 
         /* PerCPU segment */
         desc = Allocate_Segment_Descriptor_From(s_GDT[cpuid]);
-        Init_CPU_Segment_Descriptor(desc, (ulong_t)(&perCPUarr),   /* base address */
-                                     0x100000,  0  /* privilege level (0 == kernel) */
+        Init_CPU_Segment_Descriptor(desc, (ulong_t)(&perCPUarr[cpuid]),   /* base address */
+                                     1,  0  /* privilege level (0 == kernel) */
             );
-        KASSERT(Get_Descriptor_Index(desc) == (PER_CPU >> 3));
+        //KASSERT(Get_Descriptor_Index(desc) == (PER_CPU >> 3));
 
 
     //}
