@@ -130,10 +130,10 @@ void Init_LDT_Descriptor(struct Segment_Descriptor *desc,
 /*
  * Initialize a per-cpu segment descriptor.
  */
-void Init_CPU_Segment_Descriptor(struct Segment_Descriptor *desc, int cpuid, int privilegeLevel) {
+void Init_CPU_Segment_Descriptor(struct Segment_Descriptor *desc, ulong_t baseAddr, int numEntries, int privilegeLevel) {
     KASSERT(privilegeLevel >= 0 && privilegeLevel <= 3);
 
-    Set_Size_And_Base_Pages(desc, (ulong_t)&perCPUarr[cpuid], 1);  // change for percpu
+    Set_Size_And_Base_Pages(desc, baseAddr, sizeof(struct CPU_Descriptor));  // change for percpu
     desc->type = 0x02;          /* 0010b: data, expand-up, writable, !accessed */
     desc->system = 1;
     desc->dpl = privilegeLevel;

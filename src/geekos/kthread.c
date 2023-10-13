@@ -381,8 +381,8 @@ static void Setup_Kernel_Thread(struct Kernel_Thread *kthread,
     Push(kthread, KERNEL_DS);   /* ds */
     Push(kthread, KERNEL_DS);   /* es */
     Push(kthread, 0);           /* fs */
-    Push(kthread, 0);           /* gs */
-    TODO_P(PROJECT_PERCPU, "set gs to the per-cpu segment");
+    Push(kthread, PER_CPU);     /* gs */
+    //TODO_P(PROJECT_PERCPU, "set gs to the per-cpu segment");
 }
 
 /*
@@ -784,7 +784,8 @@ void Exit(int exitCode) {
     /* Clean up any thread-local memory */
     Tlocal_Exit(CURRENT_THREAD);
 
-/* Notify the thread's owner, if any */ Wake_Up(&current->joinQueue);
+/* Notify the thread's owner, if any */ 
+    Wake_Up(&current->joinQueue);
     End_Int_Atomic(iflag);
 
 

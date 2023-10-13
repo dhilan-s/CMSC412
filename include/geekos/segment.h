@@ -99,6 +99,6 @@ void Init_LDT_Descriptor(struct Segment_Descriptor *desc,
 void Init_LDT_Descriptor_Globally(struct Segment_Descriptor *desc,
                                   struct Segment_Descriptor theLDT[],
                                   int numEntries);
-void Init_CPU_Segment_Descriptor(struct Segment_Descriptor *desc, int cpuid, int privilegeLevel);
+void Init_CPU_Segment_Descriptor(struct Segment_Descriptor *desc, ulong_t baseAddr, int numEntries, int privilegeLevel);
 
 #endif /* GEEKOS_SEGMENT_H */

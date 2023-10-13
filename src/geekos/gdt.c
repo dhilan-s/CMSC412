@@ -15,6 +15,7 @@
 #include <geekos/smp.h>
 #include <geekos/projects.h>
 #include <geekos/kthread.h>
+#include <geekos/percpu.h>
 
 /*
  * This is defined in lowlevel.asm.
@@ -78,7 +79,7 @@ struct Segment_Descriptor *Allocate_Segment_Descriptor(void) {
 }
 
 struct Segment_Descriptor *Allocate_Segment_Descriptor_On_CPU(int cpu) {
-    TODO_P(PROJECT_PERCPU, "use the per-cpu GDT");
+    //TODO_P(PROJECT_PERCPU, "use the per-cpu GDT");
     return Allocate_Segment_Descriptor_From(s_GDT[cpu]);
 }
 
@@ -127,7 +128,7 @@ void Init_GDT(int cpuid) {
         Init_Code_Segment_Descriptor(desc, 0,   /* base address */
                                      0x100000,  /* num pages (== 2^20) */
                                      0  /* privilege level (0 == kernel) */
-            ); // may not need base address and/or numpages?
+            );
         KASSERT(Get_Descriptor_Index(desc) == (KERNEL_CS >> 3));
 
         /* Kernel data segment. */
@@ -140,14 +141,14 @@ void Init_GDT(int cpuid) {
 
         /* PerCPU segment */
         desc = Allocate_Segment_Descriptor_From(s_GDT[cpuid]);
-        Init_CPU_Segment_Descriptor(desc, cpuid,
-                                     0  /* privilege level (0 == kernel) */
+        Init_CPU_Segment_Descriptor(desc, (ulong_t)(&perCPUarr),   /* base address */
+                                     0x100000,  0  /* privilege level (0 == kernel) */
             );
-        //KASSERT(Get_Descriptor_Index(desc) == (PERCPU_SEG >> 3));
+        KASSERT(Get_Descriptor_Index(desc) == (PER_CPU >> 3));
 
 
     //}
-    cpuid = 0;                  /* use the cpu 0 GDT (not per cpu) */
+    //cpuid = 0;                  /* use the cpu 0 GDT (not per cpu) */
     /* Activate the kernel GDT. */
     limitAndBase[0] = sizeof(struct Segment_Descriptor) * NUM_GDT_ENTRIES;
     limitAndBase[1] = ((ulong_t) s_GDT[cpuid]) & 0xffff;

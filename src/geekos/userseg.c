@@ -36,6 +36,8 @@
 
 int userDebug = 0;
 
+extern int CPU_Count;
+
 /* ----------------------------------------------------------------------
  * Private functions
  * ---------------------------------------------------------------------- */
@@ -51,7 +53,7 @@ void *User_To_Kernel(struct User_Context *userContext, ulong_t userPtr) {
  */
 extern struct User_Context *Create_User_Context(ulong_t size) {
     struct User_Context *context;
-    int index;
+    int index = 0;
 
     /* Size must be a multiple of the page size */
     size = Round_Up_To_Page(size);
@@ -78,17 +80,19 @@ extern struct User_Context *Create_User_Context(ulong_t size) {
     context->size = size;
 
     /* Allocate an LDT descriptor for the user context */
-    context->ldtDescriptor = Allocate_Segment_Descriptor();
-    if(context->ldtDescriptor == 0)
+    int i;
+    for (i = 0; i<CPU_Count; i++){
+    (context->ldtDescriptor)[i] = *Allocate_Segment_Descriptor();
+    if(&(context->ldtDescriptor)[i] == 0)
         goto fail;
     if(userDebug)
         Print("Allocated descriptor %d for LDT\n",
-              Get_Descriptor_Index(context->ldtDescriptor));
-    Init_LDT_Descriptor(context->ldtDescriptor, context->ldt,
+              Get_Descriptor_Index(&(context->ldtDescriptor)[i]));
+    Init_LDT_Descriptor(&(context->ldtDescriptor)[i], context->ldt,
                         NUM_USER_LDT_ENTRIES);
-    index = Get_Descriptor_Index(context->ldtDescriptor);
+    index = Get_Descriptor_Index(&(context->ldtDescriptor)[i]);
+    }
     context->ldtSelector = Selector(KERNEL_PRIVILEGE, true, index);
-
     /* Initialize code and data segments within the LDT */
     Init_Code_Segment_Descriptor(&context->ldt[0],
                                  (ulong_t) context->memory,

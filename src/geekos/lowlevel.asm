@@ -235,7 +235,9 @@ Load_GDTR:
     mov	ds, ax
     mov	es, ax
     mov	fs, ax
+    mov ax, PER_CPU
     mov	gs, ax
+    mov ax, KERNEL_DS
     mov	ss, ax
     jmp	KERNEL_CS:.here
 .here:
@@ -343,6 +345,9 @@ Handle_Interrupt:
     mov	ax, KERNEL_DS
     mov	ds, ax
     mov	es, ax
+
+    mov ax, PER_CPU
+    mov gs, ax
 
     ; Get the address of the C handler function from the
     ; table of handler functions.
