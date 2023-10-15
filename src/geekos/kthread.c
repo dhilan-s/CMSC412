@@ -581,7 +581,7 @@ void Init_Scheduler(unsigned int cpuID, void *stack) {
      */
     Init_Thread(mainThread, stack, PRIORITY_NORMAL, true);
     g_currentThreads[Get_CPU_ID()] = mainThread;
-    perCPUarr[Get_CPU_ID()]->current_thread = mainThread;
+    perCPUarr[Get_CPU_ID()].current_thread = mainThread;
     Add_To_Back_Of_All_Thread_List(&s_allThreadList, mainThread);
     strcpy(mainThread->threadName, "{Main}");
 

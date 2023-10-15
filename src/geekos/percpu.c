@@ -4,9 +4,9 @@
 #include <geekos/malloc.h>
 
 void Init_PerCPU(int cpu){
-    perCPUarr[cpu] = Malloc(sizeof(struct CPU_Descriptor));
-    perCPUarr[cpu]->CPU_id = cpu;
-    perCPUarr[cpu]->current_thread = NULL;
+    //perCPUarr[cpu] = Malloc(sizeof(struct CPU_Descriptor));
+    perCPUarr[cpu].CPU_id = cpu;
+    perCPUarr[cpu].current_thread = NULL;
 }
 int PerCPU_Get_CPU(void){
     int CPUid;

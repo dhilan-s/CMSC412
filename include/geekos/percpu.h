@@ -18,4 +18,4 @@ struct CPU_Descriptor{
    struct Kernel_Thread *current_thread;
 };
 
-struct CPU_Descriptor *perCPUarr[8];
+struct CPU_Descriptor perCPUarr[8];
