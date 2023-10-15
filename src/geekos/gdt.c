@@ -145,8 +145,6 @@ void Init_GDT(int cpuid) {
                                      1,  0  /* privilege level (0 == kernel) */
             );
         //KASSERT(Get_Descriptor_Index(desc) == (PER_CPU >> 3));
-
-
     //}
     //cpuid = 0;                  /* use the cpu 0 GDT (not per cpu) */
     /* Activate the kernel GDT. */

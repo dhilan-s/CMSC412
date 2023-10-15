@@ -1,4 +1,4 @@
-BSS = 44f08
+BSS = 44f28
 start kern info = 90000
 Creating kernel heap: start=102000, size=1048576
 527352KB memory detected, 130400 pages in freelist, 1048576 bytes in kernel heap
@@ -25,38 +25,17 @@ Mounted /c filesystem!
 Never gonna give you up!
 Welcome to GeekOS!
 Spawning init process (/c/shell.exe)
-$  
+$ 
+$ printgs
 $ sigpipe
 Parent should handle sigpipe, child should terminate on sigpipe.
-original pid=9
-parent n=1, global=1, child_pid=10, my_pid=9
-child n=1, global=1, child_pid=0, my_pid=10
-Terminated 10.
-expected to reap child_pid 10, Wait returned 262
+original pid=10
+parent n=1, global=1, child_pid=11, my_pid=10
+child n=1, global=1, child_pid=0, my_pid=11
+Terminated 11.
+expected to reap child_pid 11, Wait returned 262
 GOOD: sigpiped the parent!
-$ printgs
-Exception 13 received, killing thread 0x0000e000 (pid 8)
-eax=00000030 ebx=001cad78 ecx=001c2d6c edx=00000000
-esi=0000e000 edi=00000001 ebp=00042604
-eip=0001a852 cs=00000008 eflags=00000006
-Interrupt number=13, error code=48
-index=6, TI=0, IDT=0, EXT=0
-cs: index=1, ti=0, rpl=0
-ds: index=2, ti=0, rpl=0
-es: index=2, ti=0, rpl=0
-fs: index=0, ti=0, rpl=0
-gs: index=3, ti=0, rpl=0
-ebp 42604 is not on the current kernel stack 0x0000f000
-Exception 13 received, killing thread 0x0000e000 (pid 8)
-eax=00000030 ebx=001cad78 ecx=001c2d6c edx=00000000
-esi=0000e000 edi=00000001 ebp=00042604
-eip=0001a852 cs=00000008 eflags=00000006
-Interrupt number=13, error code=48
-index=6, TI=0, IDT=0, EXT=0
-cs: index=1, ti=0, rpl=0
-ds: index=2, ti=0, rpl=0
-es: index=2, ti=0, rpl=0
-fs: index=0, ti=0, rpl=0
-gs: index=3, ti=0, rpl=0
-ebp 42604 is not on the current kernel stack 0x0000f000
-Init process exited with code -1
+$ pipe-p1
+$ exit
+DONE!
+Init process exited with code 0

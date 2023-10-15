@@ -82,7 +82,7 @@ extern struct User_Context *Create_User_Context(ulong_t size) {
     /* Allocate an LDT descriptor for the user context */
     int i;
     for (i = 0; i<CPU_Count; i++){
-    (context->ldtDescriptor)[i] = Allocate_Segment_Descriptor();
+    (context->ldtDescriptor)[i] = Allocate_Segment_Descriptor_On_CPU(i);
     if((context->ldtDescriptor)[i] == 0)
         goto fail;
     if(userDebug)
