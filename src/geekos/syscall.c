@@ -422,9 +422,7 @@ static int Sys_WaitNoPID(struct Interrupt_State *state) {
     Spin_Unlock(&kthreadLock);
     while (result != 0) {
         if(CURRENT_THREAD == result->owner && !(result->alive)){
-            Enable_Interrupts();
             exitCode = Join(result);
-            Disable_Interrupts();
             state->ebx = exitCode;
             return result->pid;
         }
