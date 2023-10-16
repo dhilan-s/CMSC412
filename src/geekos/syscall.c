@@ -415,7 +415,7 @@ static int Sys_ReturnSignal(struct Interrupt_State *state) {
 static int Sys_WaitNoPID(struct Interrupt_State *state) {
    struct Kernel_Thread *result = 0;
    int exitCode = 0;
-   bool iflag = Begin_Int_Atomic();
+   //bool iflag = Begin_Int_Atomic();
 
     Spin_Lock(&kthreadLock);
     result = Get_Front_Of_All_Thread_List(&s_allThreadList);
@@ -431,7 +431,7 @@ static int Sys_WaitNoPID(struct Interrupt_State *state) {
         Spin_Unlock(&kthreadLock);
     }
 
-    End_Int_Atomic(iflag);
+    //End_Int_Atomic(iflag);
     return ENOZOMBIES;
 }
 
