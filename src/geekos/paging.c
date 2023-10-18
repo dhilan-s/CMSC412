@@ -32,18 +32,20 @@
 #include <geekos/errno.h>
 #include <geekos/projects.h>
 #include <geekos/smp.h>
-
 #include <libc/mmap.h>
 
 /* ----------------------------------------------------------------------
  * Public data
  * ---------------------------------------------------------------------- */
+pde_t *g_kernel_page_dir;       /* kernel page directory */
 
 /* ----------------------------------------------------------------------
  * Private functions/data
  * ---------------------------------------------------------------------- */
 
 #define SECTORS_PER_PAGE (PAGE_SIZE / SECTOR_SIZE)
+
+#define CEIL_DIV(x, y) (((x) + (y) - 1) / (y))
 
 /*
  * flag to indicate if debugging paging code
@@ -162,8 +164,40 @@ void Init_VM(struct Boot_Info *bootInfo) {
      * - Do not map a page at address 0; this will help trap
      *   null pointer references
      */
-    TODO_P(PROJECT_VIRTUAL_MEMORY_A,
-           "Build initial kernel page directory and page tables");
+    int i;
+    int j;
+    int numPages = CEIL_DIV(bootInfo->memSizeKB, 4);
+    int numPageTables = CEIL_DIV(numPages, 1024);
+    g_kernel_page_dir = Alloc_Page();
+    for (i = 1; i<=numPageTables; i++){
+        g_kernel_page_dir[i].present = 1;
+        g_kernel_page_dir[i].flags = VM_WRITE | VM_READ | VM_USER;
+        pte_t *pageTable = Alloc_Page();
+        g_kernel_page_dir[i].pageTableBaseAddr = PAGE_ALIGNED_ADDR(pageTable);
+        for(j = 1; i<=numPageTables; i++){
+            pageTable[j].present = 1;
+            pageTable[j].flags = VM_WRITE | VM_READ | VM_USER;
+            pageTable[j].pageBaseAddr = (i << 10) | j;
+        }
+    }
+    int APICdir = PAGE_DIRECTORY_INDEX(0xFEE00000);
+    int APICpage = PAGE_TABLE_INDEX(0xFEE00000);
+    int APICIOpage = PAGE_TABLE_INDEX(0xFEC00000);
+    g_kernel_page_dir[APICdir].present = 1;
+    g_kernel_page_dir[APICdir].flags = VM_WRITE | VM_READ;
+    pte_t *APICpageTable = Alloc_Page();
+    g_kernel_page_dir[APICdir].pageTableBaseAddr = PAGE_ALIGNED_ADDR(APICpageTable);
+    APICpageTable[APICpage].present = 1;
+    APICpageTable[APICpage].flags = VM_WRITE | VM_READ;
+    APICpageTable[APICpage].pageBaseAddr = 0xFEE0;
+
+    APICpageTable[APICIOpage].present = 1;
+    APICpageTable[APICIOpage].flags = VM_WRITE | VM_READ;
+    APICpageTable[APICIOpage].pageBaseAddr = 0xFEC0;
+    
+    Enable_Paging(g_kernel_page_dir);
+
+    Install_Interrupt_Handler(14, Page_Fault_Handler);
 }
 
 void Init_Secondary_VM() {
