@@ -57,8 +57,7 @@ int debugFaults = 0;
 /* const because we do not expect any caller to need to
    modify the kernel page directory */
 const pde_t *Kernel_Page_Dir(void) {
-    TODO_P(PROJECT_VIRTUAL_MEMORY_A, "return kernel page directory");
-    return NULL;
+    return g_kernel_page_dir;
 }
 
 
@@ -201,7 +200,7 @@ void Init_VM(struct Boot_Info *bootInfo) {
 }
 
 void Init_Secondary_VM() {
-    TODO_P(PROJECT_VIRTUAL_MEMORY_A, "enable paging on secondary cores");
+    Enable_Paging(g_kernel_page_dir);
 }
 
 /**

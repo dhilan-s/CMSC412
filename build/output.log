@@ -9,28 +9,2818 @@ found CPU#0 with APIC id #0
 found CPU#1 with APIC id #1
 found IO APIC ID=0 at fec00000
 /Init_SMP
-apic counted down to ffffffe6
-cpu freq = -1066520896
-Initializing timer...
-Initializing keyboard...
-Initializing DMA Controller...
-Initializing IDE controller...
-ide: probe found ATA drive:     ide0: cyl=40, heads=16, sectors=63
-ide: found no drive 1
-the global lock is not held.
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
 Initializing IDT...
-Init done
-Registering paging device: /c/pagefile.bin on ide0 with 10240 sectors
-Mounted /c filesystem!
-Never gonna give you up!
-Welcome to GeekOS!
-Spawning init process (/c/shell.exe)
-$ ork   fork
-Could not spawn process: No such file or directory
-$ fork-p1
-original
-parent n=1, global=1, child_pid=10, my_pid=9
-child n=1, global=1, child_pid=0, my_pid=10
-$ exit
-DONE!
-Init process exited with code 0
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found IO APIC ID=0 at fec00000
+/Init_SMP
+BSS = 4386c
+start kern info = 90000
+Creating kernel heap: start=102000, size=1048576
+527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+Initializing IDT...
+Init_SMP
+Initializing SMP...
+found CPU#0 with APIC id #0
+found CPU#1 with APIC id #1
+found 
