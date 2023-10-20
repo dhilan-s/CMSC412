@@ -927,6 +927,7 @@ static int Sys_Pipe(struct Interrupt_State *state) {
 
 
 static int Sys_Fork(struct Interrupt_State *state) {
+    return EUNSUPPORTED;
     struct User_Context *childUC = Create_User_Context(CURRENT_THREAD->userContext->size);
     if (childUC == 0)
         return ENOMEM;

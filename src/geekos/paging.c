@@ -168,35 +168,42 @@ void Init_VM(struct Boot_Info *bootInfo) {
     int numPages = CEIL_DIV(bootInfo->memSizeKB, 4);
     int numPageTables = CEIL_DIV(numPages, 1024);
     g_kernel_page_dir = Alloc_Page();
-    for (i = 1; i<=numPageTables; i++){
+    memset(g_kernel_page_dir, 0, PAGE_SIZE);
+    for (i = 0; i<numPageTables; i++){
         g_kernel_page_dir[i].present = 1;
         g_kernel_page_dir[i].flags = VM_WRITE | VM_READ | VM_USER;
         pte_t *pageTable = Alloc_Page();
         g_kernel_page_dir[i].pageTableBaseAddr = PAGE_ALIGNED_ADDR(pageTable);
-        for(j = 1; i<=numPageTables; i++){
+        for(j = 0; j<numPageTables; j++){
             pageTable[j].present = 1;
             pageTable[j].flags = VM_WRITE | VM_READ | VM_USER;
             pageTable[j].pageBaseAddr = (i << 10) | j;
         }
     }
     int APICdir = PAGE_DIRECTORY_INDEX(0xFEE00000);
+    Print("APICdir: %d\n", APICdir);
     int APICpage = PAGE_TABLE_INDEX(0xFEE00000);
+    Print("APICpage: %d\n", APICpage);
     int APICIOpage = PAGE_TABLE_INDEX(0xFEC00000);
+    Print("APICIOpage: %d\n", APICIOpage);
     g_kernel_page_dir[APICdir].present = 1;
     g_kernel_page_dir[APICdir].flags = VM_WRITE | VM_READ;
     pte_t *APICpageTable = Alloc_Page();
+    memset(APICpageTable, 0, PAGE_SIZE);
     g_kernel_page_dir[APICdir].pageTableBaseAddr = PAGE_ALIGNED_ADDR(APICpageTable);
     APICpageTable[APICpage].present = 1;
     APICpageTable[APICpage].flags = VM_WRITE | VM_READ;
-    APICpageTable[APICpage].pageBaseAddr = 0xFEE0;
+    APICpageTable[APICpage].pageBaseAddr = 0xFEE00;
 
     APICpageTable[APICIOpage].present = 1;
     APICpageTable[APICIOpage].flags = VM_WRITE | VM_READ;
-    APICpageTable[APICIOpage].pageBaseAddr = 0xFEC0;
+    APICpageTable[APICIOpage].pageBaseAddr = 0xFEC00;
+    
+    Install_Interrupt_Handler(14, Page_Fault_Handler);
+    Install_Interrupt_Handler(46, Page_Fault_Handler);
     
     Enable_Paging(g_kernel_page_dir);
 
-    Install_Interrupt_Handler(14, Page_Fault_Handler);
 }
 
 void Init_Secondary_VM() {
