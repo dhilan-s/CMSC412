@@ -1,10 +1,10 @@
 # Submit server .submit file for
 #  Course CMSC412
-#  Project Project 2: Signals
+#  Project Project 4A: Paging(Virtual Memory A)
 
 courseName=CMSC412
 semester=202308
-projectNumber=Project 2
+projectNumber=Project 4A
 courseKey=cf5d5d823f18e797
 authentication.type=cas
 baseURL=https://submit.cs.umd.edu:443/fall2023

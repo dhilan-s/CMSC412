@@ -171,7 +171,6 @@ void Main(struct Boot_Info *bootInfo) {
     Mount_Root_Filesystem();
 
     TODO_P(PROJECT_VIRTUAL_MEMORY_A, "initialize page file.");
-    KASSERT0(false, "Before checkPaging\n");
     checkPaging();
     
 
