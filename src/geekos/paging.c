@@ -187,7 +187,14 @@ void Init_VM(struct Boot_Info *bootInfo) {
         g_kernel_page_dir[i].pageTableBaseAddr = PAGE_ALIGNED_ADDR(pageTable);
 
         // Map the page table
-        if (i<numPageTables-1){
+        int fullPageTables;
+        if (!numPages%1024){
+            fullPageTables = numPageTables;
+        }
+        else{
+            fullPageTables = numPageTables-1;
+        }
+        if (i<fullPageTables){
             for(j = 0; j<1024; j++){
                 pageTable[j].present = 1;
                 pageTable[j].flags = VM_WRITE | VM_READ | VM_USER;
@@ -195,7 +202,7 @@ void Init_VM(struct Boot_Info *bootInfo) {
                 }
         }
         // Last entry only maps remainder of pages
-        else if (i == numPageTables-1){
+        else if (i == numPageTables-1 && fullPageTables != numPageTables){
             for(j = 0; j<numPageTables%1024; j++){
                 pageTable[j].present = 1;
                 pageTable[j].flags = VM_WRITE | VM_READ | VM_USER;

@@ -29,8 +29,6 @@ Spawning init process (/c/shell.exe)
 $ b
 I am the b program
 Arg 0 is b
-$ ecit
-Could not spawn process: No such file or directory
 $ exit
 DONE!
 Init process exited with code 0
