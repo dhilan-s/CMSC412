@@ -163,40 +163,63 @@ void Init_VM(struct Boot_Info *bootInfo) {
      * - Do not map a page at address 0; this will help trap
      *   null pointer references
      */
+    // Declare loop variables
     int i;
     int j;
-    int numPages = CEIL_DIV(bootInfo->memSizeKB, 4);
-    Print("%dKB means %d pages.\n", bootInfo->memSizeKB, numPages);
-    int numPageTables = CEIL_DIV(numPages, 1024);
-    Print("%d pages means %d page tables.\n", numPages, numPageTables);
+
+    // Find the number of pages needed for the kernel
+    int numPages = CEIL_DIV(bootInfo->memSizeKB,4);
+    int numPageTables = CEIL_DIV(numPages,1024);
+
+    // Allocate space for the kernel page directory
     g_kernel_page_dir = Alloc_Page();
     memset(g_kernel_page_dir, 0, PAGE_SIZE);
+
+    // Map page directories and page tables (but not PDE_T 0)
+    //g_kernel_page_dir[0].present = 0;
+    //g_kernel_page_dir[0].flags = VM_WRITE | VM_READ | VM_USER;
     for (i = 0; i<numPageTables; i++){
-        Print("i: %d\n", i);
         g_kernel_page_dir[i].present = 1;
         g_kernel_page_dir[i].flags = VM_WRITE | VM_READ | VM_USER;
+
+        // Allocate space for the page table
         pte_t *pageTable = Alloc_Page();
         g_kernel_page_dir[i].pageTableBaseAddr = PAGE_ALIGNED_ADDR(pageTable);
-        for(j = 0; j<numPageTables; j++){
-            //Print("j: %d\n", j);
-            if (j != 0){
-            pageTable[j].present = 1;
-            pageTable[j].flags = VM_WRITE | VM_READ | VM_USER;
-            pageTable[j].pageBaseAddr = ((i << 10) | j);
-            }
+
+        // Map the page table
+        if (i<numPageTables-1){
+            for(j = 0; j<1024; j++){
+                pageTable[j].present = 1;
+                pageTable[j].flags = VM_WRITE | VM_READ | VM_USER;
+                pageTable[j].pageBaseAddr = ((i << 10) | j);
+                }
+        }
+        // Last entry only maps remainder of pages
+        else if (i == numPageTables-1){
+            for(j = 0; j<numPageTables%1024; j++){
+                pageTable[j].present = 1;
+                pageTable[j].flags = VM_WRITE | VM_READ | VM_USER;
+                pageTable[j].pageBaseAddr = ((i << 10) | j);
+                }
         }
     }
+
+    // Find APIC directory and page table
     int APICdir = PAGE_DIRECTORY_INDEX(0xFEE00000);
-    Print("APICdir: %d\n", APICdir);
     int APICpage = PAGE_TABLE_INDEX(0xFEE00000);
-    Print("APICpage: %d\n", APICpage);
     int APICIOpage = PAGE_TABLE_INDEX(0xFEC00000);
-    Print("APICIOpage: %d\n", APICIOpage);
-    g_kernel_page_dir[APICdir].present = 1;
-    g_kernel_page_dir[APICdir].flags = VM_WRITE | VM_READ;
-    pte_t *APICpageTable = Alloc_Page();
-    memset(APICpageTable, 0, PAGE_SIZE);
-    g_kernel_page_dir[APICdir].pageTableBaseAddr = PAGE_ALIGNED_ADDR(APICpageTable);
+
+    // Set up APIC directory entry and page table
+    if (!g_kernel_page_dir[APICdir].present){
+        g_kernel_page_dir[APICdir].present = 1;
+        g_kernel_page_dir[APICdir].flags = VM_WRITE | VM_READ;
+        pte_t *APICpageTable = Alloc_Page();
+        memset(APICpageTable, 0, PAGE_SIZE);
+        g_kernel_page_dir[APICdir].pageTableBaseAddr = PAGE_ALIGNED_ADDR(APICpageTable);
+        
+    }
+    pte_t *APICpageTable = (pte_t *) (g_kernel_page_dir[APICdir].pageTableBaseAddr << 12);
+    // Set up APIC and APIC IO page table entries
     APICpageTable[APICpage].present = 1;
     APICpageTable[APICpage].flags = VM_WRITE | VM_READ;
     APICpageTable[APICpage].pageBaseAddr = 0xFEE00;
@@ -205,6 +228,7 @@ void Init_VM(struct Boot_Info *bootInfo) {
     APICpageTable[APICIOpage].flags = VM_WRITE | VM_READ;
     APICpageTable[APICIOpage].pageBaseAddr = 0xFEC00;
     
+    // Enable paging and install interrupt handler
     Enable_Paging(g_kernel_page_dir);
     Install_Interrupt_Handler(14, Page_Fault_Handler);
     Install_Interrupt_Handler(46, Page_Fault_Handler);
