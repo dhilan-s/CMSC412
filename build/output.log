@@ -1,4 +1,4 @@
-BSS = 4488c
+BSS = 4496c
 start kern info = 90000
 Creating kernel heap: start=102000, size=1048576
 527352KB memory detected, 130400 pages in freelist, 1048576 bytes in kernel heap
@@ -28,14 +28,14 @@ Welcome to GeekOS!
 Spawning init process (/c/shell.exe)
 Unexpected Page Fault received
 Pid 1: (0x00622000/{Main})
- Page Fault received, at address 0x6fffffe3 (130257 pages free)
-   Non-present page, Write Fault, in Supervisor Mode
-eax=00000001 ebx=00030b2f ecx=00000003 edx=6fffffe3
-esi=6fffffe3 edi=6fffffe3 ebp=00101f44
-eip=0001aa77 cs=00000008 eflags=00000212
-Interrupt number=14, error code=2
-index=0, TI=0, IDT=1, EXT=0
-Page fault: [write][address=0x6fffffe3]
+ Page Fault received, at address 0x00000024 (130258 pages free)
+   Non-present page, Read Fault, in Supervisor Mode
+eax=00002000 ebx=00101f08 ecx=001cb0fc edx=00101f30
+esi=00030bef edi=00000000 ebp=00101f08
+eip=0001a7b4 cs=00000008 eflags=00000216
+Interrupt number=14, error code=0
+index=0, TI=0, IDT=0, EXT=0
+Page fault: [read][address=0x24]
 cs: index=1, ti=0, rpl=0
 ds: index=2, ti=0, rpl=0
 es: index=2, ti=0, rpl=0

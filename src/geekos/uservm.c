@@ -263,6 +263,8 @@ int Load_User_Program(char *exeFileData, ulong_t exeFileLength,
     ulong_t argBlockSize;
     ulong_t size, argBlockAddr;
     struct User_Context *userContext = 0;
+    pde_t *holdPDBR = Get_PDBR();
+    Set_PDBR(userContext->pageDir);
 
     /* Find maximum virtual address */
     for(i = 0; i < exeFormat->numSegments; ++i) {
@@ -312,6 +314,7 @@ int Load_User_Program(char *exeFileData, ulong_t exeFileLength,
 
 
     *pUserContext = userContext;
+    Set_PDBR(holdPDBR);
     return 0;
 }
 
@@ -339,8 +342,15 @@ bool Copy_From_User(void *destInKernel, ulong_t srcInUser,
      * interrupts are disabled; because no other process can run,
      * the page is guaranteed not to be stolen.
      */
-    TODO_P(PROJECT_VIRTUAL_MEMORY_A, "Copy user data to kernel buffer");
-    return 0;
+    pde_t *holdPDBR = Get_PDBR();
+    Set_PDBR(CURRENT_THREAD->userContext->pageDir);
+    struct User_Context *current = CURRENT_THREAD->userContext;
+
+    //if(!Validate_User_Memory(current, srcInUser, numBytes, VUM_READING))
+    //  return false;
+    memcpy(destInKernel, User_To_Kernel(current, 0x80000000+srcInUser), numBytes);
+    Set_PDBR(holdPDBR);
+    return true;
 }
 
 /*
@@ -355,8 +365,13 @@ bool Copy_To_User(ulong_t destInUser, const void *srcInKernel,
      * - Also, make sure the memory is mapped into the user
      *   address space with write permission enabled
      */
-    TODO_P(PROJECT_VIRTUAL_MEMORY_A, "Copy kernel data to user buffer");
-    return 0;
+    pde_t *holdPDBR = Get_PDBR();
+    Set_PDBR(CURRENT_THREAD->userContext->pageDir);
+    struct User_Context *current = CURRENT_THREAD->userContext;
+
+    memcpy(User_To_Kernel(current, destInUser+0x80000000), srcInKernel, numBytes);
+    Set_PDBR(holdPDBR);
+    return true;
 }
 
 
