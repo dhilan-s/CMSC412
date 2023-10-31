@@ -1,7 +1,7 @@
-BSS = 4386c
+BSS = 4488c
 start kern info = 90000
 Creating kernel heap: start=102000, size=1048576
-527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+527352KB memory detected, 130400 pages in freelist, 1048576 bytes in kernel heap
 Initializing IDT...
 Init_SMP
 Initializing SMP...
@@ -26,9 +26,20 @@ Paging on ? : 1
 Never gonna give you up!
 Welcome to GeekOS!
 Spawning init process (/c/shell.exe)
-$ b
-I am the b program
-Arg 0 is b
-$ exit
-DONE!
-Init process exited with code 0
+Unexpected Page Fault received
+Pid 1: (0x00622000/{Main})
+ Page Fault received, at address 0x6fffffe3 (130257 pages free)
+   Non-present page, Write Fault, in Supervisor Mode
+eax=00000001 ebx=00030b2f ecx=00000003 edx=6fffffe3
+esi=6fffffe3 edi=6fffffe3 ebp=00101f44
+eip=0001aa77 cs=00000008 eflags=00000212
+Interrupt number=14, error code=2
+index=0, TI=0, IDT=1, EXT=0
+Page fault: [write][address=0x6fffffe3]
+cs: index=1, ti=0, rpl=0
+ds: index=2, ti=0, rpl=0
+es: index=2, ti=0, rpl=0
+fs: index=2, ti=0, rpl=0
+gs: index=2, ti=0, rpl=0
+Failed assertion in Page_Fault_Handler: faultCode.userModeFault at ../src/geekos/paging.c, line 136, RA=10960, thread=0x00622000
+Note: unhandled kernel-mode page fault.

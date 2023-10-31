@@ -28,6 +28,11 @@
 #include <geekos/smp.h>
 #include <geekos/synch.h>
 #include <geekos/errno.h>
+#include <geekos/gdt.h>
+#include <geekos/segment.h>
+
+#define CEIL_DIV(x, y) (((x) + (y) - 1) / (y))
+#define DEFAULT_USER_STACK_SIZE 8192
 
 
 extern Spin_Lock_t kthreadLock;
@@ -40,6 +45,131 @@ int userDebug = 0;
  * ---------------------------------------------------------------------- */
 
 // TODO: Add private functions
+
+void Map_Segment(struct Exe_Segment *segment, pde_t *pageDir) {
+    int i;
+    int j;
+    int startAddr = segment->startAddress;
+    int size = segment->sizeInMemory;
+    int startPage = Round_Down_To_Page(startAddr / PAGE_SIZE);
+    int numPages = size / PAGE_SIZE;
+    pte_t *pageTable;
+    int pageFlags = VM_WRITE | VM_READ | VM_USER;
+    if ( (segment->protFlags & VM_WRITE) == 0){
+        pageFlags = VM_READ | VM_USER;
+    }
+
+    int numPageTables = CEIL_DIV(numPages,1024);
+
+    for (i = PAGE_DIRECTORY_INDEX(0x80000000 + startPage); i<numPageTables; i++){
+        pageDir[i].present = 1;
+        pageDir[i].flags = pageFlags;
+
+        // Allocate space for the page table
+        pageTable = Alloc_Page();
+        pageDir[i].pageTableBaseAddr = PAGE_ALIGNED_ADDR(pageTable);
+
+        // Map the page table
+        if (i<numPageTables-1){
+            for(j = 0; j<1024; j++){
+                if (i == 0 && j == 0){
+                    pageTable[j].present = 0;
+                }
+                else{
+                    pageTable[j].present = 1;
+                }
+                pageTable[j].flags = pageFlags;
+                void *allocedAddr = Alloc_Pageable_Page(&pageTable[j], ((i << 10) | j)+0x80000000);
+                pageTable[j].pageBaseAddr = PAGE_ALIGNED_ADDR(allocedAddr);
+                }
+        }
+        // Last entry only maps remainder of pages
+        else if (i == numPageTables-1){
+            for(j = 0; j<numPages%1024; j++){
+                pageTable[j].present = 1;
+                pageTable[j].flags = VM_WRITE | VM_READ | VM_USER;
+                void *allocedAddr = Alloc_Pageable_Page(&pageTable[j], ((i << 10) | j)+0x80000000);
+                pageTable[j].pageBaseAddr = PAGE_ALIGNED_ADDR(allocedAddr);
+                }
+        }
+    }
+}
+
+void *User_To_Kernel(struct User_Context *userContext, ulong_t userPtr) {
+    uchar_t *userBase = (uchar_t *) 0x80000000;
+
+    return (void *)(userBase + userPtr);
+}
+
+/*
+ * Create a new user context of given size
+ */
+extern struct User_Context *Create_User_Context(ulong_t size) {
+    struct User_Context *context;
+    pde_t *page_dir;
+    page_dir = Alloc_Page();
+    memcpy(page_dir, Kernel_Page_Dir(), PAGE_SIZE);
+    int index;
+
+    /* Size must be a multiple of the page size */
+    // size = Round_Up_To_Page(size); don't think we need size
+    size = 0x70000000;
+    if(userDebug)
+        Print("Size of user memory == %lu (%lx) (%lu pages)\n", size,
+              size, size / PAGE_SIZE);
+
+    /* Allocate memory for the user context */
+    context = (struct User_Context *)Malloc(sizeof(*context));
+    if(context != 0) {
+        memset(context, 0, sizeof(struct User_Context));
+        context->memory = (char *)0x80000000;
+    }
+
+    if(context == 0 || context->memory == 0)
+        goto fail;
+
+    context->size = size;
+
+    /* Allocate an LDT descriptor for the user context */
+    context->ldtDescriptor = Allocate_Segment_Descriptor();
+    if(context->ldtDescriptor == 0)
+        goto fail;
+    if(userDebug)
+        Print("Allocated descriptor %d for LDT\n",
+              Get_Descriptor_Index(context->ldtDescriptor));
+    Init_LDT_Descriptor(context->ldtDescriptor, context->ldt,
+                        NUM_USER_LDT_ENTRIES);
+    index = Get_Descriptor_Index(context->ldtDescriptor);
+    context->ldtSelector = Selector(KERNEL_PRIVILEGE, true, index);
+
+    /* Initialize code and data segments within the LDT */
+    Init_Code_Segment_Descriptor(&context->ldt[0],
+                                 (ulong_t) context->memory,
+                                 size / PAGE_SIZE, USER_PRIVILEGE);
+    Init_Data_Segment_Descriptor(&context->ldt[1],
+                                 (ulong_t) context->memory,
+                                 size / PAGE_SIZE, USER_PRIVILEGE);
+    context->csSelector = Selector(USER_PRIVILEGE, false, 0);
+    context->dsSelector = Selector(USER_PRIVILEGE, false, 1);
+
+    context->pageDir = page_dir;
+    
+    /* Nobody is using this user context yet */
+    context->refCount = 0;
+
+
+    /* Success! */
+    return context;
+
+  fail:
+    /* We failed; release any allocated memory */
+    if(context != 0) {
+        Free(context);
+    }
+
+    return 0;
+}
+
 
 
 /* ----------------------------------------------------------------------
@@ -59,8 +189,41 @@ void Destroy_User_Context(struct User_Context *context) {
      * - Free semaphores, files, and other resources used
      *   by the process
      */
-    TODO_P(PROJECT_VIRTUAL_MEMORY_A,
-           "Destroy User_Context data structure after process exits");
+    KASSERT(context->refCount == 0);
+
+    Disable_Interrupts();
+    pde_t *pageDir = context->pageDir;
+    pte_t *pageTable;
+    int i;
+    int j;
+    int startAddr = 0x80000000;
+    int size = context->size;
+    int startPage = Round_Down_To_Page(startAddr / PAGE_SIZE);
+    int numPages = size / PAGE_SIZE;
+    int numPageTables = CEIL_DIV(numPages,1024);
+
+    for (i = PAGE_DIRECTORY_INDEX(0x80000000 + startPage); i<numPageTables; i++){
+
+        pageTable = (pte_t *)PAGE_ADDR(pageDir[i].pageTableBaseAddr);
+
+        // Map the page table
+        if (i<numPageTables-1){
+            for(j = 0; j<1024; j++){
+                if (pageTable[j].present){
+                    Free_Page((void *)PAGE_ADDR(pageTable[j].pageBaseAddr));
+                }
+            }
+        }
+        Free_Page((void *)PAGE_ADDR(pageDir[i].pageTableBaseAddr));
+    }
+    Free_Page(pageDir);
+    Enable_Interrupts();
+    /* Free the context's LDT descriptor */
+    Free_Segment_Descriptor(context->ldtDescriptor);
+
+    /* Free the context's memory */
+    Free(context->memory);
+    Free(context);
 }
 
 /*
@@ -94,8 +257,61 @@ int Load_User_Program(char *exeFileData, ulong_t exeFileLength,
      * - Fill in initial stack pointer, argument block address,
      *   and code entry point fields in User_Context
      */
-    TODO_P(PROJECT_VIRTUAL_MEMORY_A,
-           "Load user program into address space");
+    int i;
+    ulong_t maxva = 0;
+    unsigned numArgs;
+    ulong_t argBlockSize;
+    ulong_t size, argBlockAddr;
+    struct User_Context *userContext = 0;
+
+    /* Find maximum virtual address */
+    for(i = 0; i < exeFormat->numSegments; ++i) {
+        struct Exe_Segment *segment = &exeFormat->segmentList[i];
+        ulong_t topva = segment->startAddress + segment->sizeInMemory;  /* FIXME: range check */
+
+        if(topva > maxva)
+            maxva = topva;
+    }
+
+    /* Determine size required for argument block */
+    Get_Argument_Block_Size(command, &numArgs, &argBlockSize);
+
+    /*
+     * Now we can determine the size of the memory block needed
+     * to run the process.
+     */
+    size = Round_Up_To_Page(maxva) + DEFAULT_USER_STACK_SIZE;
+    argBlockAddr = 0xF0000000 - argBlockSize;
+    size += argBlockSize;
+
+    /* Create User_Context */
+    userContext = Create_User_Context(size);
+    if(userContext == 0)
+        return -1;
+
+    /* Load segment data into memory */
+    for(i = 0; i < exeFormat->numSegments; ++i) {
+        struct Exe_Segment *segment = &exeFormat->segmentList[i];
+
+        Map_Segment(segment, userContext->pageDir);
+    }
+
+    /* Format argument block */
+    Format_Argument_Block(userContext->memory + argBlockAddr, numArgs,
+                          argBlockAddr, command);
+
+    /* Fill in code entry point */
+    userContext->entryAddr = exeFormat->entryAddr;
+
+    /*
+     * Fill in addresses of argument block and stack
+     * (They happen to be the same)
+     */
+    userContext->argBlockAddr = argBlockAddr;
+    userContext->stackPointerAddr = argBlockAddr;
+
+
+    *pUserContext = userContext;
     return 0;
 }
 
@@ -124,6 +340,7 @@ bool Copy_From_User(void *destInKernel, ulong_t srcInUser,
      * the page is guaranteed not to be stolen.
      */
     TODO_P(PROJECT_VIRTUAL_MEMORY_A, "Copy user data to kernel buffer");
+    return 0;
 }
 
 /*
@@ -139,6 +356,7 @@ bool Copy_To_User(ulong_t destInUser, const void *srcInKernel,
      *   address space with write permission enabled
      */
     TODO_P(PROJECT_VIRTUAL_MEMORY_A, "Copy kernel data to user buffer");
+    return 0;
 }
 
 
@@ -146,11 +364,17 @@ bool Copy_To_User(ulong_t destInUser, const void *srcInKernel,
  * Switch to user address space.
  */
 void Switch_To_Address_Space(struct User_Context *userContext) {
-    /*
-     * - If you are still using an LDT to define your user code and data
-     *   segments, switch to the process's LDT
-     * - 
-     */
-    TODO_P(PROJECT_VIRTUAL_MEMORY_A,
-           "Switch_To_Address_Space() using paging");
+    ushort_t ldtSelector;
+
+    /* Eager check to ensure that the new address space
+       has either memory (userseg) or a page directory 
+       (uservm) and is not likely to abort */
+    KASSERT(userContext->memory || userContext->pageDir);
+
+    /* Switch to the LDT of the new user context */
+    ldtSelector = userContext->ldtSelector;
+    __asm__ __volatile__("lldt %0"::"a"(ldtSelector)
+        );
+
+    Set_PDBR(userContext->pageDir);
 }
