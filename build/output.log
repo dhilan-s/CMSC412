@@ -1,4 +1,4 @@
-BSS = 4496c
+BSS = 44c8c
 start kern info = 90000
 Creating kernel heap: start=102000, size=1048576
 527352KB memory detected, 130400 pages in freelist, 1048576 bytes in kernel heap
@@ -10,7 +10,7 @@ found CPU#1 with APIC id #1
 found IO APIC ID=0 at fec00000
 /Init_SMP
 apic counted down to ffffffe6
-cpu freq = 4252800
+cpu freq = 90580800
 Initializing timer...
 Initializing keyboard...
 Initializing DMA Controller...
@@ -26,20 +26,44 @@ Paging on ? : 1
 Never gonna give you up!
 Welcome to GeekOS!
 Spawning init process (/c/shell.exe)
+startAddr: 1000
+size: 2938
+pDir: 512, pTable: 1
+numPageTables: 1
+i: 512
+pageDir[i] not present
+j: 1
+j: 2
+j: 3
+startAddr: 4940
+size: 80
+pDir: 512, pTable: 4
+numPageTables: 1
+i: 512
+pageDir[i] present
+pageTable found
+j: 4
+startAddr: 0
+size: 0
+pDir: 512, pTable: 0
+numPageTables: 0
+stack mapped
+arg block mapped
+user program loaded
 Unexpected Page Fault received
-Pid 1: (0x00622000/{Main})
- Page Fault received, at address 0x00000024 (130258 pages free)
+Pid 8: (0x0063a000/)
+ Page Fault received, at address 0x6ffffa8c (130244 pages free)
    Non-present page, Read Fault, in Supervisor Mode
-eax=00002000 ebx=00101f08 ecx=001cb0fc edx=00101f30
-esi=00030bef edi=00000000 ebp=00101f08
-eip=0001a7b4 cs=00000008 eflags=00000216
+eax=001d813c ebx=00000005 ecx=6ffffa8d edx=001d813c
+esi=001d8141 edi=0063bfb8 ebp=6ffffea4
+eip=0002b15b cs=00000008 eflags=00000206
 Interrupt number=14, error code=0
 index=0, TI=0, IDT=0, EXT=0
-Page fault: [read][address=0x24]
+Page fault: [read][address=0x6ffffa8c]
 cs: index=1, ti=0, rpl=0
 ds: index=2, ti=0, rpl=0
 es: index=2, ti=0, rpl=0
-fs: index=2, ti=0, rpl=0
-gs: index=2, ti=0, rpl=0
-Failed assertion in Page_Fault_Handler: faultCode.userModeFault at ../src/geekos/paging.c, line 136, RA=10960, thread=0x00622000
+fs: index=1, ti=1, rpl=3
+gs: index=1, ti=1, rpl=3
+Failed assertion in Page_Fault_Handler: faultCode.userModeFault at ../src/geekos/paging.c, line 136, RA=10960, thread=0x0063a000
 Note: unhandled kernel-mode page fault.

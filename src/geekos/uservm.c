@@ -50,47 +50,70 @@ void Map_Segment(struct Exe_Segment *segment, pde_t *pageDir) {
     int i;
     int j;
     int startAddr = segment->startAddress;
+    Print("startAddr: %x\n", startAddr);
     int size = segment->sizeInMemory;
-    int startPage = Round_Down_To_Page(startAddr / PAGE_SIZE);
-    int numPages = size / PAGE_SIZE;
+    Print("size: %x\n", size);
+    //int startPage = startAddr / PAGE_SIZE;
+    int numPages = CEIL_DIV(size, PAGE_SIZE);
     pte_t *pageTable;
     int pageFlags = VM_WRITE | VM_READ | VM_USER;
     if ( (segment->protFlags & VM_WRITE) == 0){
         pageFlags = VM_READ | VM_USER;
     }
+    int pDir = PAGE_DIRECTORY_INDEX(0x80000000 + startAddr);
+    int pTable = PAGE_TABLE_INDEX(0x80000000 + startAddr);
+    Print("pDir: %d, pTable: %d\n", pDir, pTable);
 
     int numPageTables = CEIL_DIV(numPages,1024);
+    Print("numPageTables: %d\n", numPageTables);
 
-    for (i = PAGE_DIRECTORY_INDEX(0x80000000 + startPage); i<numPageTables; i++){
-        pageDir[i].present = 1;
-        pageDir[i].flags = pageFlags;
+    for (i = pDir; i<pDir+numPageTables; i++){
+        Print("i: %d\n", i);
+        if (!pageDir[i].present){
+            Print("pageDir[i] not present\n");
+            pageDir[i].present = 1;
+            pageDir[i].flags = pageFlags;
 
-        // Allocate space for the page table
-        pageTable = Alloc_Page();
-        pageDir[i].pageTableBaseAddr = PAGE_ALIGNED_ADDR(pageTable);
+            // Allocate space for the page table
+            pageTable = Alloc_Page();
+            pageDir[i].pageTableBaseAddr = PAGE_ALIGNED_ADDR(pageTable);
+        }
 
+        else{
+            Print("pageDir[i] present\n");
+            pageTable = (pte_t *)(pageDir[i].pageTableBaseAddr << 12);
+            Print("pageTable found\n");
+        }
+
+        /*
         // Map the page table
         if (i<numPageTables-1){
-            for(j = 0; j<1024; j++){
-                if (i == 0 && j == 0){
-                    pageTable[j].present = 0;
-                }
-                else{
-                    pageTable[j].present = 1;
-                }
+            for(j = pTable; j<1024; j++){
+                pageTable[j].present = 1;
                 pageTable[j].flags = pageFlags;
                 void *allocedAddr = Alloc_Pageable_Page(&pageTable[j], ((i << 10) | j)+0x80000000);
+                Print("i: %d, j: %d\n", i, j);
                 pageTable[j].pageBaseAddr = PAGE_ALIGNED_ADDR(allocedAddr);
                 }
         }
         // Last entry only maps remainder of pages
         else if (i == numPageTables-1){
-            for(j = 0; j<numPages%1024; j++){
+            for(j = pTable; j<pTable+(numPages%1024); j++){
                 pageTable[j].present = 1;
                 pageTable[j].flags = VM_WRITE | VM_READ | VM_USER;
                 void *allocedAddr = Alloc_Pageable_Page(&pageTable[j], ((i << 10) | j)+0x80000000);
+                Print("i: %d, j: %d\n", i, j);
                 pageTable[j].pageBaseAddr = PAGE_ALIGNED_ADDR(allocedAddr);
                 }
+        }
+        */
+        for(j = pTable; j<pTable+numPages; j++){
+                Print("j: %d\n", j);
+                pageTable[j].present = 1;
+                pageTable[j].flags = VM_WRITE | VM_READ | VM_USER;
+                void *allocedAddr = Alloc_Pageable_Page(&pageTable[j], PAGE_ADDR(((i << 10) | j)+0x80000000));
+                //Print("i: %d, j: %d\n", i, j);
+                pageTable[j].pageBaseAddr = PAGE_ALIGNED_ADDR(allocedAddr);
         }
     }
 }
@@ -198,11 +221,10 @@ void Destroy_User_Context(struct User_Context *context) {
     int j;
     int startAddr = 0x80000000;
     int size = context->size;
-    int startPage = Round_Down_To_Page(startAddr / PAGE_SIZE);
     int numPages = size / PAGE_SIZE;
     int numPageTables = CEIL_DIV(numPages,1024);
 
-    for (i = PAGE_DIRECTORY_INDEX(0x80000000 + startPage); i<numPageTables; i++){
+    for (i = (int)PAGE_DIRECTORY_INDEX(0x80000000 + startAddr); i<(int)PAGE_DIRECTORY_INDEX(0x80000000 + startAddr)+numPageTables; i++){
 
         pageTable = (pte_t *)PAGE_ADDR(pageDir[i].pageTableBaseAddr);
 
@@ -264,7 +286,6 @@ int Load_User_Program(char *exeFileData, ulong_t exeFileLength,
     ulong_t size, argBlockAddr;
     struct User_Context *userContext = 0;
     pde_t *holdPDBR = Get_PDBR();
-    Set_PDBR(userContext->pageDir);
 
     /* Find maximum virtual address */
     for(i = 0; i < exeFormat->numSegments; ++i) {
@@ -283,7 +304,7 @@ int Load_User_Program(char *exeFileData, ulong_t exeFileLength,
      * to run the process.
      */
     size = Round_Up_To_Page(maxva) + DEFAULT_USER_STACK_SIZE;
-    argBlockAddr = 0xF0000000 - argBlockSize;
+    argBlockAddr = 0xF0000000;
     size += argBlockSize;
 
     /* Create User_Context */
@@ -291,16 +312,56 @@ int Load_User_Program(char *exeFileData, ulong_t exeFileLength,
     if(userContext == 0)
         return -1;
 
+    Set_PDBR(userContext->pageDir);
     /* Load segment data into memory */
     for(i = 0; i < exeFormat->numSegments; ++i) {
         struct Exe_Segment *segment = &exeFormat->segmentList[i];
 
         Map_Segment(segment, userContext->pageDir);
+        memcpy(userContext->memory + segment->startAddress,
+               exeFileData + segment->offsetInFile,
+               segment->lengthInFile);
+        
+        
     }
 
+    int j;
+    int stackStart = Round_Down_To_Page(argBlockAddr - argBlockSize - 3*PAGE_SIZE);
+    int stackPDEIndex = PAGE_DIRECTORY_INDEX(stackStart);
+    int stackPTEIndex = PAGE_TABLE_INDEX(stackStart);
+    pde_t stackPDE = userContext->pageDir[stackPDEIndex];
+    pte_t *stackPTE = Alloc_Page();
+    stackPDE.present = 1;
+    stackPDE.flags = VM_WRITE | VM_READ | VM_USER;
+    stackPDE.pageTableBaseAddr = PAGE_ALIGNED_ADDR(stackPTE);
+    for (j = stackPTEIndex; j<stackPTEIndex+3; j++){
+        stackPTE[j].present = 1;
+        stackPTE[j].flags = VM_WRITE | VM_READ | VM_USER;
+        void *allocedAddr = Alloc_Pageable_Page(&stackPTE[j], ((stackPDEIndex << 22) | (j << 12))+0x80000000);
+        stackPTE[j].pageBaseAddr = PAGE_ALIGNED_ADDR(allocedAddr);
+    }
+    userContext->pageDir[stackPDEIndex] = stackPDE;
+    Print("stack mapped\n");
+
+
+    int argStart = Round_Down_To_Page(argBlockAddr - argBlockSize);
+    int argPDEIndex = PAGE_DIRECTORY_INDEX(argStart);
+    int argPTEIndex = PAGE_TABLE_INDEX(argStart);
+    pde_t argPDE = userContext->pageDir[argPDEIndex];
+    pte_t *argPTE = Alloc_Page();
+    argPDE.present = 1;
+    argPDE.flags = VM_WRITE | VM_READ | VM_USER;
+    argPDE.pageTableBaseAddr = PAGE_ALIGNED_ADDR(argPTE);
+    argPTE[argPTEIndex].present = 1;
+    argPTE[argPTEIndex].flags = VM_WRITE | VM_READ | VM_USER;
+    void *allocedAddr = Alloc_Pageable_Page(&argPTE[argPTEIndex], ((argPDEIndex << 22) | (j << 12))+0x80000000);
+    argPTE[argPTEIndex].pageBaseAddr = PAGE_ALIGNED_ADDR(allocedAddr);
+    userContext->pageDir[argPDEIndex] = argPDE;
+    Print("arg block mapped\n");
+
     /* Format argument block */
-    Format_Argument_Block(userContext->memory + argBlockAddr, numArgs,
-                          argBlockAddr, command);
+    Format_Argument_Block((char *)(argBlockAddr - argBlockSize), numArgs,
+                          argBlockAddr - 0x80000000 - argBlockSize, command);
 
     /* Fill in code entry point */
     userContext->entryAddr = exeFormat->entryAddr;
@@ -309,12 +370,14 @@ int Load_User_Program(char *exeFileData, ulong_t exeFileLength,
      * Fill in addresses of argument block and stack
      * (They happen to be the same)
      */
-    userContext->argBlockAddr = argBlockAddr;
-    userContext->stackPointerAddr = argBlockAddr;
+    userContext->argBlockAddr = argBlockAddr - 0x80000000 - argBlockSize;
+    userContext->stackPointerAddr = argBlockAddr - 0x80000000 - argBlockSize;
 
 
     *pUserContext = userContext;
     Set_PDBR(holdPDBR);
+    Print("user program loaded\n");
+    //KASSERT(false);
     return 0;
 }
 
