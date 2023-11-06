@@ -194,17 +194,22 @@ void Init_VM(struct Boot_Info *bootInfo) {
                 }
                 else{
                     pageTable[j].present = 1;
+                    pageTable[j].flags = VM_WRITE | VM_READ | VM_USER;
+                    pageTable[j].pageBaseAddr = ((i << 10) | j);
                 }
-                pageTable[j].flags = VM_WRITE | VM_READ | VM_USER;
-                pageTable[j].pageBaseAddr = ((i << 10) | j);
                 }
         }
         // Last entry only maps remainder of pages
         else if (i == numPageTables-1){
             for(j = 0; j<numPages%1024; j++){
-                pageTable[j].present = 1;
-                pageTable[j].flags = VM_WRITE | VM_READ | VM_USER;
-                pageTable[j].pageBaseAddr = ((i << 10) | j);
+                if (i == 0 && j == 0){
+                    pageTable[j].present = 0;
+                }
+                else{
+                    pageTable[j].present = 1;
+                    pageTable[j].flags = VM_WRITE | VM_READ | VM_USER;
+                    pageTable[j].pageBaseAddr = ((i << 10) | j);
+                }
                 }
         }
     }

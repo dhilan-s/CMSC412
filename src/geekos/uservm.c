@@ -46,31 +46,56 @@ int userDebug = 0;
 
 // TODO: Add private functions
 
+void Map_Page_Pageable(pde_t *pageDir, ulong_t addr){
+    if (addr == 0x80000000){
+        return;
+    }
+    int pdeIndex = PAGE_DIRECTORY_INDEX(addr);
+    int pteIndex = PAGE_TABLE_INDEX(addr);
+    pde_t pde = pageDir[pdeIndex];
+    pte_t *pte;
+    if (!pde.present){
+        pde.present = 1;
+        pde.flags = VM_WRITE | VM_READ | VM_USER;
+        pte = Alloc_Page();
+        pde.pageTableBaseAddr = PAGE_ALIGNED_ADDR(pte);
+        pageDir[pdeIndex] = pde;
+    }
+    else{
+        pte = (pte_t *)(pde.pageTableBaseAddr << 12);
+    }
+    pte[pteIndex].present = 1;
+    pte[pteIndex].flags = VM_WRITE | VM_READ | VM_USER;
+    void *allocedAddr = Alloc_Pageable_Page(&pte[pteIndex], addr);
+    pte[pteIndex].pageBaseAddr = PAGE_ALIGNED_ADDR(allocedAddr);
+    pageDir[pdeIndex] = pde;
+}
+
 void Map_Segment(struct Exe_Segment *segment, pde_t *pageDir) {
     int i;
     int j;
     int startAddr = segment->startAddress;
-    Print("startAddr: %x\n", startAddr);
+    if (startAddr == 0){
+        return;
+    }
+    //Print("startAddr: %x\n", startAddr);
     int size = segment->sizeInMemory;
-    Print("size: %x\n", size);
+    //Print("size: %x\n", size);
     //int startPage = startAddr / PAGE_SIZE;
     int numPages = CEIL_DIV(size, PAGE_SIZE);
     pte_t *pageTable;
     int pageFlags = VM_WRITE | VM_READ | VM_USER;
-    if ( (segment->protFlags & VM_WRITE) == 0){
-        pageFlags = VM_READ | VM_USER;
-    }
     int pDir = PAGE_DIRECTORY_INDEX(0x80000000 + startAddr);
     int pTable = PAGE_TABLE_INDEX(0x80000000 + startAddr);
-    Print("pDir: %d, pTable: %d\n", pDir, pTable);
+    //Print("pDir: %d, pTable: %d\n", pDir, pTable);
 
     int numPageTables = CEIL_DIV(numPages,1024);
-    Print("numPageTables: %d\n", numPageTables);
+    //Print("numPageTables: %d\n", numPageTables);
 
     for (i = pDir; i<pDir+numPageTables; i++){
-        Print("i: %d\n", i);
+        //Print("i: %d\n", i);
         if (!pageDir[i].present){
-            Print("pageDir[i] not present\n");
+            //Print("pageDir[i] not present\n");
             pageDir[i].present = 1;
             pageDir[i].flags = pageFlags;
 
@@ -80,38 +105,16 @@ void Map_Segment(struct Exe_Segment *segment, pde_t *pageDir) {
         }
 
         else{
-            Print("pageDir[i] present\n");
+            //Print("pageDir[i] present\n");
             pageTable = (pte_t *)(pageDir[i].pageTableBaseAddr << 12);
-            Print("pageTable found\n");
+            //Print("pageTable found\n");
         }
 
-        /*
-        // Map the page table
-        if (i<numPageTables-1){
-            for(j = pTable; j<1024; j++){
-                pageTable[j].present = 1;
-                pageTable[j].flags = pageFlags;
-                void *allocedAddr = Alloc_Pageable_Page(&pageTable[j], ((i << 10) | j)+0x80000000);
-                Print("i: %d, j: %d\n", i, j);
-                pageTable[j].pageBaseAddr = PAGE_ALIGNED_ADDR(allocedAddr);
-                }
-        }
-        // Last entry only maps remainder of pages
-        else if (i == numPageTables-1){
-            for(j = pTable; j<pTable+(numPages%1024); j++){
-                pageTable[j].present = 1;
-                pageTable[j].flags = VM_WRITE | VM_READ | VM_USER;
-                void *allocedAddr = Alloc_Pageable_Page(&pageTable[j], ((i << 10) | j)+0x80000000);
-                Print("i: %d, j: %d\n", i, j);
-                pageTable[j].pageBaseAddr = PAGE_ALIGNED_ADDR(allocedAddr);
-                }
-        }
-        */
         for(j = pTable; j<pTable+numPages; j++){
-                Print("j: %d\n", j);
+                //Print("j: %d\n", j);
                 pageTable[j].present = 1;
                 pageTable[j].flags = VM_WRITE | VM_READ | VM_USER;
-                void *allocedAddr = Alloc_Pageable_Page(&pageTable[j], PAGE_ADDR(((i << 10) | j)+0x80000000));
+                void *allocedAddr = Alloc_Pageable_Page(&pageTable[j], Round_Down_To_Page(((i << 10) | j)+0x80000000));
                 //Print("i: %d, j: %d\n", i, j);
                 pageTable[j].pageBaseAddr = PAGE_ALIGNED_ADDR(allocedAddr);
         }
@@ -212,8 +215,10 @@ void Destroy_User_Context(struct User_Context *context) {
      * - Free semaphores, files, and other resources used
      *   by the process
      */
+    /* 
     KASSERT(context->refCount == 0);
 
+   
     Disable_Interrupts();
     pde_t *pageDir = context->pageDir;
     pte_t *pageTable;
@@ -240,12 +245,17 @@ void Destroy_User_Context(struct User_Context *context) {
     }
     Free_Page(pageDir);
     Enable_Interrupts();
-    /* Free the context's LDT descriptor */
-    Free_Segment_Descriptor(context->ldtDescriptor);
+    */
 
-    /* Free the context's memory */
+    /* Free the context's LDT descriptor
+    Free_Segment_Descriptor(context->ldtDescriptor);
+    */
+
+    /* Free the context's memory 
     Free(context->memory);
     Free(context);
+    */
+
 }
 
 /*
@@ -325,40 +335,16 @@ int Load_User_Program(char *exeFileData, ulong_t exeFileLength,
         
     }
 
+    // Map argument block
+    int argBlockStart = Round_Down_To_Page(argBlockAddr - argBlockSize);
+    Map_Page_Pageable(userContext->pageDir, argBlockStart);
+
+    // Map stack
     int j;
-    int stackStart = Round_Down_To_Page(argBlockAddr - argBlockSize - 3*PAGE_SIZE);
-    int stackPDEIndex = PAGE_DIRECTORY_INDEX(stackStart);
-    int stackPTEIndex = PAGE_TABLE_INDEX(stackStart);
-    pde_t stackPDE = userContext->pageDir[stackPDEIndex];
-    pte_t *stackPTE = Alloc_Page();
-    stackPDE.present = 1;
-    stackPDE.flags = VM_WRITE | VM_READ | VM_USER;
-    stackPDE.pageTableBaseAddr = PAGE_ALIGNED_ADDR(stackPTE);
-    for (j = stackPTEIndex; j<stackPTEIndex+3; j++){
-        stackPTE[j].present = 1;
-        stackPTE[j].flags = VM_WRITE | VM_READ | VM_USER;
-        void *allocedAddr = Alloc_Pageable_Page(&stackPTE[j], ((stackPDEIndex << 22) | (j << 12))+0x80000000);
-        stackPTE[j].pageBaseAddr = PAGE_ALIGNED_ADDR(allocedAddr);
+    for (j = 0; j <= DEFAULT_USER_STACK_SIZE/PAGE_SIZE; j++){
+        Map_Page_Pageable(userContext->pageDir, Round_Down_To_Page(argBlockStart - (j*PAGE_SIZE)));
     }
-    userContext->pageDir[stackPDEIndex] = stackPDE;
-    Print("stack mapped\n");
-
-
-    int argStart = Round_Down_To_Page(argBlockAddr - argBlockSize);
-    int argPDEIndex = PAGE_DIRECTORY_INDEX(argStart);
-    int argPTEIndex = PAGE_TABLE_INDEX(argStart);
-    pde_t argPDE = userContext->pageDir[argPDEIndex];
-    pte_t *argPTE = Alloc_Page();
-    argPDE.present = 1;
-    argPDE.flags = VM_WRITE | VM_READ | VM_USER;
-    argPDE.pageTableBaseAddr = PAGE_ALIGNED_ADDR(argPTE);
-    argPTE[argPTEIndex].present = 1;
-    argPTE[argPTEIndex].flags = VM_WRITE | VM_READ | VM_USER;
-    void *allocedAddr = Alloc_Pageable_Page(&argPTE[argPTEIndex], ((argPDEIndex << 22) | (j << 12))+0x80000000);
-    argPTE[argPTEIndex].pageBaseAddr = PAGE_ALIGNED_ADDR(allocedAddr);
-    userContext->pageDir[argPDEIndex] = argPDE;
-    Print("arg block mapped\n");
-
+   
     /* Format argument block */
     Format_Argument_Block((char *)(argBlockAddr - argBlockSize), numArgs,
                           argBlockAddr - 0x80000000 - argBlockSize, command);
@@ -387,31 +373,14 @@ int Load_User_Program(char *exeFileData, ulong_t exeFileLength,
  */
 bool Copy_From_User(void *destInKernel, ulong_t srcInUser,
                     ulong_t numBytes) {
-    /*
-     * Hints:
-     * - Make sure that user page is part of a valid region
-     *   of memory
-     * - Remember that you need to add 0x80000000 to user addresses
-     *   to convert them to kernel addresses, because of how the
-     *   user code and data segments are defined
-     * - User pages may need to be paged in from disk before being accessed.
-     * - Before you touch (read or write) any data in a user
-     *   page, **disable the PAGE_PAGEABLE bit**.
-     *
-     * Be very careful with race conditions in reading a page from disk.
-     * Kernel code must always assume that if the struct Page for
-     * a page of memory has the PAGE_PAGEABLE bit set,
-     * IT CAN BE STOLEN AT ANY TIME.  The only exception is if
-     * interrupts are disabled; because no other process can run,
-     * the page is guaranteed not to be stolen.
-     */
+    
     pde_t *holdPDBR = Get_PDBR();
     Set_PDBR(CURRENT_THREAD->userContext->pageDir);
     struct User_Context *current = CURRENT_THREAD->userContext;
 
     //if(!Validate_User_Memory(current, srcInUser, numBytes, VUM_READING))
     //  return false;
-    memcpy(destInKernel, User_To_Kernel(current, 0x80000000+srcInUser), numBytes);
+    memcpy(destInKernel, User_To_Kernel(current, srcInUser), numBytes);
     Set_PDBR(holdPDBR);
     return true;
 }
@@ -422,17 +391,12 @@ bool Copy_From_User(void *destInKernel, ulong_t srcInUser,
  */
 bool Copy_To_User(ulong_t destInUser, const void *srcInKernel,
                   ulong_t numBytes) {
-    /*
-     * Hints:
-     * - Same as for Copy_From_User()
-     * - Also, make sure the memory is mapped into the user
-     *   address space with write permission enabled
-     */
+  
     pde_t *holdPDBR = Get_PDBR();
     Set_PDBR(CURRENT_THREAD->userContext->pageDir);
     struct User_Context *current = CURRENT_THREAD->userContext;
 
-    memcpy(User_To_Kernel(current, destInUser+0x80000000), srcInKernel, numBytes);
+    memcpy(User_To_Kernel(current, destInUser), srcInKernel, numBytes);
     Set_PDBR(holdPDBR);
     return true;
 }
