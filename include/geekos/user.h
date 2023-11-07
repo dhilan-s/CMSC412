@@ -94,6 +94,7 @@ struct User_Context {
 
     /* Initial stack pointer */
     ulong_t stackPointerAddr;
+    ulong_t stackSize;
 
     /*
      * May use this in future to allow multiple threads

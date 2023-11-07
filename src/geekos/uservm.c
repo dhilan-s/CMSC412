@@ -340,6 +340,7 @@ int Load_User_Program(char *exeFileData, ulong_t exeFileLength,
     Map_Page_Pageable(userContext->pageDir, argBlockStart);
 
     // Map stack
+    userContext -> stackSize = DEFAULT_USER_STACK_SIZE;
     int j;
     for (j = 0; j <= DEFAULT_USER_STACK_SIZE/PAGE_SIZE; j++){
         Map_Page_Pageable(userContext->pageDir, Round_Down_To_Page(argBlockStart - (j*PAGE_SIZE)));

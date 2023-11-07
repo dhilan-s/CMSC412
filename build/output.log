@@ -1,7 +1,7 @@
-BSS = 4490c
+BSS = 44a2c
 start kern info = 90000
 Creating kernel heap: start=102000, size=1048576
-3064KB memory detected, 352 pages in freelist, 1048576 bytes in kernel heap
+527352KB memory detected, 130400 pages in freelist, 1048576 bytes in kernel heap
 Initializing IDT...
 Init_SMP
 Initializing SMP...
@@ -10,7 +10,7 @@ found CPU#1 with APIC id #1
 found IO APIC ID=0 at fec00000
 /Init_SMP
 apic counted down to ffffffe6
-cpu freq = 1151887104
+cpu freq = 4252800
 Initializing timer...
 Initializing keyboard...
 Initializing DMA Controller...
@@ -27,4 +27,10 @@ Never gonna give you up!
 Welcome to GeekOS!
 Spawning init process (/c/shell.exe)
 user program loaded
-$ 
+$ b
+user program loaded
+I am the b program
+Arg 0 is b
+$ exit
+DONE!
+Init process exited with code 0

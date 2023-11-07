@@ -122,6 +122,26 @@ union type_pun_workaround {
     // faultCode = *((faultcode_t *) &(state->errorCode));
 
     /* rest of your handling code here */
+    if (state->errorCode == 6){
+        if (address - CURRENT_THREAD->userContext->stackSize <= PAGE_SIZE+CURRENT_THREAD->userContext->stackPointerAddr){
+            // Allocate a new page
+            pte_t *newPage = Alloc_Page();
+            memset(newPage, 0, PAGE_SIZE);
+            // Map the page
+            int pageDirIndex = PAGE_DIRECTORY_INDEX(address);
+            int pageTableIndex = PAGE_TABLE_INDEX(address);
+            pte_t *pageTable = (pte_t *) (CURRENT_THREAD->userContext->pageDir[pageDirIndex].pageTableBaseAddr << 12);
+            pageTable[pageTableIndex].present = 1;
+            pageTable[pageTableIndex].flags = VM_WRITE | VM_READ | VM_USER;
+            pageTable[pageTableIndex].pageBaseAddr = (address >> 12);
+            CURRENT_THREAD->userContext->stackSize += PAGE_SIZE;
+        }
+        else{
+            Print("Stack overflow\n");
+            Dump_Interrupt_State(state);
+            Exit(-1);
+        }
+    }
     TODO_P(PROJECT_VIRTUAL_MEMORY_B, "handle page faults");
 
     TODO_P(PROJECT_MMAP, "handle mmap'd page faults");
