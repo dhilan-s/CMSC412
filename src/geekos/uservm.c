@@ -215,7 +215,7 @@ void Destroy_User_Context(struct User_Context *context) {
      * - Free semaphores, files, and other resources used
      *   by the process
      */
-    /* 
+    
     KASSERT(context->refCount == 0);
 
    
@@ -224,37 +224,33 @@ void Destroy_User_Context(struct User_Context *context) {
     pte_t *pageTable;
     int i;
     int j;
-    int startAddr = 0x80000000;
-    int size = context->size;
-    int numPages = size / PAGE_SIZE;
-    int numPageTables = CEIL_DIV(numPages,1024);
+    int startAt = PAGE_DIRECTORY_INDEX(0x80001000);
+    int endAt = PAGE_DIRECTORY_INDEX(0xF0000000);
 
-    for (i = (int)PAGE_DIRECTORY_INDEX(0x80000000 + startAddr); i<(int)PAGE_DIRECTORY_INDEX(0x80000000 + startAddr)+numPageTables; i++){
-
-        pageTable = (pte_t *)PAGE_ADDR(pageDir[i].pageTableBaseAddr);
-
-        // Map the page table
-        if (i<numPageTables-1){
-            for(j = 0; j<1024; j++){
+    for (i = startAt; i < endAt; i++){
+        if (pageDir[i].present){
+            pageTable = (pte_t *)(pageDir[i].pageTableBaseAddr << 12);
+            for (j = 0; j<1024; j++){
                 if (pageTable[j].present){
-                    Free_Page((void *)PAGE_ADDR(pageTable[j].pageBaseAddr));
+                    pageTable[j].present = 0;
+                    Free_Page((void *)(pageTable[j].pageBaseAddr << 12));
                 }
             }
+            pageDir[i].present = 0;
+            Free_Page((void *)(pageDir[i].pageTableBaseAddr << 12));
         }
-        Free_Page((void *)PAGE_ADDR(pageDir[i].pageTableBaseAddr));
     }
     Free_Page(pageDir);
     Enable_Interrupts();
-    */
+    
 
-    /* Free the context's LDT descriptor
+    /* Free the context's LDT descriptor */
     Free_Segment_Descriptor(context->ldtDescriptor);
-    */
+    
 
-    /* Free the context's memory 
-    Free(context->memory);
+    /* Free the context's memory */
+    //Free(context->memory);
     Free(context);
-    */
 
 }
 

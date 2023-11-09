@@ -1,4 +1,4 @@
-BSS = 44a2c
+BSS = 44c6c
 start kern info = 90000
 Creating kernel heap: start=102000, size=1048576
 527352KB memory detected, 130400 pages in freelist, 1048576 bytes in kernel heap
@@ -31,6 +31,44 @@ $ b
 user program loaded
 I am the b program
 Arg 0 is b
-$ exit
-DONE!
-Init process exited with code 0
+$ b
+user program loaded
+I am the b program
+Arg 0 is b
+$ rec 1
+user program loaded
+Depth is 1
+call 1, 6ffff790
+return 1
+Rec 1 success
+$ rec 2
+user program loaded
+Depth is 2
+call 2, 6ffff790
+call 1, 6fffef70
+return 1
+return 2
+Rec 2 success
+$ rec 1000
+user program loaded
+Depth is 1000
+call 1000, 6ffff790
+call 999, 6fffef70
+call 998, 6fffe750
+call 997, 6fffdf30
+call 996, 6fffd710
+Stack overflow
+eax=000003e3 ebx=000003e3 ecx=00000013 edx=00002ae0
+esi=00000002 edi=00000000 ebp=6fffffbf
+eip=000012f6 cs=00000007 eflags=00000202
+Interrupt number=14, error code=6
+index=0, TI=1, IDT=1, EXT=0
+user esp=6fffcee0, user ss=0000000f
+Page fault: [write][user mode][address=0xefffcef4]
+cs: index=0, ti=1, rpl=3
+ds: index=1, ti=1, rpl=3
+es: index=1, ti=1, rpl=3
+fs: index=1, ti=1, rpl=3
+gs: index=1, ti=1, rpl=3
+Failed assertion in Exit: Interrupts_Enabled() at ../src/geekos/kthread.c, line 735, RA=22feb, thread=0x0067a000
+Note: believe exit should be called with interrupts enabled
