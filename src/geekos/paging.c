@@ -122,24 +122,38 @@ union type_pun_workaround {
     // faultCode = *((faultcode_t *) &(state->errorCode));
 
     /* rest of your handling code here */
-    if (state->errorCode == 6){
-        if (address - CURRENT_THREAD->userContext->stackSize <= PAGE_SIZE+CURRENT_THREAD->userContext->stackPointerAddr){
+    if (state->errorCode == 6 && address > 0x80001000){
+        Print("Error code 6 at %p\n", (void *)address);
+        if (address + CURRENT_THREAD->userContext->stackSize >= CURRENT_THREAD->userContext->stackPointerAddr - PAGE_SIZE){
             // Allocate a new page
-            pte_t *newPage = Alloc_Page();
-            memset(newPage, 0, PAGE_SIZE);
+            //Print("New stack page needed\n");
+            Enable_Interrupts();
+            pte_t *pageTable = 0;
             // Map the page
             int pageDirIndex = PAGE_DIRECTORY_INDEX(address);
             int pageTableIndex = PAGE_TABLE_INDEX(address);
-            pte_t *pageTable = (pte_t *) (CURRENT_THREAD->userContext->pageDir[pageDirIndex].pageTableBaseAddr << 12);
+            if (!CURRENT_THREAD->userContext->pageDir[pageDirIndex].present){
+                CURRENT_THREAD->userContext->pageDir[pageDirIndex].present = 1;
+                CURRENT_THREAD->userContext->pageDir[pageDirIndex].flags = VM_WRITE | VM_READ | VM_USER;
+                pte_t *pageTable = Alloc_Page();
+                memset(pageTable, 0, PAGE_SIZE);
+                CURRENT_THREAD->userContext->pageDir[pageDirIndex].pageTableBaseAddr = PAGE_ALIGNED_ADDR(pageTable);
+            }
+            else{
+                pageTable = (pte_t *) (CURRENT_THREAD->userContext->pageDir[pageDirIndex].pageTableBaseAddr << 12);
+            }
             pageTable[pageTableIndex].present = 1;
             pageTable[pageTableIndex].flags = VM_WRITE | VM_READ | VM_USER;
-            pageTable[pageTableIndex].pageBaseAddr = (address >> 12);
+            void *allocedAddr = Alloc_Pageable_Page(&pageTable[pageTableIndex], Round_Down_To_Page(address));
+            pageTable[pageTableIndex].pageBaseAddr =  PAGE_ALIGNED_ADDR(allocedAddr);
             CURRENT_THREAD->userContext->stackSize += PAGE_SIZE;
+            Disable_Interrupts();
+            //Print("New stack page allocated\n");
+            //Exit(0);
+            return;
         }
         else{
-            Print("Stack overflow\n");
-            Dump_Interrupt_State(state);
-            Exit(-1);
+            goto error;
         }
     }
     TODO_P(PROJECT_VIRTUAL_MEMORY_B, "handle page faults");

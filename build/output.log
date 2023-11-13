@@ -1,4 +1,4 @@
-BSS = 44c6c
+BSS = 44e0c
 start kern info = 90000
 Creating kernel heap: start=102000, size=1048576
 527352KB memory detected, 130400 pages in freelist, 1048576 bytes in kernel heap
@@ -10,7 +10,7 @@ found CPU#1 with APIC id #1
 found IO APIC ID=0 at fec00000
 /Init_SMP
 apic counted down to ffffffe6
-cpu freq = 4252800
+cpu freq = 1424924800
 Initializing timer...
 Initializing keyboard...
 Initializing DMA Controller...
@@ -31,44 +31,1263 @@ $ b
 user program loaded
 I am the b program
 Arg 0 is b
-$ b
+$ rec 10
 user program loaded
-I am the b program
-Arg 0 is b
-$ rec 1
-user program loaded
-Depth is 1
-call 1, 6ffff790
-return 1
-Rec 1 success
-$ rec 2
-user program loaded
-Depth is 2
-call 2, 6ffff790
-call 1, 6fffef70
+Depth is 10
+call 10, 6ffff790
+call 9, 6fffef70
+call 8, 6fffe750
+call 7, 6fffdf30
+call 6, 6fffd710
+call 5, 6fffcef0
+call 4, 6fffc6d0
+call 3, 6fffbeb0
+call 2, 6fffb690
+call 1, 6fffae70
 return 1
 return 2
-Rec 2 success
-$ rec 1000
+return 3
+return 4
+return 5
+return 6
+return 7
+return 8
+return 9
+return 10
+Rec 10 success
+$ rec 100
 user program loaded
-Depth is 1000
-call 1000, 6ffff790
-call 999, 6fffef70
-call 998, 6fffe750
-call 997, 6fffdf30
-call 996, 6fffd710
-Stack overflow
-eax=000003e3 ebx=000003e3 ecx=00000013 edx=00002ae0
-esi=00000002 edi=00000000 ebp=6fffffbf
-eip=000012f6 cs=00000007 eflags=00000202
-Interrupt number=14, error code=6
-index=0, TI=1, IDT=1, EXT=0
-user esp=6fffcee0, user ss=0000000f
-Page fault: [write][user mode][address=0xefffcef4]
-cs: index=0, ti=1, rpl=3
-ds: index=1, ti=1, rpl=3
-es: index=1, ti=1, rpl=3
-fs: index=1, ti=1, rpl=3
-gs: index=1, ti=1, rpl=3
-Failed assertion in Exit: Interrupts_Enabled() at ../src/geekos/kthread.c, line 735, RA=22feb, thread=0x0067a000
-Note: believe exit should be called with interrupts enabled
+Depth is 100
+call 100, 6ffff790
+call 99, 6fffef70
+call 98, 6fffe750
+call 97, 6fffdf30
+call 96, 6fffd710
+call 95, 6fffcef0
+call 94, 6fffc6d0
+call 93, 6fffbeb0
+call 92, 6fffb690
+call 91, 6fffae70
+call 90, 6fffa650
+call 89, 6fff9e30
+call 88, 6fff9610
+call 87, 6fff8df0
+call 86, 6fff85d0
+call 85, 6fff7db0
+call 84, 6fff7590
+call 83, 6fff6d70
+call 82, 6fff6550
+call 81, 6fff5d30
+call 80, 6fff5510
+call 79, 6fff4cf0
+call 78, 6fff44d0
+call 77, 6fff3cb0
+call 76, 6fff3490
+call 75, 6fff2c70
+call 74, 6fff2450
+call 73, 6fff1c30
+call 72, 6fff1410
+call 71, 6fff0bf0
+call 70, 6fff03d0
+call 69, 6ffefbb0
+call 68, 6ffef390
+call 67, 6ffeeb70
+call 66, 6ffee350
+call 65, 6ffedb30
+call 64, 6ffed310
+call 63, 6ffecaf0
+call 62, 6ffec2d0
+call 61, 6ffebab0
+call 60, 6ffeb290
+call 59, 6ffeaa70
+call 58, 6ffea250
+call 57, 6ffe9a30
+call 56, 6ffe9210
+call 55, 6ffe89f0
+call 54, 6ffe81d0
+call 53, 6ffe79b0
+call 52, 6ffe7190
+call 51, 6ffe6970
+call 50, 6ffe6150
+call 49, 6ffe5930
+call 48, 6ffe5110
+call 47, 6ffe48f0
+call 46, 6ffe40d0
+call 45, 6ffe38b0
+call 44, 6ffe3090
+call 43, 6ffe2870
+call 42, 6ffe2050
+call 41, 6ffe1830
+call 40, 6ffe1010
+call 39, 6ffe07f0
+call 38, 6ffdffd0
+call 37, 6ffdf7b0
+call 36, 6ffdef90
+call 35, 6ffde770
+call 34, 6ffddf50
+call 33, 6ffdd730
+call 32, 6ffdcf10
+call 31, 6ffdc6f0
+call 30, 6ffdbed0
+call 29, 6ffdb6b0
+call 28, 6ffdae90
+call 27, 6ffda670
+call 26, 6ffd9e50
+call 25, 6ffd9630
+call 24, 6ffd8e10
+call 23, 6ffd85f0
+call 22, 6ffd7dd0
+call 21, 6ffd75b0
+call 20, 6ffd6d90
+call 19, 6ffd6570
+call 18, 6ffd5d50
+call 17, 6ffd5530
+call 16, 6ffd4d10
+call 15, 6ffd44f0
+call 14, 6ffd3cd0
+call 13, 6ffd34b0
+call 12, 6ffd2c90
+call 11, 6ffd2470
+call 10, 6ffd1c50
+call 9, 6ffd1430
+call 8, 6ffd0c10
+call 7, 6ffd03f0
+call 6, 6ffcfbd0
+call 5, 6ffcf3b0
+call 4, 6ffceb90
+call 3, 6ffce370
+call 2, 6ffcdb50
+call 1, 6ffcd330
+return 1
+return 2
+return 3
+return 4
+return 5
+return 6
+return 7
+return 8
+return 9
+return 10
+return 11
+return 12
+return 13
+return 14
+return 15
+return 16
+return 17
+return 18
+return 19
+return 20
+return 21
+return 22
+return 23
+return 24
+return 25
+return 26
+return 27
+return 28
+return 29
+return 30
+return 31
+return 32
+return 33
+return 34
+return 35
+return 36
+return 37
+return 38
+return 39
+return 40
+return 41
+return 42
+return 43
+return 44
+return 45
+return 46
+return 47
+return 48
+return 49
+return 50
+return 51
+return 52
+return 53
+return 54
+return 55
+return 56
+return 57
+return 58
+return 59
+return 60
+return 61
+return 62
+return 63
+return 64
+return 65
+return 66
+return 67
+return 68
+return 69
+return 70
+return 71
+return 72
+return 73
+return 74
+return 75
+return 76
+return 77
+return 78
+return 79
+return 80
+return 81
+return 82
+return 83
+return 84
+return 85
+return 86
+return 87
+return 88
+return 89
+return 90
+return 91
+return 92
+return 93
+return 94
+return 95
+return 96
+return 97
+return 98
+return 99
+return 100
+Rec 100 success
+$ rec
+user program loaded
+call 512, 6ffff7a0
+call 511, 6fffef80
+call 510, 6fffe760
+call 509, 6fffdf40
+call 508, 6fffd720
+call 507, 6fffcf00
+call 506, 6fffc6e0
+call 505, 6fffbec0
+call 504, 6fffb6a0
+call 503, 6fffae80
+call 502, 6fffa660
+call 501, 6fff9e40
+call 500, 6fff9620
+call 499, 6fff8e00
+call 498, 6fff85e0
+call 497, 6fff7dc0
+call 496, 6fff75a0
+call 495, 6fff6d80
+call 494, 6fff6560
+call 493, 6fff5d40
+call 492, 6fff5520
+call 491, 6fff4d00
+call 490, 6fff44e0
+call 489, 6fff3cc0
+call 488, 6fff34a0
+call 487, 6fff2c80
+call 486, 6fff2460
+call 485, 6fff1c40
+call 484, 6fff1420
+call 483, 6fff0c00
+call 482, 6fff03e0
+call 481, 6ffefbc0
+call 480, 6ffef3a0
+call 479, 6ffeeb80
+call 478, 6ffee360
+call 477, 6ffedb40
+call 476, 6ffed320
+call 475, 6ffecb00
+call 474, 6ffec2e0
+call 473, 6ffebac0
+call 472, 6ffeb2a0
+call 471, 6ffeaa80
+call 470, 6ffea260
+call 469, 6ffe9a40
+call 468, 6ffe9220
+call 467, 6ffe8a00
+call 466, 6ffe81e0
+call 465, 6ffe79c0
+call 464, 6ffe71a0
+call 463, 6ffe6980
+call 462, 6ffe6160
+call 461, 6ffe5940
+call 460, 6ffe5120
+call 459, 6ffe4900
+call 458, 6ffe40e0
+call 457, 6ffe38c0
+call 456, 6ffe30a0
+call 455, 6ffe2880
+call 454, 6ffe2060
+call 453, 6ffe1840
+call 452, 6ffe1020
+call 451, 6ffe0800
+call 450, 6ffdffe0
+call 449, 6ffdf7c0
+call 448, 6ffdefa0
+call 447, 6ffde780
+call 446, 6ffddf60
+call 445, 6ffdd740
+call 444, 6ffdcf20
+call 443, 6ffdc700
+call 442, 6ffdbee0
+call 441, 6ffdb6c0
+call 440, 6ffdaea0
+call 439, 6ffda680
+call 438, 6ffd9e60
+call 437, 6ffd9640
+call 436, 6ffd8e20
+call 435, 6ffd8600
+call 434, 6ffd7de0
+call 433, 6ffd75c0
+call 432, 6ffd6da0
+call 431, 6ffd6580
+call 430, 6ffd5d60
+call 429, 6ffd5540
+call 428, 6ffd4d20
+call 427, 6ffd4500
+call 426, 6ffd3ce0
+call 425, 6ffd34c0
+call 424, 6ffd2ca0
+call 423, 6ffd2480
+call 422, 6ffd1c60
+call 421, 6ffd1440
+call 420, 6ffd0c20
+call 419, 6ffd0400
+call 418, 6ffcfbe0
+call 417, 6ffcf3c0
+call 416, 6ffceba0
+call 415, 6ffce380
+call 414, 6ffcdb60
+call 413, 6ffcd340
+call 412, 6ffccb20
+call 411, 6ffcc300
+call 410, 6ffcbae0
+call 409, 6ffcb2c0
+call 408, 6ffcaaa0
+call 407, 6ffca280
+call 406, 6ffc9a60
+call 405, 6ffc9240
+call 404, 6ffc8a20
+call 403, 6ffc8200
+call 402, 6ffc79e0
+call 401, 6ffc71c0
+call 400, 6ffc69a0
+call 399, 6ffc6180
+call 398, 6ffc5960
+call 397, 6ffc5140
+call 396, 6ffc4920
+call 395, 6ffc4100
+call 394, 6ffc38e0
+call 393, 6ffc30c0
+call 392, 6ffc28a0
+call 391, 6ffc2080
+call 390, 6ffc1860
+call 389, 6ffc1040
+call 388, 6ffc0820
+call 387, 6ffc0000
+call 386, 6ffbf7e0
+call 385, 6ffbefc0
+call 384, 6ffbe7a0
+call 383, 6ffbdf80
+call 382, 6ffbd760
+call 381, 6ffbcf40
+call 380, 6ffbc720
+call 379, 6ffbbf00
+call 378, 6ffbb6e0
+call 377, 6ffbaec0
+call 376, 6ffba6a0
+call 375, 6ffb9e80
+call 374, 6ffb9660
+call 373, 6ffb8e40
+call 372, 6ffb8620
+call 371, 6ffb7e00
+call 370, 6ffb75e0
+call 369, 6ffb6dc0
+call 368, 6ffb65a0
+call 367, 6ffb5d80
+call 366, 6ffb5560
+call 365, 6ffb4d40
+call 364, 6ffb4520
+call 363, 6ffb3d00
+call 362, 6ffb34e0
+call 361, 6ffb2cc0
+call 360, 6ffb24a0
+call 359, 6ffb1c80
+call 358, 6ffb1460
+call 357, 6ffb0c40
+call 356, 6ffb0420
+call 355, 6ffafc00
+call 354, 6ffaf3e0
+call 353, 6ffaebc0
+call 352, 6ffae3a0
+call 351, 6ffadb80
+call 350, 6ffad360
+call 349, 6ffacb40
+call 348, 6ffac320
+call 347, 6ffabb00
+call 346, 6ffab2e0
+call 345, 6ffaaac0
+call 344, 6ffaa2a0
+call 343, 6ffa9a80
+call 342, 6ffa9260
+call 341, 6ffa8a40
+call 340, 6ffa8220
+call 339, 6ffa7a00
+call 338, 6ffa71e0
+call 337, 6ffa69c0
+call 336, 6ffa61a0
+call 335, 6ffa5980
+call 334, 6ffa5160
+call 333, 6ffa4940
+call 332, 6ffa4120
+call 331, 6ffa3900
+call 330, 6ffa30e0
+call 329, 6ffa28c0
+call 328, 6ffa20a0
+call 327, 6ffa1880
+call 326, 6ffa1060
+call 325, 6ffa0840
+call 324, 6ffa0020
+call 323, 6ff9f800
+call 322, 6ff9efe0
+call 321, 6ff9e7c0
+call 320, 6ff9dfa0
+call 319, 6ff9d780
+call 318, 6ff9cf60
+call 317, 6ff9c740
+call 316, 6ff9bf20
+call 315, 6ff9b700
+call 314, 6ff9aee0
+call 313, 6ff9a6c0
+call 312, 6ff99ea0
+call 311, 6ff99680
+call 310, 6ff98e60
+call 309, 6ff98640
+call 308, 6ff97e20
+call 307, 6ff97600
+call 306, 6ff96de0
+call 305, 6ff965c0
+call 304, 6ff95da0
+call 303, 6ff95580
+call 302, 6ff94d60
+call 301, 6ff94540
+call 300, 6ff93d20
+call 299, 6ff93500
+call 298, 6ff92ce0
+call 297, 6ff924c0
+call 296, 6ff91ca0
+call 295, 6ff91480
+call 294, 6ff90c60
+call 293, 6ff90440
+call 292, 6ff8fc20
+call 291, 6ff8f400
+call 290, 6ff8ebe0
+call 289, 6ff8e3c0
+call 288, 6ff8dba0
+call 287, 6ff8d380
+call 286, 6ff8cb60
+call 285, 6ff8c340
+call 284, 6ff8bb20
+call 283, 6ff8b300
+call 282, 6ff8aae0
+call 281, 6ff8a2c0
+call 280, 6ff89aa0
+call 279, 6ff89280
+call 278, 6ff88a60
+call 277, 6ff88240
+call 276, 6ff87a20
+call 275, 6ff87200
+call 274, 6ff869e0
+call 273, 6ff861c0
+call 272, 6ff859a0
+call 271, 6ff85180
+call 270, 6ff84960
+call 269, 6ff84140
+call 268, 6ff83920
+call 267, 6ff83100
+call 266, 6ff828e0
+call 265, 6ff820c0
+call 264, 6ff818a0
+call 263, 6ff81080
+call 262, 6ff80860
+call 261, 6ff80040
+call 260, 6ff7f820
+call 259, 6ff7f000
+call 258, 6ff7e7e0
+call 257, 6ff7dfc0
+call 256, 6ff7d7a0
+call 255, 6ff7cf80
+call 254, 6ff7c760
+call 253, 6ff7bf40
+call 252, 6ff7b720
+call 251, 6ff7af00
+call 250, 6ff7a6e0
+call 249, 6ff79ec0
+call 248, 6ff796a0
+call 247, 6ff78e80
+call 246, 6ff78660
+call 245, 6ff77e40
+call 244, 6ff77620
+call 243, 6ff76e00
+call 242, 6ff765e0
+call 241, 6ff75dc0
+call 240, 6ff755a0
+call 239, 6ff74d80
+call 238, 6ff74560
+call 237, 6ff73d40
+call 236, 6ff73520
+call 235, 6ff72d00
+call 234, 6ff724e0
+call 233, 6ff71cc0
+call 232, 6ff714a0
+call 231, 6ff70c80
+call 230, 6ff70460
+call 229, 6ff6fc40
+call 228, 6ff6f420
+call 227, 6ff6ec00
+call 226, 6ff6e3e0
+call 225, 6ff6dbc0
+call 224, 6ff6d3a0
+call 223, 6ff6cb80
+call 222, 6ff6c360
+call 221, 6ff6bb40
+call 220, 6ff6b320
+call 219, 6ff6ab00
+call 218, 6ff6a2e0
+call 217, 6ff69ac0
+call 216, 6ff692a0
+call 215, 6ff68a80
+call 214, 6ff68260
+call 213, 6ff67a40
+call 212, 6ff67220
+call 211, 6ff66a00
+call 210, 6ff661e0
+call 209, 6ff659c0
+call 208, 6ff651a0
+call 207, 6ff64980
+call 206, 6ff64160
+call 205, 6ff63940
+call 204, 6ff63120
+call 203, 6ff62900
+call 202, 6ff620e0
+call 201, 6ff618c0
+call 200, 6ff610a0
+call 199, 6ff60880
+call 198, 6ff60060
+call 197, 6ff5f840
+call 196, 6ff5f020
+call 195, 6ff5e800
+call 194, 6ff5dfe0
+call 193, 6ff5d7c0
+call 192, 6ff5cfa0
+call 191, 6ff5c780
+call 190, 6ff5bf60
+call 189, 6ff5b740
+call 188, 6ff5af20
+call 187, 6ff5a700
+call 186, 6ff59ee0
+call 185, 6ff596c0
+call 184, 6ff58ea0
+call 183, 6ff58680
+call 182, 6ff57e60
+call 181, 6ff57640
+call 180, 6ff56e20
+call 179, 6ff56600
+call 178, 6ff55de0
+call 177, 6ff555c0
+call 176, 6ff54da0
+call 175, 6ff54580
+call 174, 6ff53d60
+call 173, 6ff53540
+call 172, 6ff52d20
+call 171, 6ff52500
+call 170, 6ff51ce0
+call 169, 6ff514c0
+call 168, 6ff50ca0
+call 167, 6ff50480
+call 166, 6ff4fc60
+call 165, 6ff4f440
+call 164, 6ff4ec20
+call 163, 6ff4e400
+call 162, 6ff4dbe0
+call 161, 6ff4d3c0
+call 160, 6ff4cba0
+call 159, 6ff4c380
+call 158, 6ff4bb60
+call 157, 6ff4b340
+call 156, 6ff4ab20
+call 155, 6ff4a300
+call 154, 6ff49ae0
+call 153, 6ff492c0
+call 152, 6ff48aa0
+call 151, 6ff48280
+call 150, 6ff47a60
+call 149, 6ff47240
+call 148, 6ff46a20
+call 147, 6ff46200
+call 146, 6ff459e0
+call 145, 6ff451c0
+call 144, 6ff449a0
+call 143, 6ff44180
+call 142, 6ff43960
+call 141, 6ff43140
+call 140, 6ff42920
+call 139, 6ff42100
+call 138, 6ff418e0
+call 137, 6ff410c0
+call 136, 6ff408a0
+call 135, 6ff40080
+call 134, 6ff3f860
+call 133, 6ff3f040
+call 132, 6ff3e820
+call 131, 6ff3e000
+call 130, 6ff3d7e0
+call 129, 6ff3cfc0
+call 128, 6ff3c7a0
+call 127, 6ff3bf80
+call 126, 6ff3b760
+call 125, 6ff3af40
+call 124, 6ff3a720
+call 123, 6ff39f00
+call 122, 6ff396e0
+call 121, 6ff38ec0
+call 120, 6ff386a0
+call 119, 6ff37e80
+call 118, 6ff37660
+call 117, 6ff36e40
+call 116, 6ff36620
+call 115, 6ff35e00
+call 114, 6ff355e0
+call 113, 6ff34dc0
+call 112, 6ff345a0
+call 111, 6ff33d80
+call 110, 6ff33560
+call 109, 6ff32d40
+call 108, 6ff32520
+call 107, 6ff31d00
+call 106, 6ff314e0
+call 105, 6ff30cc0
+call 104, 6ff304a0
+call 103, 6ff2fc80
+call 102, 6ff2f460
+call 101, 6ff2ec40
+call 100, 6ff2e420
+call 99, 6ff2dc00
+call 98, 6ff2d3e0
+call 97, 6ff2cbc0
+call 96, 6ff2c3a0
+call 95, 6ff2bb80
+call 94, 6ff2b360
+call 93, 6ff2ab40
+call 92, 6ff2a320
+call 91, 6ff29b00
+call 90, 6ff292e0
+call 89, 6ff28ac0
+call 88, 6ff282a0
+call 87, 6ff27a80
+call 86, 6ff27260
+call 85, 6ff26a40
+call 84, 6ff26220
+call 83, 6ff25a00
+call 82, 6ff251e0
+call 81, 6ff249c0
+call 80, 6ff241a0
+call 79, 6ff23980
+call 78, 6ff23160
+call 77, 6ff22940
+call 76, 6ff22120
+call 75, 6ff21900
+call 74, 6ff210e0
+call 73, 6ff208c0
+call 72, 6ff200a0
+call 71, 6ff1f880
+call 70, 6ff1f060
+call 69, 6ff1e840
+call 68, 6ff1e020
+call 67, 6ff1d800
+call 66, 6ff1cfe0
+call 65, 6ff1c7c0
+call 64, 6ff1bfa0
+call 63, 6ff1b780
+call 62, 6ff1af60
+call 61, 6ff1a740
+call 60, 6ff19f20
+call 59, 6ff19700
+call 58, 6ff18ee0
+call 57, 6ff186c0
+call 56, 6ff17ea0
+call 55, 6ff17680
+call 54, 6ff16e60
+call 53, 6ff16640
+call 52, 6ff15e20
+call 51, 6ff15600
+call 50, 6ff14de0
+call 49, 6ff145c0
+call 48, 6ff13da0
+call 47, 6ff13580
+call 46, 6ff12d60
+call 45, 6ff12540
+call 44, 6ff11d20
+call 43, 6ff11500
+call 42, 6ff10ce0
+call 41, 6ff104c0
+call 40, 6ff0fca0
+call 39, 6ff0f480
+call 38, 6ff0ec60
+call 37, 6ff0e440
+call 36, 6ff0dc20
+call 35, 6ff0d400
+call 34, 6ff0cbe0
+call 33, 6ff0c3c0
+call 32, 6ff0bba0
+call 31, 6ff0b380
+call 30, 6ff0ab60
+call 29, 6ff0a340
+call 28, 6ff09b20
+call 27, 6ff09300
+call 26, 6ff08ae0
+call 25, 6ff082c0
+call 24, 6ff07aa0
+call 23, 6ff07280
+call 22, 6ff06a60
+call 21, 6ff06240
+call 20, 6ff05a20
+call 19, 6ff05200
+call 18, 6ff049e0
+call 17, 6ff041c0
+call 16, 6ff039a0
+call 15, 6ff03180
+call 14, 6ff02960
+call 13, 6ff02140
+call 12, 6ff01920
+call 11, 6ff01100
+call 10, 6ff008e0
+call 9, 6ff000c0
+call 8, 6feff8a0
+call 7, 6feff080
+call 6, 6fefe860
+call 5, 6fefe040
+call 4, 6fefd820
+call 3, 6fefd000
+call 2, 6fefc7e0
+call 1, 6fefbfc0
+return 1
+return 2
+return 3
+return 4
+return 5
+return 6
+return 7
+return 8
+return 9
+return 10
+return 11
+return 12
+return 13
+return 14
+return 15
+return 16
+return 17
+return 18
+return 19
+return 20
+return 21
+return 22
+return 23
+return 24
+return 25
+return 26
+return 27
+return 28
+return 29
+return 30
+return 31
+return 32
+return 33
+return 34
+return 35
+return 36
+return 37
+return 38
+return 39
+return 40
+return 41
+return 42
+return 43
+return 44
+return 45
+return 46
+return 47
+return 48
+return 49
+return 50
+return 51
+return 52
+return 53
+return 54
+return 55
+return 56
+return 57
+return 58
+return 59
+return 60
+return 61
+return 62
+return 63
+return 64
+return 65
+return 66
+return 67
+return 68
+return 69
+return 70
+return 71
+return 72
+return 73
+return 74
+return 75
+return 76
+return 77
+return 78
+return 79
+return 80
+return 81
+return 82
+return 83
+return 84
+return 85
+return 86
+return 87
+return 88
+return 89
+return 90
+return 91
+return 92
+return 93
+return 94
+return 95
+return 96
+return 97
+return 98
+return 99
+return 100
+return 101
+return 102
+return 103
+return 104
+return 105
+return 106
+return 107
+return 108
+return 109
+return 110
+return 111
+return 112
+return 113
+return 114
+return 115
+return 116
+return 117
+return 118
+return 119
+return 120
+return 121
+return 122
+return 123
+return 124
+return 125
+return 126
+return 127
+return 128
+return 129
+return 130
+return 131
+return 132
+return 133
+return 134
+return 135
+return 136
+return 137
+return 138
+return 139
+return 140
+return 141
+return 142
+return 143
+return 144
+return 145
+return 146
+return 147
+return 148
+return 149
+return 150
+return 151
+return 152
+return 153
+return 154
+return 155
+return 156
+return 157
+return 158
+return 159
+return 160
+return 161
+return 162
+return 163
+return 164
+return 165
+return 166
+return 167
+return 168
+return 169
+return 170
+return 171
+return 172
+return 173
+return 174
+return 175
+return 176
+return 177
+return 178
+return 179
+return 180
+return 181
+return 182
+return 183
+return 184
+return 185
+return 186
+return 187
+return 188
+return 189
+return 190
+return 191
+return 192
+return 193
+return 194
+return 195
+return 196
+return 197
+return 198
+return 199
+return 200
+return 201
+return 202
+return 203
+return 204
+return 205
+return 206
+return 207
+return 208
+return 209
+return 210
+return 211
+return 212
+return 213
+return 214
+return 215
+return 216
+return 217
+return 218
+return 219
+return 220
+return 221
+return 222
+return 223
+return 224
+return 225
+return 226
+return 227
+return 228
+return 229
+return 230
+return 231
+return 232
+return 233
+return 234
+return 235
+return 236
+return 237
+return 238
+return 239
+return 240
+return 241
+return 242
+return 243
+return 244
+return 245
+return 246
+return 247
+return 248
+return 249
+return 250
+return 251
+return 252
+return 253
+return 254
+return 255
+return 256
+return 257
+return 258
+return 259
+return 260
+return 261
+return 262
+return 263
+return 264
+return 265
+return 266
+return 267
+return 268
+return 269
+return 270
+return 271
+return 272
+return 273
+return 274
+return 275
+return 276
+return 277
+return 278
+return 279
+return 280
+return 281
+return 282
+return 283
+return 284
+return 285
+return 286
+return 287
+return 288
+return 289
+return 290
+return 291
+return 292
+return 293
+return 294
+return 295
+return 296
+return 297
+return 298
+return 299
+return 300
+return 301
+return 302
+return 303
+return 304
+return 305
+return 306
+return 307
+return 308
+return 309
+return 310
+return 311
+return 312
+return 313
+return 314
+return 315
+return 316
+return 317
+return 318
+return 319
+return 320
+return 321
+return 322
+return 323
+return 324
+return 325
+return 326
+return 327
+return 328
+return 329
+return 330
+return 331
+return 332
+return 333
+return 334
+return 335
+return 336
+return 337
+return 338
+return 339
+return 340
+return 341
+return 342
+return 343
+return 344
+return 345
+return 346
+return 347
+return 348
+return 349
+return 350
+return 351
+return 352
+return 353
+return 354
+return 355
+return 356
+return 357
+return 358
+return 359
+return 360
+return 361
+return 362
+return 363
+return 364
+return 365
+return 366
+return 367
+return 368
+return 369
+return 370
+return 371
+return 372
+return 373
+return 374
+return 375
+return 376
+return 377
+return 378
+return 379
+return 380
+return 381
+return 382
+return 383
+return 384
+return 385
+return 386
+return 387
+return 388
+return 389
+return 390
+return 391
+return 392
+return 393
+return 394
+return 395
+return 396
+return 397
+return 398
+return 399
+return 400
+return 401
+return 402
+return 403
+return 404
+return 405
+return 406
+return 407
+return 408
+return 409
+return 410
+return 411
+return 412
+return 413
+return 414
+return 415
+return 416
+return 417
+return 418
+return 419
+return 420
+return 421
+return 422
+return 423
+return 424
+return 425
+return 426
+return 427
+return 428
+return 429
+return 430
+return 431
+return 432
+return 433
+return 434
+return 435
+return 436
+return 437
+return 438
+return 439
+return 440
+return 441
+return 442
+return 443
+return 444
+return 445
+return 446
+return 447
+return 448
+return 449
+return 450
+return 451
+return 452
+return 453
+return 454
+return 455
+return 456
+return 457
+return 458
+return 459
+return 460
+return 461
+return 462
+return 463
+return 464
+return 465
+return 466
+return 467
+return 468
+return 469
+return 470
+return 471
+return 472
+return 473
+return 474
+return 475
+return 476
+return 477
+return 478
+return 479
+return 480
+return 481
+return 482
+return 483
+return 484
+return 485
+return 486
+return 487
+return 488
+return 489
+return 490
+return 491
+return 492
+return 493
+return 494
+return 495
+return 496
+return 497
+return 498
+return 499
+return 500
+return 501
+return 502
+return 503
+return 504
+return 505
+return 506
+return 507
+return 508
+return 509
+return 510
+return 511
+return 512
+Rec 512 success
+$ quit
+Could not spawn process: No such file or directory
+$ exit
+DONE!
+Init process exited with code 0
