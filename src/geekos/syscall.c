@@ -467,8 +467,15 @@ static int Sys_Mount(struct Interrupt_State *state) {
      * and invoke the Mount() VFS function.  You will need to check
      * to make sure they are correctly nul-terminated.
      */
-    TODO_P(PROJECT_FS, "Mount system call");
-    rc = EUNSUPPORTED;
+    if (args->devname[BLOCKDEV_MAX_NAME_LEN] != '\0' ||
+        args->prefix[VFS_MAX_PATH_LEN] != '\0' ||
+        args->fstype[VFS_MAX_FS_NAME_LEN] != '\0') {
+        rc = EINVALID;
+        goto done;
+    }
+    rc = Mount(args->devname, args->prefix, args->fstype);
+    //TODO_P(PROJECT_FS, "Mount system call");
+    //rc = EUNSUPPORTED;
   done:
     if(args != 0)
         Free(args);

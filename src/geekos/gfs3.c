@@ -30,6 +30,14 @@
  * Private data and functions
  * ---------------------------------------------------------------------- */
 
+struct GFS_Instance {
+    struct gfs3_superblock superblock;
+    gfs3_inodenum rootInode;
+};
+
+/*struct gfs3_inode getInode(gfs3_inodenum inum) {
+    return 0;
+}*/
 
 /* ----------------------------------------------------------------------
  * Implementation of VFS operations
@@ -128,8 +136,14 @@ static int GFS3_Read_Entry(struct File *dir, struct VFS_Dir_Entry *entry) {
  */
 static int GFS3_Open(struct Mount_Point *mountPoint, const char *path,
                      int mode, struct File **pFile) {
-    TODO_P(PROJECT_GFS3, "GeekOS filesystem open operation");
+    /*
+    struct GFS_Instance *gfs3 = (struct GFS_Instance *) mountPoint->fsData;
+    directoryEntry *dirEntry;
+    // GFS3_File?
+    struct File *file = 0;
+    */
     return EUNSUPPORTED;
+    
 }
 
 /*
@@ -208,8 +222,30 @@ static int GFS3_Format(struct Block_Device *blockDev
 }
 
 static int GFS3_Mount(struct Mount_Point *mountPoint) {
-    TODO_P(PROJECT_GFS3, "GeekOS filesystem mount operation");
-    return EUNSUPPORTED;
+    struct GFS_Instance *instance = 0;
+
+    /* Allocate instance. */
+    instance = (struct GFS_Instance *)Malloc(sizeof(*instance));
+    if(instance == 0)
+        return ENOMEM;
+    memset(instance, '\0', sizeof(*instance));
+
+    /* Read superblock. */
+    void *bootBlock = Malloc(SECTOR_SIZE);
+    Block_Read(mountPoint->dev, 0, bootBlock);
+    memcpy(&instance->superblock, bootBlock+PFAT_BOOT_RECORD_OFFSET, sizeof(struct gfs3_superblock));
+
+    /* Check magic number. */
+    if(instance->superblock.gfs3_magic != GFS3_MAGIC) {
+        Print("GFS3_Mount: bad magic number %x\n", instance->superblock.gfs3_magic);
+        return -1;
+    }
+
+    mountPoint->fsData = instance;
+    memcpy(&s_gfs3MountPointOps, mountPoint->ops, sizeof(s_gfs3MountPointOps));
+    Free(bootBlock);
+
+    return 0;
 }
 
 
