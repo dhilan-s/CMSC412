@@ -1,7 +1,7 @@
-BSS = 43868
+BSS = 44b08
 start kern info = 90000
 Creating kernel heap: start=102000, size=1048576
-527352KB memory detected, 130401 pages in freelist, 1048576 bytes in kernel heap
+527352KB memory detected, 130400 pages in freelist, 1048576 bytes in kernel heap
 Initializing IDT...
 Init_SMP
 Initializing SMP...
@@ -10,7 +10,7 @@ found CPU#1 with APIC id #1
 found IO APIC ID=0 at fec00000
 /Init_SMP
 apic counted down to ffffffe6
-cpu freq = 4252800
+cpu freq = 1183578304
 Initializing timer...
 Initializing keyboard...
 Initializing DMA Controller...
@@ -25,10 +25,25 @@ Mounted /c filesystem!
 Never gonna give you up!
 Welcome to GeekOS!
 Spawning init process (/c/shell.exe)
-$ mount 1 2 3
-Mount failed: No such filesystem
-$ Mount 1 2 3
-Could not spawn process: No such file or directory
+$ 
+$ b
+I am the b program
+Arg 0 is b
+$ gfs3tst 1
+Task index is 1.
+Retrieved disk parameters, blocksize 512, blocks 0
+Testing: Mount...Mount returned 0.
+PASSED (0) crt score: 1 
+$ gfs3tst 33
+Task index is 33.
+Invoking preliminary mount
+Open_Block_Device: Unable to open ide1
+Mount returned -6.
+$ gfs3tst 34
+Task index is 34.
+Invoking preliminary mount
+Open_Block_Device: Unable to open ide1
+Mount returned -6.
 $ exit
 DONE!
 Init process exited with code 0

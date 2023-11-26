@@ -35,9 +35,18 @@ struct GFS_Instance {
     gfs3_inodenum rootInode;
 };
 
-/*struct gfs3_inode getInode(gfs3_inodenum inum) {
-    return 0;
-}*/
+struct GFS3_File {
+    struct gfs3_inode *inode;
+    gfs3_inodenum inode_num;
+};
+
+struct gfs3_inode getInode(struct GFS_Instance *instance, struct Block_Device *dev, gfs3_inodenum inum) {
+    struct gfs3_inode blockBuffer[16];
+    gfs3_blocknum blockNumber = (inum / (SECTOR_SIZE / sizeof(struct gfs3_inode))) + (instance->superblock.block_with_inode_zero);
+    int blockIndex = inum % (SECTOR_SIZE / sizeof(struct gfs3_inode));
+    Block_Read(dev, blockNumber, blockBuffer);
+    return blockBuffer[blockIndex];
+}
 
 /* ----------------------------------------------------------------------
  * Implementation of VFS operations
@@ -136,14 +145,98 @@ static int GFS3_Read_Entry(struct File *dir, struct VFS_Dir_Entry *entry) {
  */
 static int GFS3_Open(struct Mount_Point *mountPoint, const char *path,
                      int mode, struct File **pFile) {
-    /*
-    struct GFS_Instance *gfs3 = (struct GFS_Instance *) mountPoint->fsData;
-    directoryEntry *dirEntry;
-    // GFS3_File?
-    struct File *file = 0;
-    */
-    return EUNSUPPORTED;
-    
+    Print("GFS3_Open: %s\n", path);  
+    ++path;
+    int i = 0;
+    int numSegments = 1;
+    char **directories = Malloc(sizeof(char *) * 10);
+    char *fileName;
+    char *pos = (char *)path;
+    Print("path: %s\n", pos);
+
+    char *delimed = strchr(path, '/');
+    if (delimed == NULL){
+        directories = NULL;
+        fileName = pos;
+    }
+    else{
+        while (delimed != NULL) {
+            *delimed = '\0';
+            directories[i++] = pos;
+            numSegments++;
+            pos = delimed + 1;
+            delimed = strchr(pos, '/');
+        }
+        fileName = pos;
+    }
+
+    Print("fileName: %s\n", fileName);
+    for (i = 0; i < 10; ++i){
+        if (directories[i] != NULL){
+            Print("directories[%d]: %s\n", i, directories[i]);
+        }
+    }
+
+    struct gfs3_inode inode = getInode((struct GFS_Instance *)mountPoint->fsData, mountPoint->dev, ((struct GFS_Instance *)(mountPoint->fsData))->rootInode);
+    struct gfs3_dirent *dirents[16];
+    int read = 0;
+    bool found = false;
+    bool fileFound = false;
+    char *target = 0;
+
+    int k = 0;
+
+    for (i = 0; i < numSegments; i++){
+        if (i == numSegments - 1){
+            //last segment = file
+            target = fileName;
+        }
+        else{
+            target = directories[i];
+        }
+        if(inode.type == GFS3_DIRECTORY){
+            int j = 0;
+            for (j = 0; j < GFS3_EXTENTS; j++){
+                gfs3_blocknum blockNumber = inode.extents[j].start_block;
+                Block_Read(mountPoint->dev, blockNumber, dirents);
+                while(read < (int)inode.size){
+                    dirents[k]->name[dirents[k]->name_length] = '\0';
+                    if (strcmp(dirents[k]->name, target) == 0){
+                        inode = getInode((struct GFS_Instance *)mountPoint->fsData, mountPoint->dev, dirents[k]->inum);
+                        found = true;
+                        if (i == numSegments - 1){
+                            fileFound = true;
+                        }
+                        break;
+                    }
+                    read += sizeof(gfs3_inodenum) + sizeof(dirents[k]->entry_length) + sizeof(dirents[k]->name_length) + sizeof(dirents[k]->name);
+                    k++;
+                }
+                read = 0;
+                if(found){
+                    found = false;
+                    break;
+                }
+            }
+        }
+        if (fileFound){
+            break;
+        }
+    }
+    if (!fileFound){
+        return ENOTFOUND;
+    }
+
+    struct GFS3_File gfsFile;
+    gfsFile.inode = &inode;
+    gfsFile.inode_num = dirents[k]->inum;
+    struct File *file = Allocate_File(&s_gfs3FileOps, 0, inode.size, &gfsFile, mode, mountPoint);
+    if (!file){
+        return ENOMEM;
+    }
+
+    *pFile = file;
+    return 0;
 }
 
 /*
@@ -242,7 +335,7 @@ static int GFS3_Mount(struct Mount_Point *mountPoint) {
     }
 
     mountPoint->fsData = instance;
-    memcpy(&s_gfs3MountPointOps, mountPoint->ops, sizeof(s_gfs3MountPointOps));
+    mountPoint->ops = &s_gfs3MountPointOps;
     Free(bootBlock);
 
     return 0;
