@@ -36,7 +36,7 @@ struct GFS_Instance {
 };
 
 struct GFS3_File {
-    struct gfs3_inode *inode;
+    struct gfs3_inode inode;
     gfs3_inodenum inode_num;
 };
 
@@ -57,9 +57,10 @@ struct gfs3_inode getInode(struct GFS_Instance *instance, struct Block_Device *d
  */
 static int GFS3_FStat(struct File *file, struct VFS_File_Stat *stat) {
     struct GFS3_File *gfsFile = (struct GFS3_File *)file->fsData;
-    struct gfs3_inode *inode = gfsFile->inode;
-    stat->size = inode->size;
-    stat->isDirectory = inode->type == GFS3_DIRECTORY;
+    struct gfs3_inode inode = (gfsFile->inode);
+    stat->size = inode.size;
+    Print("size in stat: %d, size in inode: %d\n", stat->size, inode.size);
+    stat->isDirectory = inode.type == GFS3_DIRECTORY;
     return 0;
 }
 
@@ -214,6 +215,7 @@ static int GFS3_Open(struct Mount_Point *mountPoint, const char *path,
                     if (strcmp(currDirent->name, target) == 0){ //found what we're looking for
                         Print("found %s \n", target);
                         inode = getInode((struct GFS_Instance *)mountPoint->fsData, mountPoint->dev, currDirent->inum); //update inode
+                        Print("inode size: %d\n", inode.size);
                         found = true;
                         if (i == numSegments - 1){ //last segment = file
                             fileFound = true;
@@ -249,7 +251,7 @@ static int GFS3_Open(struct Mount_Point *mountPoint, const char *path,
 
     // Create GFS3_File struct with required data
     struct GFS3_File gfsFile;
-    gfsFile.inode = &inode;
+    gfsFile.inode = inode;
     gfsFile.inode_num = currDirent->inum;
 
     // Allocate file struct with GFS3_File as fsData
@@ -360,6 +362,7 @@ Print("GFS3_Open: %s\n", path);
         }
         else if (inode.type != GFS3_DIRECTORY && inode.type != GFS3_FILE){ //inode is invalid
             Print("inode is invalid\n");
+            Free(dirents);
             return EINVALID;
         }
 
@@ -369,22 +372,25 @@ Print("GFS3_Open: %s\n", path);
     }
     if (!fileFound){ //looped through all levels, file not found
         Print("file '%s' not found\n", fileName);
+        Free(dirents);
         return ENOTFOUND;
     }
 
     // Create GFS3_File struct with required data
     struct GFS3_File gfsFile;
-    gfsFile.inode = &inode;
+    gfsFile.inode = inode;
     gfsFile.inode_num = currDirent->inum;
 
     // Allocate file struct with GFS3_File as fsData
     struct File *file = Allocate_File(&s_gfs3DirOps, 0, inode.size, &gfsFile, 0, mountPoint);
     if (!file){
+        Free(dirents);
         return ENOMEM;
     }
 
     // Set pDir
     *pDir = file;
+    Free(dirents);
     return 0;
 }
 
@@ -464,6 +470,7 @@ static int GFS3_Stat(struct Mount_Point *mountPoint, const char *path,
                     if (strcmp(currDirent->name, target) == 0){ //found what we're looking for
                         Print("found %s \n", target);
                         inode = getInode((struct GFS_Instance *)mountPoint->fsData, mountPoint->dev, currDirent->inum); //update inode
+                        Print("inode size: %d\n", inode.size);
                         found = true;
                         if (i == numSegments - 1){ //last segment = file
                             fileFound = true;

@@ -753,11 +753,16 @@ static int Sys_Write(struct Interrupt_State *state) {
  * Returns: 0 if successful, error code (< 0) if unsuccessful
  */
 static int Sys_Stat(struct Interrupt_State *state) {
-    char *path;
-    struct VFS_File_Stat *stat;
+    char *path = 0;
+    struct VFS_File_Stat *stat = 0;
+    int rc = 0;
     Copy_User_String(state->ebx, state->ecx, VFS_MAX_PATH_LEN, &path);
     Copy_From_User(&stat, state->edx, sizeof(struct VFS_File_Stat *));
-    return Stat(path, stat);
+    rc = Stat(path, stat);
+    if(!rc) {
+        Copy_To_User(state->edx, stat, sizeof(struct VFS_File_Stat *));
+    }
+    return rc;
 }
 
 /*
@@ -770,9 +775,14 @@ static int Sys_Stat(struct Interrupt_State *state) {
  */
 static int Sys_FStat(struct Interrupt_State *state) {
     struct File *file = CURRENT_THREAD->userContext->file_descriptor_table[state->ebx];
-    struct VFS_File_Stat *stat;
+    struct VFS_File_Stat *stat = 0;
+    int rc = 0;
     Copy_From_User(&stat, state->ecx, sizeof(struct VFS_File_Stat *));
-    return FStat(file, stat);
+    rc = FStat(file, stat);
+    if (!rc){
+        Copy_To_User(state->ecx, stat, sizeof(struct VFS_File_Stat *));
+    }
+    return rc;
 }
 
 /*
