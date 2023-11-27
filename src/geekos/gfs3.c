@@ -56,7 +56,10 @@ struct gfs3_inode getInode(struct GFS_Instance *instance, struct Block_Device *d
  * Get metadata for given file.
  */
 static int GFS3_FStat(struct File *file, struct VFS_File_Stat *stat) {
-    TODO_P(PROJECT_GFS3, "GeekOS filesystem FStat operation");
+    struct GFS3_File *gfsFile = (struct GFS3_File *)file->fsData;
+    struct gfs3_inode *inode = gfsFile->inode;
+    stat->size = inode->size;
+    stat->isDirectory = inode->type == GFS3_DIRECTORY;
     return 0;
 }
 
@@ -82,8 +85,12 @@ static int GFS3_Write(struct File *file, void *buf, ulong_t numBytes) {
  * Seek to a position in file; returns 0 on success.
  */
 static int GFS3_Seek(struct File *file, ulong_t pos) {
-    TODO_P(PROJECT_GFS3, "GeekOS filesystem seek operation");
-    return EUNSUPPORTED;
+    Print("GFS3_Seek: Current position %d, Seek to %d \n", (int)(file->filePos), (int)pos);
+    if(pos <= file->endPos){
+        file->filePos = pos;
+        return 0;
+    }
+    return EINVALID;
 }
 
 /*
@@ -146,95 +153,112 @@ static int GFS3_Read_Entry(struct File *dir, struct VFS_Dir_Entry *entry) {
 static int GFS3_Open(struct Mount_Point *mountPoint, const char *path,
                      int mode, struct File **pFile) {
     Print("GFS3_Open: %s\n", path);  
-    ++path;
-    int i = 0;
-    int numSegments = 1;
-    char **directories = Malloc(sizeof(char *) * 10);
+    ++path; //skip leading slash
+    int i = 0; 
+    int numSegments = 1; //number of segments in path
+    char **directories = Malloc(sizeof(char *) * 10); //array of directory pointers
     char *fileName;
-    char *pos = (char *)path;
+    char *pos = (char *)path;   //current position in path
     Print("path: %s\n", pos);
 
-    char *delimed = strchr(path, '/');
-    if (delimed == NULL){
+    char *delimed = strchr(path, '/'); //first occurence of '/'
+    if (delimed == NULL){ //no directories, just a file
         directories = NULL;
         fileName = pos;
     }
-    else{
+    else{ // still directories to parse
         while (delimed != NULL) {
-            *delimed = '\0';
-            directories[i++] = pos;
-            numSegments++;
-            pos = delimed + 1;
-            delimed = strchr(pos, '/');
+            *delimed = '\0'; //null terminate directory
+            directories[i++] = pos; //add directory to array
+            numSegments++; 
+            pos = delimed + 1; //move to next directory
+            delimed = strchr(pos, '/'); //find next '/'
         }
-        fileName = pos;
+        fileName = pos; //last segment is file
     }
 
-    Print("fileName: %s\n", fileName);
-    for (i = 0; i < 10; ++i){
-        if (directories[i] != NULL){
-            Print("directories[%d]: %s\n", i, directories[i]);
-        }
-    }
-
-    struct gfs3_inode inode = getInode((struct GFS_Instance *)mountPoint->fsData, mountPoint->dev, ((struct GFS_Instance *)(mountPoint->fsData))->rootInode);
-    struct gfs3_dirent *dirents[16];
-    int read = 0;
-    bool found = false;
-    bool fileFound = false;
-    char *target = 0;
-
-    int k = 0;
+    //current inode initialied to root inode
+    struct gfs3_inode inode = getInode((struct GFS_Instance *)mountPoint->fsData, mountPoint->dev, 1);
+    Print("root inode type %d \n", inode.type); 
+    void *dirents = Malloc(SECTOR_SIZE); //dirents buffer
+    struct gfs3_dirent *currDirent = (struct gfs3_dirent *)dirents; //current dirent
+    int read = 0;   //bytes read
+    bool found = false; //found what we're looking for (used to break out of loops)
+    bool fileFound = false; //found the file (last segment)
+    char *target = 0; //what we're looking for
 
     for (i = 0; i < numSegments; i++){
+        Print("Segment %d of %d\n", i, numSegments);
         if (i == numSegments - 1){
             //last segment = file
-            target = fileName;
+            target = fileName; 
         }
         else{
+            //not the last segment, looking for directory
             target = directories[i];
         }
-        if(inode.type == GFS3_DIRECTORY){
-            int j = 0;
-            for (j = 0; j < GFS3_EXTENTS; j++){
-                gfs3_blocknum blockNumber = inode.extents[j].start_block;
-                Block_Read(mountPoint->dev, blockNumber, dirents);
-                while(read < (int)inode.size){
-                    dirents[k]->name[dirents[k]->name_length] = '\0';
-                    if (strcmp(dirents[k]->name, target) == 0){
-                        inode = getInode((struct GFS_Instance *)mountPoint->fsData, mountPoint->dev, dirents[k]->inum);
+        Print("target: %s\n", target);
+        Print("Current inodetype: %d\n", inode.type);
+
+        if(inode.type == GFS3_DIRECTORY){ //inode is a directory
+            Print("inode is a directory\n");
+            int j;
+            for (j = 0; j < GFS3_EXTENTS; j++){ //iterate through extents
+                Print("extent %d of %d\n", j, GFS3_EXTENTS);
+                gfs3_blocknum blockNumber = inode.extents[j].start_block; //initalize current block number to start block
+                Block_Read(mountPoint->dev, blockNumber, dirents); //read block into dirents buffer
+                Print("read %d bytes, inode.size: %d\n", read, inode.size);
+                while(read < (int)inode.size){ //iterate through dirents
+                    currDirent->name[currDirent->name_length] = '\0'; //null terminate name
+                    Print("currDirent->name: %s\n", currDirent->name);
+                    if (strcmp(currDirent->name, target) == 0){ //found what we're looking for
+                        Print("found %s \n", target);
+                        inode = getInode((struct GFS_Instance *)mountPoint->fsData, mountPoint->dev, currDirent->inum); //update inode
                         found = true;
-                        if (i == numSegments - 1){
+                        if (i == numSegments - 1){ //last segment = file
                             fileFound = true;
                         }
                         break;
                     }
-                    read += sizeof(gfs3_inodenum) + sizeof(dirents[k]->entry_length) + sizeof(dirents[k]->name_length) + sizeof(dirents[k]->name);
-                    k++;
+                    read += sizeof(gfs3_inodenum) + sizeof(currDirent->entry_length) + sizeof(currDirent->name_length) + sizeof(currDirent->name); //update bytes read
+                    currDirent = (struct gfs3_dirent *)((uint_t)currDirent + 4 + currDirent->entry_length); //iterate current dirent
                 }
-                read = 0;
-                if(found){
-                    found = false;
+                read = 0; //reset bytes read
+                if(found){ //reset found for next segment and break out of extent loop
+                    found = false; 
                     break;
                 }
             }
         }
-        if (fileFound){
+        else if (inode.type == GFS3_FILE){ //inode is a file
+            Print("inode is a file\n");
+        }
+        else if (inode.type != GFS3_DIRECTORY && inode.type != GFS3_FILE){ //inode is invalid
+            Print("inode is invalid\n");
+            return EINVALID;
+        }
+
+        if (fileFound){ //found file
             break;
         }
     }
-    if (!fileFound){
+    if (!fileFound){ //looped through all levels, file not found
+        Print("file '%s' not found\n", fileName);
         return ENOTFOUND;
     }
 
+    // Create GFS3_File struct with required data
     struct GFS3_File gfsFile;
     gfsFile.inode = &inode;
-    gfsFile.inode_num = dirents[k]->inum;
+    gfsFile.inode_num = currDirent->inum;
+
+    // Allocate file struct with GFS3_File as fsData
     struct File *file = Allocate_File(&s_gfs3FileOps, 0, inode.size, &gfsFile, mode, mountPoint);
     if (!file){
         return ENOMEM;
     }
 
+    // Set pFile
     *pFile = file;
     return 0;
 }
@@ -253,8 +277,115 @@ static int GFS3_Create_Directory(struct Mount_Point *mountPoint,
  */
 static int GFS3_Open_Directory(struct Mount_Point *mountPoint,
                                const char *path, struct File **pDir) {
-    TODO_P(PROJECT_GFS3, "GeekOS filesystem open directory operation");
-    return EUNSUPPORTED;
+Print("GFS3_Open: %s\n", path);  
+    ++path; //skip leading slash
+    int i = 0; 
+    int numSegments = 1; //number of segments in path
+    char **directories = Malloc(sizeof(char *) * 10); //array of directory pointers
+    char *fileName;
+    char *pos = (char *)path;   //current position in path
+    Print("path: %s\n", pos);
+
+    char *delimed = strchr(path, '/'); //first occurence of '/'
+    if (delimed == NULL){ //no directories, just a file
+        directories = NULL;
+        fileName = pos;
+    }
+    else{ // still directories to parse
+        while (delimed != NULL) {
+            *delimed = '\0'; //null terminate directory
+            directories[i++] = pos; //add directory to array
+            numSegments++; 
+            pos = delimed + 1; //move to next directory
+            delimed = strchr(pos, '/'); //find next '/'
+        }
+        fileName = pos; //last segment is file
+    }
+
+    //current inode initialied to root inode
+    struct gfs3_inode inode = getInode((struct GFS_Instance *)mountPoint->fsData, mountPoint->dev, 1);
+    Print("root inode type %d \n", inode.type); 
+    void *dirents = Malloc(SECTOR_SIZE); //dirents buffer
+    struct gfs3_dirent *currDirent = (struct gfs3_dirent *)dirents; //current dirent
+    int read = 0;   //bytes read
+    bool found = false; //found what we're looking for (used to break out of loops)
+    bool fileFound = false; //found the file (last segment)
+    char *target = 0; //what we're looking for
+
+    for (i = 0; i < numSegments; i++){
+        Print("Segment %d of %d\n", i, numSegments);
+        if (i == numSegments - 1){
+            //last segment = file
+            target = fileName; 
+        }
+        else{
+            //not the last segment, looking for directory
+            target = directories[i];
+        }
+        Print("target: %s\n", target);
+        Print("Current inodetype: %d\n", inode.type);
+
+        if(inode.type == GFS3_DIRECTORY){ //inode is a directory
+            Print("inode is a directory\n");
+            int j;
+            for (j = 0; j < GFS3_EXTENTS; j++){ //iterate through extents
+                Print("extent %d of %d\n", j, GFS3_EXTENTS);
+                gfs3_blocknum blockNumber = inode.extents[j].start_block; //initalize current block number to start block
+                Block_Read(mountPoint->dev, blockNumber, dirents); //read block into dirents buffer
+                Print("read %d bytes, inode.size: %d\n", read, inode.size);
+                while(read < (int)inode.size){ //iterate through dirents
+                    currDirent->name[currDirent->name_length] = '\0'; //null terminate name
+                    Print("currDirent->name: %s\n", currDirent->name);
+                    if (strcmp(currDirent->name, target) == 0){ //found what we're looking for
+                        Print("found %s \n", target);
+                        inode = getInode((struct GFS_Instance *)mountPoint->fsData, mountPoint->dev, currDirent->inum); //update inode
+                        found = true;
+                        if (i == numSegments - 1){ //last segment = file
+                            fileFound = true;
+                        }
+                        break;
+                    }
+                    read += sizeof(gfs3_inodenum) + sizeof(currDirent->entry_length) + sizeof(currDirent->name_length) + sizeof(currDirent->name); //update bytes read
+                    currDirent = (struct gfs3_dirent *)((uint_t)currDirent + 4 + currDirent->entry_length); //iterate current dirent
+                }
+                read = 0; //reset bytes read
+                if(found){ //reset found for next segment and break out of extent loop
+                    found = false; 
+                    break;
+                }
+            }
+        }
+        else if (inode.type == GFS3_FILE){ //inode is a file
+            Print("inode is a file\n");
+        }
+        else if (inode.type != GFS3_DIRECTORY && inode.type != GFS3_FILE){ //inode is invalid
+            Print("inode is invalid\n");
+            return EINVALID;
+        }
+
+        if (fileFound){ //found file
+            break;
+        }
+    }
+    if (!fileFound){ //looped through all levels, file not found
+        Print("file '%s' not found\n", fileName);
+        return ENOTFOUND;
+    }
+
+    // Create GFS3_File struct with required data
+    struct GFS3_File gfsFile;
+    gfsFile.inode = &inode;
+    gfsFile.inode_num = currDirent->inum;
+
+    // Allocate file struct with GFS3_File as fsData
+    struct File *file = Allocate_File(&s_gfs3DirOps, 0, inode.size, &gfsFile, 0, mountPoint);
+    if (!file){
+        return ENOMEM;
+    }
+
+    // Set pDir
+    *pDir = file;
+    return 0;
 }
 
 /*
@@ -271,8 +402,106 @@ static int GFS3_Delete(struct Mount_Point *mountPoint, const char *path,
  */
 static int GFS3_Stat(struct Mount_Point *mountPoint, const char *path,
                      struct VFS_File_Stat *stat) {
-    TODO_P(PROJECT_GFS3, "GeekOS filesystem stat operation");
-    return EUNSUPPORTED;
+    //struct GFS3_Instance *instance = (struct GFS3_Instance *)mountPoint->fsData;
+    ++path; //skip leading slash
+    int i = 0; 
+    int numSegments = 1; //number of segments in path
+    char **directories = Malloc(sizeof(char *) * 10); //array of directory pointers
+    char *fileName;
+    char *pos = (char *)path;   //current position in path
+    Print("path: %s\n", pos);
+
+    char *delimed = strchr(path, '/'); //first occurence of '/'
+    if (delimed == NULL){ //no directories, just a file
+        directories = NULL;
+        fileName = pos;
+    }
+    else{ // still directories to parse
+        while (delimed != NULL) {
+            *delimed = '\0'; //null terminate directory
+            directories[i++] = pos; //add directory to array
+            numSegments++; 
+            pos = delimed + 1; //move to next directory
+            delimed = strchr(pos, '/'); //find next '/'
+        }
+        fileName = pos; //last segment is file
+    }
+
+    //current inode initialied to root inode
+    struct gfs3_inode inode = getInode((struct GFS_Instance *)mountPoint->fsData, mountPoint->dev, 1);
+    Print("root inode type %d \n", inode.type); 
+    void *dirents = Malloc(SECTOR_SIZE); //dirents buffer
+    struct gfs3_dirent *currDirent = (struct gfs3_dirent *)dirents; //current dirent
+    int read = 0;   //bytes read
+    bool found = false; //found what we're looking for (used to break out of loops)
+    bool fileFound = false; //found the file (last segment)
+    char *target = 0; //what we're looking for
+
+    for (i = 0; i < numSegments; i++){
+        Print("Segment %d of %d\n", i, numSegments);
+        if (i == numSegments - 1){
+            //last segment = file
+            target = fileName; 
+        }
+        else{
+            //not the last segment, looking for directory
+            target = directories[i];
+        }
+        Print("target: %s\n", target);
+        Print("Current inodetype: %d\n", inode.type);
+
+        if(inode.type == GFS3_DIRECTORY){ //inode is a directory
+            Print("inode is a directory\n");
+            int j;
+            for (j = 0; j < GFS3_EXTENTS; j++){ //iterate through extents
+                Print("extent %d of %d\n", j, GFS3_EXTENTS);
+                gfs3_blocknum blockNumber = inode.extents[j].start_block; //initalize current block number to start block
+                Block_Read(mountPoint->dev, blockNumber, dirents); //read block into dirents buffer
+                Print("read %d bytes, inode.size: %d\n", read, inode.size);
+                while(read < (int)inode.size){ //iterate through dirents
+                    currDirent->name[currDirent->name_length] = '\0'; //null terminate name
+                    Print("currDirent->name: %s\n", currDirent->name);
+                    if (strcmp(currDirent->name, target) == 0){ //found what we're looking for
+                        Print("found %s \n", target);
+                        inode = getInode((struct GFS_Instance *)mountPoint->fsData, mountPoint->dev, currDirent->inum); //update inode
+                        found = true;
+                        if (i == numSegments - 1){ //last segment = file
+                            fileFound = true;
+                        }
+                        break;
+                    }
+                    read += sizeof(gfs3_inodenum) + sizeof(currDirent->entry_length) + sizeof(currDirent->name_length) + sizeof(currDirent->name); //update bytes read
+                    currDirent = (struct gfs3_dirent *)((uint_t)currDirent + 4 + currDirent->entry_length); //iterate current dirent
+                }
+                read = 0; //reset bytes read
+                if(found){ //reset found for next segment and break out of extent loop
+                    found = false; 
+                    break;
+                }
+            }
+        }
+        else if (inode.type == GFS3_FILE){ //inode is a file
+            Print("inode is a file\n");
+        }
+        else if (inode.type != GFS3_DIRECTORY && inode.type != GFS3_FILE){ //inode is invalid
+            Print("inode is invalid\n");
+            return EINVALID;
+        }
+
+        if (fileFound){ //found file
+            break;
+        }
+    }
+    if (!fileFound){ //looped through all levels, file not found
+        Print("file '%s' not found\n", fileName);
+        return ENOTFOUND;
+    }
+
+    // Set stat
+    stat->size = inode.size;
+    stat->isDirectory = inode.type == GFS3_DIRECTORY;
+    return 0;
+
 }
 
 /*

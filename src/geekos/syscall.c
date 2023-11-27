@@ -567,8 +567,11 @@ static int Sys_Open(struct Interrupt_State *state) {
  *   or an error code (< 0) if unsuccessful
  */
 static int Sys_OpenDirectory(struct Interrupt_State *state) {
-    TODO_P(PROJECT_FS, "Open directory system call");
-    return EUNSUPPORTED;
+    struct File *directory;
+    char *path;
+    Copy_User_String(state->ebx, state->ecx, VFS_MAX_PATH_LEN, &path);
+    Open_Directory(path, &directory);
+    return add_file_to_descriptor_table(directory);
 }
 
 /*
@@ -750,8 +753,11 @@ static int Sys_Write(struct Interrupt_State *state) {
  * Returns: 0 if successful, error code (< 0) if unsuccessful
  */
 static int Sys_Stat(struct Interrupt_State *state) {
-    TODO_P(PROJECT_FS, "Stat system call");
-    return EUNSUPPORTED;
+    char *path;
+    struct VFS_File_Stat *stat;
+    Copy_User_String(state->ebx, state->ecx, VFS_MAX_PATH_LEN, &path);
+    Copy_From_User(&stat, state->edx, sizeof(struct VFS_File_Stat *));
+    return Stat(path, stat);
 }
 
 /*
@@ -763,8 +769,10 @@ static int Sys_Stat(struct Interrupt_State *state) {
  * Returns: 0 if successful, error code (< 0) if unsuccessful
  */
 static int Sys_FStat(struct Interrupt_State *state) {
-    TODO_P(PROJECT_FS, "FStat system call");
-    return EUNSUPPORTED;
+    struct File *file = CURRENT_THREAD->userContext->file_descriptor_table[state->ebx];
+    struct VFS_File_Stat *stat;
+    Copy_From_User(&stat, state->ecx, sizeof(struct VFS_File_Stat *));
+    return FStat(file, stat);
 }
 
 /*
@@ -776,8 +784,8 @@ static int Sys_FStat(struct Interrupt_State *state) {
  * Returns: 0 if successful, error code (< 0) if unsuccessful
  */
 static int Sys_Seek(struct Interrupt_State *state) {
-    TODO_P(PROJECT_FS, "Seek system call");
-    return EUNSUPPORTED;
+    struct File *file = CURRENT_THREAD->userContext->file_descriptor_table[state->ebx];
+    return Seek(file, (ulong_t)state->ecx);
 }
 
 /*
