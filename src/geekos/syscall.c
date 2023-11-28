@@ -775,14 +775,16 @@ static int Sys_Stat(struct Interrupt_State *state) {
  */
 static int Sys_FStat(struct Interrupt_State *state) {
     struct File *file = CURRENT_THREAD->userContext->file_descriptor_table[state->ebx];
-    struct VFS_File_Stat *stat = 0;
-    int rc = 0;
-    Copy_From_User(&stat, state->ecx, sizeof(struct VFS_File_Stat *));
-    rc = FStat(file, stat);
-    if (!rc){
-        Copy_To_User(state->ecx, stat, sizeof(struct VFS_File_Stat *));
+    struct VFS_File_Stat stat;
+    Copy_From_User(&stat, (ulong_t)state->ecx, sizeof(struct VFS_File_Stat));
+    if(file) {
+        FStat(file, &stat);
+        Copy_To_User(state->ecx, &stat, sizeof(struct VFS_File_Stat));
+        return 0;
     }
-    return rc;
+    else {
+        return ENOTFOUND;
+    }
 }
 
 /*

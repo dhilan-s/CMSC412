@@ -26,6 +26,8 @@
 #include <geekos/pfat.h>
 #include <geekos/projects.h>
 
+#define VFS_NO_MORE_DIR_ENTRIES 1
+
 /* ----------------------------------------------------------------------
  * Private data and functions
  * ---------------------------------------------------------------------- */
@@ -57,10 +59,10 @@ struct gfs3_inode getInode(struct GFS_Instance *instance, struct Block_Device *d
  */
 static int GFS3_FStat(struct File *file, struct VFS_File_Stat *stat) {
     struct GFS3_File *gfsFile = (struct GFS3_File *)file->fsData;
-    struct gfs3_inode inode = (gfsFile->inode);
-    stat->size = inode.size;
-    Print("size in stat: %d, size in inode: %d\n", stat->size, inode.size);
-    stat->isDirectory = inode.type == GFS3_DIRECTORY;
+    Print("GFS3_FStat: inode size: %d\n", gfsFile->inode.size);
+    stat->size = gfsFile->inode.size;
+    Print("size in stat: %d, size in inode: %d\n", stat->size, gfsFile->inode.size);
+    stat->isDirectory = gfsFile->inode.type == GFS3_DIRECTORY;
     return 0;
 }
 
@@ -152,7 +154,10 @@ static int GFS3_Close(struct File *file) {
 static int GFS3_FStat_Directory(struct File *dir,
                                 struct VFS_File_Stat *stat) {
     /* may be unused. */
-    TODO_P(PROJECT_GFS3, "GeekOS filesystem FStat directory operation");
+    struct GFS3_File *gfsFile = (struct GFS3_File *)dir->fsData;
+    struct gfs3_inode inode = gfsFile->inode;
+    stat->size = inode.size;
+    stat->isDirectory = inode.type == GFS3_DIRECTORY;
     return 0;
 }
 
@@ -168,17 +173,50 @@ static int GFS3_Close_Directory(struct File *dir) {
  * Read a directory entry from an open directory.
  */
 static int GFS3_Read_Entry(struct File *dir, struct VFS_Dir_Entry *entry) {
-    int retval = 0;
-    while (retval != VFS_NO_MORE_DIR_ENTRIES){
-        retval = dir->ops->Read(dir, entry, sizeof(struct VFS_Dir_Entry));
-        if (retval == VFS_NO_MORE_DIR_ENTRIES){
-            return retval;
+    /* Retrieve the GFS3 file and the GFS3 instance */
+    struct GFS3_File *gfsFile = (struct GFS3_File *)dir->fsData;
+    //struct GFS3_Instance *instance = (struct GFS3_Instance *)dir->mountPoint->fsData;
+    
+    /* Get the inode from the struct GFS3 file */
+    struct gfs3_inode inode = gfsFile->inode;
+
+    /* Loop through dirents making use of entry_length */
+    void *dirents = Malloc(SECTOR_SIZE);
+    struct gfs3_dirent *currDirent = (struct gfs3_dirent *)dirents;
+    int j;
+    int read = 0;   //bytes read
+    int currPos = 0; //current position in file
+ 
+    for (j = 0; j < GFS3_EXTENTS; j++){ //iterate through extents
+        Print("extent %d of %d\n", j, GFS3_EXTENTS);
+        gfs3_blocknum blockNumber = inode.extents[j].start_block; //initalize current block number to start block
+        Block_Read(dir->mountPoint->dev, blockNumber, dirents); //read block into dirents buffer
+        Print("read %d bytes, inode.size: %d\n", read, inode.size);
+        while(read < (int)inode.size){ //iterate through dirents
+            if (currPos < (int)dir->filePos){ //skip dirents before filePos
+                read += sizeof(gfs3_inodenum) + sizeof(currDirent->entry_length) + sizeof(currDirent->name_length) + sizeof(currDirent->name); //update bytes read
+                currDirent = (struct gfs3_dirent *)((uint_t)currDirent + 4 + currDirent->entry_length); //iterate current dirent
+                currPos += sizeof(gfs3_inodenum) + sizeof(currDirent->entry_length) + sizeof(currDirent->name_length) + sizeof(currDirent->name); //update current position
+                continue;
+            }
+            currDirent->name[currDirent->name_length] = '\0'; //null terminate name
+            Print("currDirent->name: %s\n", currDirent->name);
+            read += sizeof(gfs3_inodenum) + sizeof(currDirent->entry_length) + sizeof(currDirent->name_length) + sizeof(currDirent->name); //update bytes read
+            dir->filePos += sizeof(gfs3_inodenum) + sizeof(currDirent->entry_length) + sizeof(currDirent->name_length) + sizeof(currDirent->name); //update filePos
+            currDirent = (struct gfs3_dirent *)((uint_t)currDirent + 4 + currDirent->entry_length); //iterate current dirent
+            strcpy(entry->name, currDirent->name);
+            Free(dirents);
+            if (dir->filePos < dir->endPos){
+                return GFS3_Read_Entry(dir, entry);
+            }
+            else{
+                return VFS_NO_MORE_DIR_ENTRIES;
+            }
         }
-        if (entry->name[0] != '\0'){
-            return retval;
-        }
+        read = 0; //reset bytes read
     }
-    return 0;
+    Free(dirents);
+    return VFS_NO_MORE_DIR_ENTRIES;
 }
 
 /*static*/ struct File_Ops s_gfs3DirOps = {
@@ -293,10 +331,13 @@ static int GFS3_Open(struct Mount_Point *mountPoint, const char *path,
         return ENOTFOUND;
     }
 
+    Free(dirents);
     // Create GFS3_File struct with required data
-    struct GFS3_File gfsFile;
-    gfsFile.inode = inode;
-    gfsFile.inode_num = currDirent->inum;
+    struct GFS3_File *gfsFile = Malloc(sizeof(struct GFS3_File));
+    memcpy(&gfsFile->inode, &inode, sizeof(struct gfs3_inode));
+    //gfsFile.inode = inode;
+    Print("gfsFile.inode.size: %d\n", gfsFile->inode.size);
+    gfsFile->inode_num = currDirent->inum;
 
     // Allocate file struct with GFS3_File as fsData
     struct File *file = Allocate_File(&s_gfs3FileOps, 0, inode.size, &gfsFile, mode, mountPoint);
