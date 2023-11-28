@@ -1,7 +1,7 @@
-BSS = 44868
+BSS = 45908
 start kern info = 90000
 Creating kernel heap: start=102000, size=1048576
-527352KB memory detected, 130400 pages in freelist, 1048576 bytes in kernel heap
+527352KB memory detected, 130399 pages in freelist, 1048576 bytes in kernel heap
 Initializing IDT...
 Init_SMP
 Initializing SMP...
@@ -10,7 +10,7 @@ found CPU#1 with APIC id #1
 found IO APIC ID=0 at fec00000
 /Init_SMP
 apic counted down to ffffffe6
-cpu freq = 1185755904
+cpu freq = 4252800
 Initializing timer...
 Initializing keyboard...
 Initializing DMA Controller...
@@ -25,17 +25,17 @@ Mounted /c filesystem!
 Never gonna give you up!
 Welcome to GeekOS!
 Spawning init process (/c/shell.exe)
-$ gfs3tst 18
-Task index is 18.
+$ gfs3tst 27
+Task index is 27.
 Invoking preliminary mount
 Mount returned 0.
 preliminary mount apparently successful
-Retrieved disk parameters, blocksize 512, blocks 0
-Testing: Basic Stat...GFS3_Open: /basic
-path: basic
+Retrieved disk parameters, blocksize 512, blocks 20480
+Testing: Read Entry...GFS3_Open: /basic11d
+path: basic11d
 root inode type 1 
 Segment 0 of 1
-target: basic
+target: basic11d
 Current inodetype: 1
 inode is a directory
 extent 0 of 3
@@ -45,10 +45,9 @@ currDirent->name: ..
 currDirent->name: somefile
 currDirent->name: somedir
 currDirent->name: basic
-found basic 
-inode size: 10000
-size in stat: 73720, size in inode: 73720
-PASSED (1) crt score: 2 
-$ exit
-DONE!
-Init process exited with code 0
+currDirent->name: basic7f
+currDirent->name: basic11d
+found basic11d 
+Dir name (d1) not correct  0.
+FAILED (-1) crt score: 0 
+$ 

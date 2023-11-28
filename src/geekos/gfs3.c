@@ -68,9 +68,44 @@ static int GFS3_FStat(struct File *file, struct VFS_File_Stat *stat) {
  * Read data from current position in file.
  */
 static int GFS3_Read(struct File *file, void *buf, ulong_t numBytes) {
-    TODO_P(PROJECT_GFS3, "GeekOS filesystem read operation");
-
-    return EUNSUPPORTED;
+    Print("GFS3_Read: Current position %d, Read %d bytes\n", (int)(file->filePos), (int)numBytes);
+    struct GFS3_File *gfsFile = (struct GFS3_File *)file->fsData;
+    struct gfs3_inode inode = gfsFile->inode;
+    Print("inode size: %d\n", inode.size);
+    if (file->filePos + numBytes > inode.size){
+        numBytes = inode.size - file->filePos;
+    }
+    Print("numBytes: %d\n", (int)numBytes);
+    int i;
+    int read = 0;
+    int bytesLeft = numBytes;
+    int bytesToRead = 0;
+    void *bufPos = buf;
+    void *blockBuffer = Malloc(SECTOR_SIZE);
+    for (i = 0; i < GFS3_EXTENTS; i++){
+        if (inode.extents[i].start_block == 0){
+            break;
+        }
+        if (bytesLeft == 0){
+            break;
+        }
+        if ((int)(inode.extents[i].length_blocks * SECTOR_SIZE) > (int)bytesLeft){
+            bytesToRead = bytesLeft;
+        }
+        else{
+            bytesToRead = inode.extents[i].length_blocks * SECTOR_SIZE;
+        }
+        Print("bytesToRead: %d\n", bytesToRead);
+        Block_Read(file->mountPoint->dev, inode.extents[i].start_block, blockBuffer);
+        memcpy(bufPos, blockBuffer, bytesToRead);
+        bufPos += bytesToRead;
+        read += bytesToRead;
+        bytesLeft -= bytesToRead;
+    }
+    Print("read: %d\n", read);
+    file->filePos += read;
+    Free(blockBuffer);
+    return read;
 }
 
 /*
@@ -133,8 +168,17 @@ static int GFS3_Close_Directory(struct File *dir) {
  * Read a directory entry from an open directory.
  */
 static int GFS3_Read_Entry(struct File *dir, struct VFS_Dir_Entry *entry) {
-    TODO_P(PROJECT_GFS3, "GeekOS filesystem Read_Entry operation");
-    return EUNSUPPORTED;
+    int retval = 0;
+    while (retval != VFS_NO_MORE_DIR_ENTRIES){
+        retval = dir->ops->Read(dir, entry, sizeof(struct VFS_Dir_Entry));
+        if (retval == VFS_NO_MORE_DIR_ENTRIES){
+            return retval;
+        }
+        if (entry->name[0] != '\0'){
+            return retval;
+        }
+    }
+    return 0;
 }
 
 /*static*/ struct File_Ops s_gfs3DirOps = {
@@ -523,9 +567,11 @@ static int GFS3_Sync(struct Mount_Point *mountPoint) {
 static int GFS3_Disk_Properties(struct Mount_Point *mountPoint,
                                 unsigned int *block_size,
                                 unsigned int *blocks_in_disk) {
-    TODO_P(PROJECT_GFS3,
-           "GeekOS filesystem infomation operation; set variables.");
-    return EUNSUPPORTED;
+    struct GFS_Instance *instance = (struct GFS_Instance *)mountPoint->fsData;
+    struct gfs3_superblock superblock = instance->superblock;
+    *blocks_in_disk = superblock.blocks_per_disk;
+    *block_size = SECTOR_SIZE;
+    return 0;
 }
 
 /*static*/ struct Mount_Point_Ops s_gfs3MountPointOps = {
