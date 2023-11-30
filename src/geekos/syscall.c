@@ -774,12 +774,13 @@ static int Sys_Stat(struct Interrupt_State *state) {
  * Returns: 0 if successful, error code (< 0) if unsuccessful
  */
 static int Sys_FStat(struct Interrupt_State *state) {
-    struct File *file = CURRENT_THREAD->userContext->file_descriptor_table[state->ebx];
     struct VFS_File_Stat stat;
     Copy_From_User(&stat, (ulong_t)state->ecx, sizeof(struct VFS_File_Stat));
+
+    struct File *file = CURRENT_THREAD->userContext->file_descriptor_table[state->ebx];
     if(file) {
         FStat(file, &stat);
-        Copy_To_User(state->ecx, &stat, sizeof(struct VFS_File_Stat));
+        Copy_To_User((ulong_t)state->ecx, &stat, sizeof(struct VFS_File_Stat));
         return 0;
     }
     else {

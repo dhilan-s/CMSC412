@@ -10,7 +10,7 @@ found CPU#1 with APIC id #1
 found IO APIC ID=0 at fec00000
 /Init_SMP
 apic counted down to ffffffe6
-cpu freq = 1184183104
+cpu freq = 1185584704
 Initializing timer...
 Initializing keyboard...
 Initializing DMA Controller...
@@ -47,8 +47,8 @@ currDirent->name: somedir
 currDirent->name: basic
 found basic 
 inode size: 10000
-gfsFile.inode.size: 10000
-GFS3_FStat: inode size: 73720
-size in stat: 73720, size in inode: 73720
+Open: inode size 10000
+GFS3_FStat: inode size: 10000
+GFS3_FStat: type: 2
 PASSED (1) crt score: 2 
 $ 

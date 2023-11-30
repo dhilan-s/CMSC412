@@ -59,10 +59,11 @@ struct gfs3_inode getInode(struct GFS_Instance *instance, struct Block_Device *d
  */
 static int GFS3_FStat(struct File *file, struct VFS_File_Stat *stat) {
     struct GFS3_File *gfsFile = (struct GFS3_File *)file->fsData;
-    Print("GFS3_FStat: inode size: %d\n", gfsFile->inode.size);
-    stat->size = gfsFile->inode.size;
-    Print("size in stat: %d, size in inode: %d\n", stat->size, gfsFile->inode.size);
-    stat->isDirectory = gfsFile->inode.type == GFS3_DIRECTORY;
+    struct gfs3_inode *inode = &gfsFile->inode;
+    Print("GFS3_FStat: inode size: %d\n", inode->size);
+    stat->size = inode->size;
+    Print("GFS3_FStat: type: %d\n", inode->type);
+    stat->isDirectory = inode->type == GFS3_DIRECTORY;
     return 0;
 }
 
@@ -336,11 +337,11 @@ static int GFS3_Open(struct Mount_Point *mountPoint, const char *path,
     struct GFS3_File *gfsFile = Malloc(sizeof(struct GFS3_File));
     memcpy(&gfsFile->inode, &inode, sizeof(struct gfs3_inode));
     //gfsFile.inode = inode;
-    Print("gfsFile.inode.size: %d\n", gfsFile->inode.size);
+    Print("Open: inode size %d\n", gfsFile->inode.size);
     gfsFile->inode_num = currDirent->inum;
 
     // Allocate file struct with GFS3_File as fsData
-    struct File *file = Allocate_File(&s_gfs3FileOps, 0, inode.size, &gfsFile, mode, mountPoint);
+    struct File *file = Allocate_File(&s_gfs3FileOps, 0, inode.size, gfsFile, mode, mountPoint);
     if (!file){
         return ENOMEM;
     }
@@ -462,14 +463,16 @@ Print("GFS3_Open: %s\n", path);
     }
 
     // Create GFS3_File struct with required data
-    struct GFS3_File gfsFile;
-    gfsFile.inode = inode;
-    gfsFile.inode_num = currDirent->inum;
+    struct GFS3_File *gfsFile = Malloc(sizeof(struct GFS3_File));
+    gfsFile->inode = inode;
+    Print("gfsFile.inode.size: %d in open_dir\n", gfsFile->inode.size);
+    gfsFile->inode_num = currDirent->inum;
 
     // Allocate file struct with GFS3_File as fsData
-    struct File *file = Allocate_File(&s_gfs3DirOps, 0, inode.size, &gfsFile, 0, mountPoint);
+    struct File *file = Allocate_File(&s_gfs3DirOps, 0, inode.size, gfsFile, O_READ, mountPoint);
     if (!file){
         Free(dirents);
+        Free(gfsFile);
         return ENOMEM;
     }
 
